@@ -154,7 +154,7 @@ class Professional_Credential(db.Model):
     credential = db.relationship("Credential", backref="professionals_credentials")
 
     def __repr__(self):
-        return f'<PetPro id: {self.professional_id}, Credential id: {self.credential_id}>'
+        return f'<{self.professional}, {self.credential}>'
 
 class Specialty(db.Model):
     """ A specialty. """
@@ -190,7 +190,7 @@ class Professional_Specialty(db.Model):
     specialty = db.relationship("Specialty", backref="professionals_specialties")
 
     def __repr__(self):
-        return f'<PetPro id: {self.professional_id}, Specialty id: {self.specialty_id}>'
+        return f'<{self.professional}, {self.specialty}>'
 
 
 # I have named my database 'petpros'
