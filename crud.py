@@ -2,6 +2,7 @@
 
 from model import db, Professional, Job, Professional_Job, Membership, Professional_Membership, Credential, Professional_Credential, Specialty, Professional_Specialty, connect_to_db
 
+from random import choice, randint
 
 professions_list = ["groomer", "walker", "sitter", "trainer"]
 memberships_list = ["APDT", "PPG", "IACP"]
@@ -33,7 +34,7 @@ def create_job(profession):
 def give_professional_a_job(professional):
     """Take a professional, give them a random job, and return a professional with a job"""
     professional_id = professional.professional_id
-    job = randint(1:4)
+    job = randint(1,4)
 
     professional_with_job = Professional_Job(professional_id=professional_id, job_id=job)
 

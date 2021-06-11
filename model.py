@@ -78,7 +78,7 @@ class Professional_Job(db.Model):
     job = db.relationship("Job", backref="professionals_jobs")
 
     def __repr__(self):
-        return f'<PetPro id: {self.professional_id}, Job id: {self.job_id}>'
+        return f'<{self.professional}, {self.job}>'
 
 class Membership(db.Model):
     """ A membership. """
