@@ -116,7 +116,7 @@ class Professional_Membership(db.Model):
     membership = db.relationship("Membership", backref="professionals_memberships")
 
     def __repr__(self):
-        return f'<PetPro id: {self.professional_id}, Membership id: {self.membership_id}>'
+        return f'<{self.professional}, {self.membership}>'
 
 class Credential(db.Model):
     """ A credential. """

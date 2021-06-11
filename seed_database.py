@@ -33,6 +33,7 @@ for petpro in petpro_data:
     db_petpro = crud.create_petpro(first_name, last_name, company_name, email, phone, zipcode)
     petpros_in_db.append(db_petpro)
 
+
 jobs_in_db = []
 for profession in crud.professions_list:
     db_profession = crud.create_job(profession)
@@ -42,3 +43,14 @@ professionals_with_jobs_in_db = []
 for professional in petpros_in_db:
     db_professional_with_job = crud.give_professional_a_job(professional)
     professionals_with_jobs_in_db.append(db_professional_with_job)
+
+
+memberships_in_db = []
+for membership in crud.memberships_list:
+    db_membership = crud.create_membership(membership)
+    memberships_in_db.append(db_membership)
+
+professionals_with_memberships_in_db = []
+for professional in petpros_in_db:
+    db_professional_with_membership = crud.give_professional_a_membership(professional)
+    professionals_with_memberships_in_db.append(db_professional_with_membership)

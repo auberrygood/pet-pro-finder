@@ -30,11 +30,10 @@ def create_job(profession):
 
     return job
 
-
 def give_professional_a_job(professional):
     """Take a professional, give them a random job, and return a professional with a job"""
     professional_id = professional.professional_id
-    job = randint(1,4)
+    job = randint(1,len(professions_list))
 
     professional_with_job = Professional_Job(professional_id=professional_id, job_id=job)
 
@@ -42,7 +41,6 @@ def give_professional_a_job(professional):
     db.session.commit()
 
     return professional_with_job
-
 
 def create_membership(membership):
     """Create and return a membership type"""
@@ -53,6 +51,20 @@ def create_membership(membership):
     db.session.commit()
 
     return membership
+
+def give_professional_a_membership(professional):
+    """Take a professional, give them a random membership, and return a professional with a membership"""
+    professional_id = professional.professional_id
+    membership = randint(1,len(memberships_list))
+
+    professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership)
+
+    db.session.add(professional_with_membership)
+    db.session.commit()
+
+    return professional_with_membership
+
+
 
 if __name__ == "__main__":
     from server import app
