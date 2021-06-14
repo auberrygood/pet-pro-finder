@@ -54,3 +54,25 @@ professionals_with_memberships_in_db = []
 for professional in petpros_in_db:
     db_professional_with_membership = crud.give_professional_a_membership(professional)
     professionals_with_memberships_in_db.append(db_professional_with_membership)
+
+
+credentials_in_db = []
+for credential in crud.credentials_list:
+    db_credential = crud.create_credential(credential)
+    credentials_in_db.append(db_credential)
+
+professionals_with_credentials_in_db = []
+for professional in petpros_in_db:
+    db_professional_with_credential = crud.give_professional_a_credential(professional)
+    professionals_with_credentials_in_db.append(db_professional_with_credential)
+
+
+specialties_in_db = []
+for specialty in crud.specialties_list:
+    db_specialty = crud.create_specialty(specialty)
+    specialties_in_db.append(db_specialty)
+
+professionals_with_specialties_in_db = []
+for professional in petpros_in_db:
+    db_professional_with_specialty = crud.give_professional_a_specialty(professional)
+    professionals_with_specialties_in_db.append(db_professional_with_specialty)
