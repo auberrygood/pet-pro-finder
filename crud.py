@@ -5,8 +5,11 @@ from model import db, Professional, Job, Professional_Job, Membership, Professio
 from random import choice, randint
 
 professions_list = ["groomer", "walker", "sitter", "trainer"]
-memberships_list = ["APDT", "PPG", "IACP"]
+
+memberships_list = {"training":['APDT', 'PPG', 'IACP'], "grooming":['PGA', 'IGA']}
+
 credentials_list = ["CPDT-KA", "CPDT-KSA", "CBCC-KA", "IACP-DT", "CDBD", "IACP-CDTA", "IACP-PDTA", "IACP-CSDT", "ABC-PG", "FFCP", "KPA-CTP", "AABP", "CBATI", "CTC", "VSA-CDT", "CAAB", "CSC", "CSAT", "PMCT", "DACVB", "PFA"]
+
 specialties_list = ["puppy", "adolescent", "senior", "dog aggression", "human aggression", "leash reactivity", "basic obedience", "service dog training", "therapy training", "ESA training", "small dogs", "medium dogs", "large dogs", "competitive sports", "nosework", "creative cuts/color"]
 
 
@@ -31,9 +34,9 @@ def create_job(profession):
 def give_professional_a_job(professional):
     """Take a professional, give them a random job, and return a professional with a job"""
     professional_id = professional.professional_id
-    job = randint(1,len(professions_list))
+    job_id = randint(1,len(professions_list))
 
-    professional_with_job = Professional_Job(professional_id=professional_id, job_id=job)
+    professional_with_job = Professional_Job(professional_id=professional_id, job_id=job_id)
 
     db.session.add(professional_with_job)
     db.session.commit()
@@ -49,12 +52,44 @@ def create_membership(membership):
 
     return membership
 
-def give_professional_a_membership(professional):
-    """Take a professional, give them a random membership, and return a professional with a membership"""
+def give_professional_a_training_membership(professional):
+    """Take a professional, give them a random training membership, and return"""
     professional_id = professional.professional_id
-    membership = randint(1,len(memberships_list))
+    training_membership = choice(memberships_list['training'])
+    
+    QUERY = """
+        SELECT membership_id
+        FROM memberships
+        WHERE title = :membership
+        """
 
-    professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership)
+    db_cursor = db.session.execute(QUERY, {'membership': training_membership})
+    row = db_cursor.fetchone()
+    membership_id = int(row[0])
+
+    professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership_id)
+
+    db.session.add(professional_with_membership)
+    db.session.commit()
+
+    return professional_with_membership
+
+def give_professional_a_grooming_membership(professional):
+    """Take a professional, give them a random grooming membership, and return"""
+    professional_id = professional.professional_id
+    grooming_membership = choice(memberships_list['grooming'])
+
+    QUERY = """
+        SELECT membership_id
+        FROM memberships
+        WHERE title = :membership
+        """
+
+    db_cursor = db.session.execute(QUERY, {'membership': grooming_membership})
+    row = db_cursor.fetchone()
+    membership_id = int(row[0])
+
+    professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership_id)
 
     db.session.add(professional_with_membership)
     db.session.commit()

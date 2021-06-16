@@ -46,15 +46,25 @@ for professional in petpros_in_db:
 
 
 memberships_in_db = []
-for membership in crud.memberships_list:
-    db_membership = crud.create_membership(membership)
-    memberships_in_db.append(db_membership)
+for membership in crud.memberships_list['training']:
+    db_training_membership = crud.create_membership(membership)
+    memberships_in_db.append(db_training_membership)
+for membership in crud.memberships_list['grooming']:
+    db_grooming_membership = crud.create_membership(membership)
+    memberships_in_db.append(db_grooming_membership)
+
+#the conditional statement to ensure trainers are only getting matched with training memebrships is not working! HELP!! 
+#is my QUERY in model.py faulty??
 
 professionals_with_memberships_in_db = []
-for professional in petpros_in_db:
-    db_professional_with_membership = crud.give_professional_a_membership(professional)
-    professionals_with_memberships_in_db.append(db_professional_with_membership)
-
+for professional in professionals_with_jobs_in_db:
+    if professional.job == "trainer":
+        db_professional_with_training_membership = crud.give_professional_a_training_membership(professional)
+        professionals_with_memberships_in_db.append(db_professional_with_training_membership)
+    else:
+        db_professional_with_grooming_membership = crud.give_professional_a_grooming_membership(professional)
+        professionals_with_memberships_in_db.append(db_professional_with_grooming_membership)
+    
 
 credentials_in_db = []
 for credential in crud.credentials_list:

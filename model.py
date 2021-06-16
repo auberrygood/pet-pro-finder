@@ -21,27 +21,27 @@ class Professional(db.Model):
     zipcode = db.Column(db.Integer)
 
     #relationship tables:
-    jobs = db.relationship("Job",
+    job = db.relationship("Job",
                             secondary="professionals_jobs",
                             backref="professionals")                       
-    memberships = db.relationship("Membership",
+    membership = db.relationship("Membership",
                                     secondary="professionals_memberships",
                                     backref="professionals")
-    credentials = db.relationship("Credential",
+    credential = db.relationship("Credential",
                                     secondary="professionals_credentials",
                                     backref="professionals")
-    specialties = db.relationship("Specialty",
+    specialty = db.relationship("Specialty",
                                     secondary="professionals_specialties",
                                     backref="professionals")
 
     # magic attributes:
-    # professionals_jobs = a list of Professional_Job class objects (professional id & their job id)
+    # professionals_jobs = a list of Professional_Job class objects (professional & their job)
     # professionals_memberships = a list of Professional_Membership class (professional & their membership id)
     # professionals_credentials = a list of Professional_Credential class objects(professional id & their credential id)
     # professionals_specialties = a list of Professional_Specialty class objects (professional id & their specialty id)
 
     def __repr__(self):
-        return f'<PetPro: pro_id={self.professional_id} name={self.first_name} {self.last_name}>'
+        return f'<PetPro: id={self.professional_id} name={self.first_name} {self.last_name} {self.job}>'
 
 
 class Job(db.Model):
@@ -56,7 +56,7 @@ class Job(db.Model):
 
     # magic attributes:
     # professionals = a list of Professional class objects
-    # professionals_jobs = a list of Professional_Job class objects (professional id & their job id)
+    # professionals_jobs = a list of Professional_Job class objects (professional & their job)
     
     def __repr__(self):
         return f'<Job: {self.job}>'
