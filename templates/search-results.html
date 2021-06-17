@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ term }}{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col d-flex justify-content-center">
+        <a href="/groomer" class="lead backlink">
+          Go back to the search form
+        </a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+
+        <div id="groomer-search-results">
+          <h2>{{ term }} Search Results</h2>
+
+          <p>
+            <span id="result-count">
+              {{ data['total'] }}
+            </span>
+            {{ term.lower() }} matched your search.
+          </p>
+
+          <ul class="professionals-list">
+            {% for professional in professionals %}
+              <li>
+                <a href="/professional/{{ professional['id'] }}" target="_blank">
+                  {{ professional['name'] }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
