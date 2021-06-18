@@ -53,12 +53,10 @@ for membership in crud.memberships_list['grooming']:
     db_grooming_membership = crud.create_membership(membership)
     memberships_in_db.append(db_grooming_membership)
 
-#the conditional statement to ensure trainers are only getting matched with training memebrships is not working! HELP!! 
-#is my QUERY in model.py faulty??
-
 professionals_with_memberships_in_db = []
+# breakpoint() - keeps program running but stops here so i can play in console, can type "next" to go to next line in code
 for professional in professionals_with_jobs_in_db:
-    if professional.job == "trainer":
+    if professional.job.type_ == "trainer":
         db_professional_with_training_membership = crud.give_professional_a_training_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_training_membership)
     else:

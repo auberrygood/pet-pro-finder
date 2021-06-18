@@ -24,7 +24,7 @@ def create_petpro(first_name, last_name, company_name, email, phone, zipcode):
 
 def create_job(profession):
     """Create and return a pet profession"""
-    job = Job(job=profession)
+    job = Job(type_=profession)
 
     db.session.add(job)
     db.session.commit()
@@ -119,7 +119,7 @@ def give_professional_a_credential(professional):
 
 def create_specialty(specialty):
     """Create and return a specialty"""
-    specialty = Specialty(specialty=specialty)
+    specialty = Specialty(type_=specialty)
 
     db.session.add(specialty)
     db.session.commit()

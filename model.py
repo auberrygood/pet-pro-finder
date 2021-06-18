@@ -23,7 +23,7 @@ class Professional(db.Model):
     #relationship tables:
     job = db.relationship("Job",
                             secondary="professionals_jobs",
-                            backref="professionals")                       
+                            backref="professionals") #only points to Job class, must then type .job again to access job attr inside Job class                
     membership = db.relationship("Membership",
                                     secondary="professionals_memberships",
                                     backref="professionals")
@@ -35,13 +35,13 @@ class Professional(db.Model):
                                     backref="professionals")
 
     # magic attributes:
-    # professionals_jobs = a list of Professional_Job class objects (professional & their job)
-    # professionals_memberships = a list of Professional_Membership class (professional & their membership id)
-    # professionals_credentials = a list of Professional_Credential class objects(professional id & their credential id)
-    # professionals_specialties = a list of Professional_Specialty class objects (professional id & their specialty id)
+        # professionals_jobs = a list of Professional_Job class objects (professional & their job)
+        # professionals_memberships = a list of Professional_Membership class (professional & their membership id)
+        # professionals_credentials = a list of Professional_Credential class objects(professional id & their credential id)
+        # professionals_specialties = a list of Professional_Specialty class objects (professional id & their specialty id)
 
     def __repr__(self):
-        return f'<PetPro: id={self.professional_id} name={self.first_name} {self.last_name} {self.job}>'
+        return f'<PetPro: id={self.professional_id} name={self.first_name} {self.last_name}>'
 
 
 class Job(db.Model):
@@ -52,14 +52,14 @@ class Job(db.Model):
     job_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    job = db.Column(db.String)
+    type_ = db.Column(db.String) #change to name to make more obvious
 
     # magic attributes:
-    # professionals = a list of Professional class objects
-    # professionals_jobs = a list of Professional_Job class objects (professional & their job)
+        # professionals = a list of Professional class objects
+        # professionals_jobs = a list of Professional_Job class objects (professional & their job)
     
     def __repr__(self):
-        return f'<Job: {self.job}>'
+        return f'<Job: {self.type_}>'
 
 class Professional_Job(db.Model):
     """ A pet professional's job type; an assocation table between 'professionals' & 'jobs'. """
@@ -78,7 +78,7 @@ class Professional_Job(db.Model):
     job = db.relationship("Job", backref="professionals_jobs")
 
     def __repr__(self):
-        return f'<{self.professional}, {self.job}>'
+        return f'<{self.professional}, {self.job.type_}>'
 
 class Membership(db.Model):
     """ A membership. """
@@ -93,8 +93,8 @@ class Membership(db.Model):
     link = db.Column(db.String)
 
     # magic attibutes:
-    # professionals = a list of Professional class objects
-    # professionals_memberships = a list of Professional_Membership class objects (professional id & their membership id)
+        # professionals = a list of Professional class objects
+        # professionals_memberships = a list of Professional_Membership class objects (professional id & their membership id)
 
     def __repr__(self):
         return f'<Membership: {self.title}>'
@@ -116,7 +116,7 @@ class Professional_Membership(db.Model):
     membership = db.relationship("Membership", backref="professionals_memberships")
 
     def __repr__(self):
-        return f'<{self.professional}, {self.membership}>'
+        return f'<{self.professional}, {self.membership.title}>'
 
 class Credential(db.Model):
     """ A credential. """
@@ -131,8 +131,8 @@ class Credential(db.Model):
     link = db.Column(db.String)
 
     # magic attributes:
-    # professionals = a list of Professional class objects
-    # professionals_credentials = a list of Professional_Credential class objects (professional id & their credential id)
+        # professionals = a list of Professional class objects
+        # professionals_credentials = a list of Professional_Credential class objects (professional id & their credential id)
 
     def __repr__(self):
         return f'<Credential: {self.title}>'
@@ -154,7 +154,7 @@ class Professional_Credential(db.Model):
     credential = db.relationship("Credential", backref="professionals_credentials")
 
     def __repr__(self):
-        return f'<{self.professional}, {self.credential}>'
+        return f'<{self.professional}, {self.credential.title}>'
 
 class Specialty(db.Model):
     """ A specialty. """
@@ -164,14 +164,14 @@ class Specialty(db.Model):
     specialty_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    specialty = db.Column(db.String)
+    type_ = db.Column(db.String)
 
     # magic attributes:
-    # professionals = a list of Professional class objects
-    # professionals_specialties = a list of Professional_Specialty class objects (professional id & their specialty id)
+        # professionals = a list of Professional class objects
+        # professionals_specialties = a list of Professional_Specialty class objects (professional id & their specialty id)
 
     def __repr__(self):
-        return f'<Specialty: {self.specialty}>'
+        return f'<Specialty: {self.type_}>'
 
 class Professional_Specialty(db.Model):
     """ A pet professional's specialty; an assocation table between 'professionals' & 'specialties'."""
@@ -190,10 +190,9 @@ class Professional_Specialty(db.Model):
     specialty = db.relationship("Specialty", backref="professionals_specialties")
 
     def __repr__(self):
-        return f'<{self.professional}, {self.specialty}>'
+        return f'<{self.professional}, {self.specialty.type_}>'
 
 
-# I have named my database 'petpros'
 def connect_to_db(flask_app, db_uri='postgresql:///petpros', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
