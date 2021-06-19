@@ -41,7 +41,7 @@ class Professional(db.Model):
         # professionals_specialties = a list of Professional_Specialty class objects (professional id & their specialty id)
 
     def __repr__(self):
-        return f'<PetPro: id={self.professional_id} name={self.first_name} {self.last_name}>'
+        return f'<PetPro: id={self.professional_id} name={self.first_name} {self.last_name}, {self.job}>'
 
 
 class Job(db.Model):

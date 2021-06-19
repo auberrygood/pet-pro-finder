@@ -46,6 +46,13 @@ for professional in petpros_in_db:
 
 
 memberships_in_db = []
+#****why is this not an acceptable alternative to code block below??***
+
+# for memberships in crud.memberships_list:
+    # for membership in memberships:
+    #     db_membership = crud.create_membership(membership)
+    #     memberships_in_db.append(db_membership)
+
 for membership in crud.memberships_list['training']:
     db_training_membership = crud.create_membership(membership)
     memberships_in_db.append(db_training_membership)
@@ -59,28 +66,67 @@ for professional in professionals_with_jobs_in_db:
     if professional.job.type_ == "trainer":
         db_professional_with_training_membership = crud.give_professional_a_training_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_training_membership)
-    else:
+    elif professional.job.type_ == "groomer":
         db_professional_with_grooming_membership = crud.give_professional_a_grooming_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_grooming_membership)
     
 
 credentials_in_db = []
-for credential in crud.credentials_list:
+for credential in crud.credentials_list["training"]:
+    db_credential = crud.create_credential(credential)
+    credentials_in_db.append(db_credential)
+for credential in crud.credentials_list["grooming"]:
+    db_credential = crud.create_credential(credential)
+    credentials_in_db.append(db_credential)
+for credential in crud.credentials_list["walking"]:
+    db_credential = crud.create_credential(credential)
+    credentials_in_db.append(db_credential)
+for credential in crud.credentials_list["sitting"]:
     db_credential = crud.create_credential(credential)
     credentials_in_db.append(db_credential)
 
 professionals_with_credentials_in_db = []
-for professional in petpros_in_db:
-    db_professional_with_credential = crud.give_professional_a_credential(professional)
-    professionals_with_credentials_in_db.append(db_professional_with_credential)
+for professional in professionals_with_jobs_in_db:
+    if professional.job.type_ == "trainer":
+        db_professional_with_training_credential = crud.give_professional_a_training_credential(professional)
+        professionals_with_credentials_in_db.append(db_professional_with_training_credential)
+    elif professional.job.type_ == "groomer":
+        db_professional_with_grooming_credential = crud.give_professional_a_grooming_credential(professional)
+        professionals_with_credentials_in_db.append(db_professional_with_grooming_credential)
+    elif professional.job.type_ == "walker":
+        db_professional_with_walking_credential = crud.give_professional_a_walking_credential(professional)
+        professionals_with_credentials_in_db.append(db_professional_with_walking_credential)
+    elif professional.job.type_ == "sitter":
+        db_professional_with_sitting_credential = crud.give_professional_a_sitting_credential(professional)
+        professionals_with_credentials_in_db.append(db_professional_with_sitting_credential)
 
 
 specialties_in_db = []
-for specialty in crud.specialties_list:
+for specialty in crud.specialties_list["training"]:
     db_specialty = crud.create_specialty(specialty)
-    specialties_in_db.append(db_specialty)
+    credentials_in_db.append(db_credential)
+for specialty in crud.specialties_list["grooming"]:
+    db_specialty = crud.create_specialty(specialty)
+    credentials_in_db.append(db_credential)
+for specialty in crud.specialties_list["walking"]:
+    db_specialty = crud.create_specialty(specialty)
+    credentials_in_db.append(db_credential)
+for specialty in crud.specialties_list["sitting"]:
+    db_specialty = crud.create_specialty(specialty)
+    credentials_in_db.append(db_credential)
+
 
 professionals_with_specialties_in_db = []
-for professional in petpros_in_db:
-    db_professional_with_specialty = crud.give_professional_a_specialty(professional)
-    professionals_with_specialties_in_db.append(db_professional_with_specialty)
+for professional in professionals_with_jobs_in_db:
+    if professional.job.type_ == "trainer":
+        db_professional_with_training_specialty = crud.give_professional_a_training_specialty(professional)
+        professionals_with_specialties_in_db.append(db_professional_with_training_specialty)
+    elif professional.job.type_ == "groomer":
+        db_professional_with_grooming_specialty = crud.give_professional_a_grooming_specialty(professional)
+        professionals_with_specialties_in_db.append(db_professional_with_grooming_specialty)
+    elif professional.job.type_ == "walker":
+        db_professional_with_walking_specialty = crud.give_professional_a_walking_specialty(professional)
+        professionals_with_specialties_in_db.append(db_professional_with_walking_specialty)
+    elif professional.job.type_ == "sitter":
+        db_professional_with_sitting_specialty = crud.give_professional_a_sitting_specialty(professional)
+        professionals_with_specialties_in_db.append(db_professional_with_sitting_specialty)
