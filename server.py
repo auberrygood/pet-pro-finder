@@ -23,18 +23,19 @@ def homepage():
     return render_template("homepage.html")
 
 
-@app.route('/groomer')
+@app.route('/groomer/search')
 def show_groomer_search_form():
     """Show groomer search form"""
 
     return render_template('groomer-search-form.html')
 
 
-@app.route('/groomer/search')
+@app.route('/groomer/results')
 def find_groomers():
     """Search for groomers"""
 
     term = 'Pet Groomers'
+    category = 'groomer'
     location = request.args.get('address', '')
     radius = request.args.get('radius', '')
     sort_by = request.args.get('sort_by','')
@@ -46,6 +47,7 @@ def find_groomers():
     payload = {'Authorization': f'bearer {YELP_KEY}'}
     
     parameters = {'term': term,
+                'category': category,
                 'limit': 10,
                 'location': location,
                 'radius': radius,
@@ -59,6 +61,7 @@ def find_groomers():
     return render_template ('search-results.html',
                             data=data,
                             professionals=groomers,
+                            category=category,
                             term=term)
 
 
