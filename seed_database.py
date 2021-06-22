@@ -50,11 +50,11 @@ memberships_in_db = []
 for membership in crud.memberships_list['training']:
     if membership not in memberships_in_db:
         db_training_membership = crud.create_membership(membership)
-        memberships_in_db.append(db_training_membership)
+        memberships_in_db.append(db_training_membership.title)
 for membership in crud.memberships_list['grooming']:
     if membership not in memberships_in_db:
         db_grooming_membership = crud.create_membership(membership)
-        memberships_in_db.append(db_grooming_membership)
+        memberships_in_db.append(db_grooming_membership.title)
 
 professionals_with_memberships_in_db = []
 # breakpoint() - keeps program running but stops here so i can play in console, can type "next" to go to next line in code
@@ -69,20 +69,21 @@ for professional in professionals_with_jobs_in_db:
 
 credentials_in_db = []
 for credential in crud.credentials_list["training"]:
-    db_credential = crud.create_credential(credential)
-    credentials_in_db.append(db_credential)
+    if credential not in credentials_in_db:
+        db_training_credential = crud.create_credential(credential)
+        credentials_in_db.append(db_training_credential.title)
 for credential in crud.credentials_list["grooming"]:
     if credential not in credentials_in_db:
-        db_credential = crud.create_credential(credential)
-        credentials_in_db.append(db_credential)
+        db_grooming_credential = crud.create_credential(credential)
+        credentials_in_db.append(db_grooming_credential.title)
 for credential in crud.credentials_list["walking"]:
     if credential not in credentials_in_db:
-        db_credential = crud.create_credential(credential)
-        credentials_in_db.append(db_credential)
+        db_walking_credential = crud.create_credential(credential)
+        credentials_in_db.append(db_walking_credential.title)
 for credential in crud.credentials_list["sitting"]:
     if credential not in credentials_in_db:
-        db_credential = crud.create_credential(credential)
-        credentials_in_db.append(db_credential)
+        db_sitting_credential = crud.create_credential(credential)
+        credentials_in_db.append(db_sitting_credential.title)
 
 professionals_with_credentials_in_db = []
 for professional in professionals_with_jobs_in_db:
@@ -102,20 +103,21 @@ for professional in professionals_with_jobs_in_db:
 
 specialties_in_db = []
 for specialty in crud.specialties_list["training"]:
-    db_specialty = crud.create_specialty(specialty)
-    sepcialties_in_db.append(db_specialty)
+    if specialty not in specialties_in_db:
+        db_training_specialty = crud.create_specialty(specialty)
+        specialties_in_db.append(db_training_specialty.type_)
 for specialty in crud.specialties_list["grooming"]:
     if specialty not in specialties_in_db:
-        db_specialty = crud.create_specialty(specialty)
-        specialties_in_db.append(db_specialty)
+        db_grooming_specialty = crud.create_specialty(specialty)
+        specialties_in_db.append(db_grooming_specialty.type_)
 for specialty in crud.specialties_list["walking"]:
     if specialty not in specialties_in_db:
-        db_specialty = crud.create_specialty(specialty)
-        specialties_in_db.append(db_specialty)
+        db_walking_specialty = crud.create_specialty(specialty)
+        specialties_in_db.append(db_walking_specialty.type_)
 for specialty in crud.specialties_list["sitting"]:
     if specialty not in specialties_in_db:
-        db_specialty = crud.create_specialty(specialty)
-        specialty_in_db.append(db_specialty)
+        db_sitting_specialty = crud.create_specialty(specialty)
+        specialty_in_db.append(db_sitting_specialty.type_)
 
 
 professionals_with_specialties_in_db = []

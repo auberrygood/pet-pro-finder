@@ -18,8 +18,8 @@ credentials_list = {"training":['','CPDT-KA', 'CPDT-KSA', 'CBCC-KA', 'IACP-DT', 
 
 specialties_list = {"training":['puppies', 'adolescent', 'senior', 'dog aggression', 'human aggression', 'leash reactivity', 'basic obedience', 'service', 'therapy', 'ESA', 'sport', 'nosework', 'search and rescue', 'separation anxiety'],
                     "grooming":['puppies', 'kennel cut', 'teddy bear', 'breed trim', 'show trim', 'exotic', 'double coats'],
-                    "walking":['small dogs', 'medium dogs', 'large dogs','leash reactivity','fearful dogs', 'puppies', 'seniors','group walks','hikes'],
-                    "sitting":['small dogs', 'medium dogs', 'large dogs','puppies','fearful dogs']}
+                    "walking":['high energy','small dogs', 'medium dogs', 'large dogs','leash reactivity','fearful dogs', 'puppies', 'seniors','group walks','hikes'],
+                    "sitting":['high energy','small dogs', 'medium dogs', 'large dogs','puppies','fearful dogs']}
 
 
 
@@ -82,7 +82,7 @@ def give_professional_a_training_membership(professional):
     #     """
 
     # db_cursor = db.session.execute(QUERY, {'membership': training_membership})
-    # row = db_cursor.fetchone()
+    # row = db_cursor.fetchone() ##this is the query equivalent of saying .first()
     # membership_id = int(row[0])
 
     professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership_id)
