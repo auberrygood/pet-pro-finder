@@ -1,7 +1,11 @@
 """CRUD operations."""
 
-from model import db, Professional, Job, Professional_Job, Membership, Professional_Membership, Credential, Professional_Credential, Specialty, Professional_Specialty, connect_to_db
+from model import db, Professional, Membership, Professional_Membership, Credential, Professional_Credential, Specialty, Professional_Specialty, connect_to_db
 from random import choice, randint
+import requests
+import os
+
+YELP_KEY = os.environ['YELP_KEY']
 
 
 professions_list = ["trainer","groomer","walker","sitter"]
@@ -21,39 +25,32 @@ specialties_list = {"training":['puppies', 'adolescent', 'senior', 'dog aggressi
                     "walking":['high energy','small dogs', 'medium dogs', 'large dogs','leash reactivity','fearful dogs', 'puppies', 'seniors','group walks','hikes'],
                     "sitting":['high energy','small dogs', 'medium dogs', 'large dogs','puppies','fearful dogs']}
 
+def get_groomer_data():
+    """Get groomer data from Yelp API"""
 
+    url = 'https://api.yelp.com/v3/businesses/search'
+    payload = {'Authorization': f'bearer {YELP_KEY}'}
+    
+    parameters = {'term': 'Pet Groomers',
+                'category': 'groomer',
+                'limit': 25,
+                'location': 'Oakland, CA',
+                'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 
-def create_petpro(first_name, last_name, company_name, email, phone, zipcode):
+    response = requests.get(url, params=parameters, headers=payload)
+    data = response.json()
+    groomers = data['businesses']
+
+    return groomers
+
+def create_petpro(yelp_id, company_name, phone, job):
     """Create and return a pet professional"""
-    petpro = Professional(first_name=first_name, last_name=last_name, company_name=company_name, email=email, phone=phone, zipcode=zipcode)
+    petpro = Professional(yelp_id=yelp_id, company_name=company_name, phone=phone, job=job)
     
     db.session.add(petpro)
     db.session.commit()
 
     return petpro
-
-"""****************** JOB FUNCTIONS *****************"""
-
-def create_job(profession):
-    """Create and return a pet profession"""
-    job = Job(type_=profession)
-
-    db.session.add(job)
-    db.session.commit()
-
-    return job
-
-def give_professional_a_job(professional):
-    """Take a professional, give them a random job, and return a professional with a job"""
-    professional_id = professional.professional_id
-    job_id = randint(1,len(professions_list))
-
-    professional_with_job = Professional_Job(professional_id=professional_id, job_id=job_id)
-
-    db.session.add(professional_with_job)
-    db.session.commit()
-
-    return professional_with_job
 
 
 """****************** MEMBERSHIP FUNCTIONS *****************"""
@@ -75,16 +72,6 @@ def give_professional_a_training_membership(professional):
     membership_oo = Membership.query.filter_by(title=training_membership).one()
     membership_id = membership_oo.membership_id
 
-    # QUERY = """
-    #     SELECT membership_id
-    #     FROM memberships
-    #     WHERE title = :membership
-    #     """
-
-    # db_cursor = db.session.execute(QUERY, {'membership': training_membership})
-    # row = db_cursor.fetchone() ##this is the query equivalent of saying .first()
-    # membership_id = int(row[0])
-
     professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership_id)
 
     db.session.add(professional_with_membership)
@@ -99,16 +86,6 @@ def give_professional_a_grooming_membership(professional):
 
     membership_oo = Membership.query.filter_by(title=grooming_membership).one()
     membership_id = membership_oo.membership_id
-
-    # QUERY = """
-    #     SELECT membership_id
-    #     FROM memberships
-    #     WHERE title = :membership
-    #     """
-
-    # db_cursor = db.session.execute(QUERY, {'membership': grooming_membership})
-    # row = db_cursor.fetchone()
-    # membership_id = int(row[0])
 
     professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership_id)
 
@@ -136,16 +113,6 @@ def give_professional_a_training_credential(professional):
 
     credential_oo = Credential.query.filter_by(title=training_credential).one()
     credential_id = credential_oo.credential_id
-    
-    # QUERY = """
-    #     SELECT credential_id
-    #     FROM credentials
-    #     WHERE title = :credential
-    #     """
-    
-    # db_cursor = db.session.execute(QUERY, {'credential': training_credential})
-    # row = db_cursor.fetchone()
-    # credential_id = int(row[0])
 
     professional_with_credential = Professional_Credential(professional_id=professional_id, credential_id=credential_id)
 
@@ -162,16 +129,6 @@ def give_professional_a_grooming_credential(professional):
     credential_oo = Credential.query.filter_by(title=grooming_credential).one()
     credential_id = credential_oo.credential_id
 
-    # QUERY = """
-    #     SELECT credential_id
-    #     FROM credentials
-    #     WHERE title = :credential
-    #     """
-    
-    # db_cursor = db.session.execute(QUERY, {'credential': grooming_credential})
-    # row = db_cursor.fetchone()
-    # credential_id = int(row[0])
-
     professional_with_credential = Professional_Credential(professional_id=professional_id, credential_id=credential_id)
 
     db.session.add(professional_with_credential)
@@ -187,16 +144,6 @@ def give_professional_a_walking_credential(professional):
     credential_oo = Credential.query.filter_by(title=walking_credential).one()
     credential_id = credential_oo.credential_id
 
-    # QUERY = """
-    #     SELECT credential_id
-    #     FROM credentials
-    #     WHERE title = :credential
-    #     """
-    
-    # db_cursor = db.session.execute(QUERY, {'credential': walking_credential})
-    # row = db_cursor.fetchone()
-    # credential_id = int(row[0])
-
     professional_with_credential = Professional_Credential(professional_id=professional_id, credential_id=credential_id)
 
     db.session.add(professional_with_credential)
@@ -211,16 +158,6 @@ def give_professional_a_sitting_credential(professional):
 
     credential_oo = Credential.query.filter_by(title=sitting_credential).one()
     credential_id = credential_oo.credential_id
-
-    # QUERY = """
-    #     SELECT credential_id
-    #     FROM credentials
-    #     WHERE title = :credential
-    #     """
-    
-    # db_cursor = db.session.execute(QUERY, {'credential': sitting_credential})
-    # row = db_cursor.fetchone()
-    # credential_id = int(row[0])
 
     professional_with_credential = Professional_Credential(professional_id=professional_id, credential_id=credential_id)
 
@@ -249,16 +186,6 @@ def give_professional_a_training_specialty(professional):
     specialty_oo = Specialty.query.filter_by(type_=training_specialty).one()
     specialty_id = specialty_oo.specialty_id
 
-    # QUERY = """
-    #     SELECT specialty_id
-    #     FROM specialties
-    #     WHERE type_ = :specialty
-    #     """
-    
-    # db_cursor = db.session.execute(QUERY, {'specialty': training_specialty})
-    # row = db_cursor.fetchone()
-    # specialty_id = int(row[0])
-
     professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
 
     db.session.add(professional_with_specialty)
@@ -273,16 +200,6 @@ def give_professional_a_grooming_specialty(professional):
 
     specialty_oo = Specialty.query.filter_by(type_=grooming_specialty).one()
     specialty_id = specialty_oo.specialty_id
-
-    # QUERY = """
-    #     SELECT specialty_id
-    #     FROM specialties
-    #     WHERE type_ = :specialty
-    #     """
-    
-    # db_cursor = db.session.execute(QUERY, {'specialty': grooming_specialty})
-    # row = db_cursor.fetchone()
-    # specialty_id = int(row[0])
 
     professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
 
@@ -299,16 +216,6 @@ def give_professional_a_walking_specialty(professional):
     specialty_oo = Specialty.query.filter_by(type_=walking_specialty).one()
     specialty_id = specialty_oo.specialty_id
 
-    # QUERY = """
-    #     SELECT specialty_id
-    #     FROM specialties
-    #     WHERE type_ = :specialty
-    #     """
-    
-    # db_cursor = db.session.execute(QUERY, {'specialty': walking_specialty})
-    # row = db_cursor.fetchone()
-    # specialty_id = int(row[0])
-
     professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
 
     db.session.add(professional_with_specialty)
@@ -323,16 +230,6 @@ def give_professional_a_sitting_specialty(professional):
 
     specialty_oo = Specialty.query.filter_by(type_=sitting_specialty).one()
     specialty_id = specialty_oo.specialty_id
-
-    # QUERY = """
-    #     SELECT specialty_id
-    #     FROM specialties
-    #     WHERE type_ = :specialty
-    #     """
-    
-    # db_cursor = db.session.execute(QUERY, {'specialty': sitting_specialty})
-    # row = db_cursor.fetchone()
-    # specialty_id = int(row[0])
 
     professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
 

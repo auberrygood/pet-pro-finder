@@ -13,17 +13,12 @@ class Professional(db.Model):
     professional_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    first_name =db.Column(db.String)
-    last_name = db.Column(db.String)
+    yelp_id = db.Column(db.String)
     company_name = db.Column(db.String)
-    email = db.Column(db.String)
     phone = db.Column(db.String)
-    zipcode = db.Column(db.Integer)
+    job = db.Column(db.String)
 
-    #relationship tables:
-    job = db.relationship("Job",
-                            secondary="professionals_jobs",
-                            backref="professionals") #only points to Job class, must then type .job again to access job attr inside Job class                
+    #relationship tables:               
     membership = db.relationship("Membership",
                                     secondary="professionals_memberships",
                                     backref="professionals")
@@ -35,50 +30,12 @@ class Professional(db.Model):
                                     backref="professionals")
 
     # magic attributes:
-        # professionals_jobs = a list of Professional_Job class objects (professional & their job)
         # professionals_memberships = a list of Professional_Membership class (professional & their membership id)
         # professionals_credentials = a list of Professional_Credential class objects(professional id & their credential id)
         # professionals_specialties = a list of Professional_Specialty class objects (professional id & their specialty id)
 
     def __repr__(self):
-        return f'<PetPro: id={self.professional_id} name={self.first_name} {self.last_name}, {self.job}>'
-
-
-class Job(db.Model):
-    """A type of job."""
-    
-    __tablename__ = "jobs"
-
-    job_id = db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True)
-    type_ = db.Column(db.String) #change to name to make more obvious
-
-    # magic attributes:
-        # professionals = a list of Professional class objects
-        # professionals_jobs = a list of Professional_Job class objects (professional & their job)
-    
-    def __repr__(self):
-        return f'<Job: {self.type_}>'
-
-class Professional_Job(db.Model):
-    """ A pet professional's job type; an assocation table between 'professionals' & 'jobs'. """
-
-    __tablename__ = "professionals_jobs"
-
-    id_ = db.Column(db.Integer, 
-            autoincrement=True, 
-            primary_key=True)
-    professional_id = db.Column(db.Integer, 
-                        db.ForeignKey('professionals.professional_id'))
-    job_id = db.Column(db.Integer, db.ForeignKey('jobs.job_id'))
-
-    #relationship tables:
-    professional = db.relationship("Professional", backref="professionals_jobs")
-    job = db.relationship("Job", backref="professionals_jobs")
-
-    def __repr__(self):
-        return f'<{self.professional}, {self.job.type_}>'
+        return f'<PetPro: id={self.professional_id} business={self.company_name} job={self.job}>'
 
 class Membership(db.Model):
     """ A membership. """
