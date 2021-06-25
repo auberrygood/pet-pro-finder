@@ -20,13 +20,34 @@ credentials_list = {"training":['','CPDT-KA', 'CPDT-KSA', 'CBCC-KA', 'IACP-DT', 
                     "walking":['','FFCP'], 
                     "sitting":['','FFCP']}
 
-specialties_list = {"training":['puppies', 'adolescent', 'senior', 'dog aggression', 'human aggression', 'leash reactivity', 'basic obedience', 'service', 'therapy', 'ESA', 'sport', 'nosework', 'search and rescue', 'separation anxiety'],
-                    "grooming":['puppies', 'kennel cut', 'teddy bear', 'breed trim', 'show trim', 'exotic', 'double coats'],
-                    "walking":['high energy','small dogs', 'medium dogs', 'large dogs','leash reactivity','fearful dogs', 'puppies', 'seniors','group walks','hikes'],
+specialties_list = {"training":['puppies', 'adolescent', 'senior', 'dog aggression', 'human aggression', 'leash reactivity', 'basic obedience', 'service', 'therapy', 'ESA', 'sport', 'nosework', 'search and rescue', 'separation anxiety', 'potty training', 'off-leash', 'recall training'],
+                    "grooming":['cats', 'puppies', 'kennel cut', 'teddy bear', 'breed trim', 'show trim', 'exotic', 'double coats'],
+                    "walking":['high energy','small dogs', 'medium dogs', 'large dogs','leash reactivity','fearful dogs', 'puppies', 'seniors','group walks','solo walks', 'hikes', 'off-leash parks'],
                     "sitting":['high energy','small dogs', 'medium dogs', 'large dogs','puppies','fearful dogs']}
 
+
+"""****************** YELP API FUNCTIONS *****************"""
+
+def get_trainer_data():
+    """Get pet trainer data from Yelp API"""
+
+    url = 'https://api.yelp.com/v3/businesses/search'
+    payload = {'Authorization': f'bearer {YELP_KEY}'}
+    
+    parameters = {'term': 'Pet Training',
+                'category': 'pet_training',
+                'limit': 25,
+                'location': 'Oakland, CA',
+                'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
+
+    response = requests.get(url, params=parameters, headers=payload)
+    data = response.json()
+    trainers = data['businesses']
+
+    return trainers
+
 def get_groomer_data():
-    """Get groomer data from Yelp API"""
+    """Get pet groomer data from Yelp API"""
 
     url = 'https://api.yelp.com/v3/businesses/search'
     payload = {'Authorization': f'bearer {YELP_KEY}'}
@@ -42,6 +63,45 @@ def get_groomer_data():
     groomers = data['businesses']
 
     return groomers
+
+def get_walker_data():
+    """Get dog walker data from Yelp API"""
+
+    url = 'https://api.yelp.com/v3/businesses/search'
+    payload = {'Authorization': f'bearer {YELP_KEY}'}
+    
+    parameters = {'term': 'Dog Walkers',
+                'category': 'dogwalkers',
+                'limit': 25,
+                'location': 'Oakland, CA',
+                'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
+
+    response = requests.get(url, params=parameters, headers=payload)
+    data = response.json()
+    walkers = data['businesses']
+
+    return walkers
+
+def get_sitter_data():
+    """Get pet sitter data from Yelp API"""
+
+    url = 'https://api.yelp.com/v3/businesses/search'
+    payload = {'Authorization': f'bearer {YELP_KEY}'}
+    
+    parameters = {'term': 'Pet Sitting',
+                'category': 'pet_sitting',
+                'limit': 25,
+                'location': 'Oakland, CA',
+                'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
+
+    response = requests.get(url, params=parameters, headers=payload)
+    data = response.json()
+    sitters = data['businesses']
+
+    return sitters
+
+
+"""****************** DATABASE FUNCTIONS *****************"""
 
 def create_petpro(yelp_id, company_name, phone, job):
     """Create and return a pet professional"""

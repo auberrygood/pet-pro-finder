@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Find Dog Walkers{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>Search for Dog Walkers</h2>
+
+            <form method="GET" action="/walker-results">
+        
+                <div class="form-group">
+                    <label for="search-keyword">Search Location</label>
+                    <small class="form-text text-muted">
+                        Type in an address you'd like to search from.
+                    </small>
+
+                    <input
+                        id="search-address"
+                        class="form-control"
+                        type="text"
+                        name="address"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="search-radius">Distance Radius</label>
+                    <small class="form-text text-muted">
+                        How many miles would you like to search from your location?
+                    </small>
+
+                    <input
+                        id="search-radius"
+                        class="form-control"
+                        type="number"
+                        name="radius"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="search-sort-by">Sort by</label>
+
+                    <select
+                        id="search-sort-by"
+                        class="form-control custom-select"
+                        name="sort_by"
+                    >
+                        <option value="best_match">Best Match</option>
+                        <option value="rating">Rating</option>
+                        <option value="review_count">Review Count</option>
+                        <option value="distance">Distance</option>
+                    </select>
+                </div>
+
+                <input type="submit" value="Look for dog walkers!" class="btn btn-walker">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

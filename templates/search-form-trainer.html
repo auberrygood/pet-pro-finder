@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Find Groomers{% endblock %}
+{% block title %}Find Dog Trainers{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col">
-            <h2>Search for Groomers</h2>
+            <h2>Search for Dog Trainers</h2>
 
-            <form method="GET" action="/groomer/results">
+            <form method="GET" action="/trainer-results">
         
                 <div class="form-group">
                     <label for="search-keyword">Search Location</label>
@@ -53,7 +53,7 @@
                     </select>
                 </div>
 
-                <input type="submit" value="Look for groomers!" class="btn btn-groomer">
+                <input type="submit" value="Look for dog trainers!" class="btn btn-trainer">
             </form>
         </div>
     </div>
