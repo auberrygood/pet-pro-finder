@@ -36,7 +36,7 @@ def get_trainer_data():
     
     parameters = {'term': 'Pet Training',
                 'category': 'pet_training',
-                'limit': 25,
+                'limit': 100,
                 'location': 'Oakland, CA',
                 'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 
@@ -54,7 +54,7 @@ def get_groomer_data():
     
     parameters = {'term': 'Pet Groomers',
                 'category': 'groomer',
-                'limit': 25,
+                'limit': 100,
                 'location': 'Oakland, CA',
                 'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 
@@ -72,7 +72,7 @@ def get_walker_data():
     
     parameters = {'term': 'Dog Walkers',
                 'category': 'dogwalkers',
-                'limit': 25,
+                'limit': 100,
                 'location': 'Oakland, CA',
                 'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 
@@ -90,7 +90,7 @@ def get_sitter_data():
     
     parameters = {'term': 'Pet Sitting',
                 'category': 'pet_sitting',
-                'limit': 25,
+                'limit': 100,
                 'location': 'Oakland, CA',
                 'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 

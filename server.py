@@ -23,18 +23,17 @@ def homepage():
 
 
 """************* SEARCH FORMS *************"""
-
-@app.route('/trainer-search')
-def show_trainer_search_form():
-    """Show trainer search form"""
-
-    return render_template('search-form-trainer.html')
-
 @app.route('/groomer-search')
 def show_groomer_search_form():
     """Show groomer search form"""
 
     return render_template('search-form-groomer.html')
+    
+@app.route('/trainer-search')
+def show_trainer_search_form():
+    """Show trainer search form"""
+
+    return render_template('search-form-trainer.html')
 
 @app.route('/walker-search')
 def show_walker_search_form():
@@ -64,12 +63,13 @@ def find_groomers():
     #converting user's miles to yelp's meters
     radius = int(radius) * 1609
 
+    #grabbing API data
     url = 'https://api.yelp.com/v3/businesses/search'
     payload = {'Authorization': f'bearer {YELP_KEY}'}
     
     parameters = {'term': term,
                 'category': category,
-                'limit': 10,
+                'limit': 25,
                 'location': location,
                 'radius': radius,
                 'sort_by': sort_by}
@@ -77,6 +77,9 @@ def find_groomers():
     response = requests.get(url, params=parameters, headers=payload)
     data = response.json()
     groomers = data['businesses'] #list of business objects
+
+    #grabbing DB data
+
 
     return render_template ('search-results.html',
                             data=data,
