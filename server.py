@@ -27,25 +27,53 @@ def homepage():
 def show_groomer_search_form():
     """Show groomer search form"""
 
-    return render_template('search-form-groomer.html')
+    memberships = crud.memberships_list['grooming']
+    credentials = crud.credentials_list['grooming']
+    specialties = crud.specialties_list['grooming']
+
+    return render_template('search-form-groomer.html',
+                            memberships=memberships,
+                            credentials=credentials,
+                            specialties=specialties)
     
 @app.route('/trainer-search')
 def show_trainer_search_form():
     """Show trainer search form"""
 
-    return render_template('search-form-trainer.html')
+    memberships = crud.memberships_list['training']
+    credentials = crud.credentials_list['training']
+    specialties = crud.specialties_list['training']
+
+    return render_template('search-form-trainer.html',
+                            memberships=memberships,
+                            credentials=credentials,
+                            specialties=specialties)
 
 @app.route('/walker-search')
 def show_walker_search_form():
     """Show walker search form"""
 
-    return render_template('search-form-walker.html')
+    memberships = crud.memberships_list['walking']
+    credentials = crud.credentials_list['walking']
+    specialties = crud.specialties_list['walking']
+
+    return render_template('search-form-walker.html',
+                            memberships=memberships,
+                            credentials=credentials,
+                            specialties=specialties)
 
 @app.route('/sitter-search')
 def show_sitter_search_form():
     """Show sitter search form"""
     
-    return render_template('search-form-sitter.html')
+    memberships = crud.memberships_list['sitting']
+    credentials = crud.credentials_list['sitting']
+    specialties = crud.specialties_list['sitting']
+
+    return render_template('search-form-sitter.html',
+                            memberships=memberships,
+                            credentials=credentials,
+                            specialties=specialties)
 
 
 """********** SEARCH RESULTS ***********"""

@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Find Dog Trainers{% endblock %}
+{% block title %}Find Groomers{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col">
-            <h2>Search for Dog Trainers</h2>
+            <h2>Search for Pet Groomers</h2>
 
-            <form method="GET" action="/trainer-results">
+            <form method="GET" action="/groomer-results">
         
                 <div class="form-group">
                     <label for="search-keyword">Search Location</label>
@@ -29,13 +29,17 @@
                     <small class="form-text text-muted">
                         How many miles would you like to search from your location?
                     </small>
-
-                    <input
+                    <select
                         id="search-radius"
                         class="form-control"
                         type="number"
                         name="radius"
                     >
+                        <option value="5">5 miles</option>
+                        <option value="10">10 miles</option>
+                        <option value="15">15 miles</option>
+                        <option value="20">20 miles</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -59,7 +63,7 @@
                 <div class="form-group">
                     <label for="search-by-memberships">Memberships</label>
                     <small class="form-text text-muted">
-                        Do you prefer your trainer belong to a specific professional organization?
+                        Do you prefer your groomer belong to a specific professional organization?
                     </small>
                     <select
                         id="search-memberships"
@@ -75,7 +79,7 @@
                 <div class="form-group">
                     <label for="search-by-credentials">Credentials</label>
                     <small class="form-text text-muted">
-                        Do you prefer your trainer have specific professional certifications?
+                        Do you prefer your groomer have specific professional certifications?
                     </small>
                     <select
                         id="search-credentials"
@@ -91,7 +95,7 @@
                 <div class="form-group">
                     <label for="search-by-specialties">Specialties</label>
                     <small class="form-text text-muted">
-                        Do you prefer your trainer specialize in the service you are looking for?
+                        Do you prefer your groomer specialize in the service you are looking for?
                     </small>
                     <select
                         id="search-specialties"
@@ -106,8 +110,7 @@
 
                 <br>
                 <br>
-
-                <input type="submit" value="Look for dog trainers!" class="btn btn-trainer">
+                <input type="submit" value="Look for pet groomers!" class="btn btn-groomer">
             </form>
         </div>
     </div>

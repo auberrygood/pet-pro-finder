@@ -53,6 +53,60 @@
                     </select>
                 </div>
 
+                <br>
+                <h3>Advanced Search</h3>
+
+                <div class="form-group">
+                    <label for="search-by-memberships">Memberships</label>
+                    <small class="form-text text-muted">
+                        Do you prefer your walker belong to a specific professional organization?
+                    </small>
+                    <select
+                        id="search-memberships"
+                        class="form-control custom-select"
+                        name="memberships"
+                    >
+                        {% for membership in memberships %}
+                            <option value="{{ membership }}"> {{ membership }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="search-by-credentials">Credentials</label>
+                    <small class="form-text text-muted">
+                        Do you prefer your walker have specific professional certifications?
+                    </small>
+                    <select
+                        id="search-credentials"
+                        class="form-control custom-select"
+                        name="credentials"
+                    >
+                        {% for credential in credentials %}
+                            <option value="{{ credential }}"> {{ credential }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="search-by-specialties">Specialties</label>
+                    <small class="form-text text-muted">
+                        Do you prefer your walker specialize in the service you are looking for?
+                    </small>
+                    <select
+                        id="search-specialties"
+                        class="form-control custom-select"
+                        name="specialties"
+                    >
+                        {% for specialty in specialties %}
+                            <option value="{{ specialty }}"> {{ specialty }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <br>
+                <br>
+
                 <input type="submit" value="Look for dog walkers!" class="btn btn-walker">
             </form>
         </div>
