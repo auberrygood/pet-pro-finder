@@ -97,21 +97,47 @@ def find_groomers():
     
     parameters = {'term': term,
                 'category': category,
-                'limit': 25,
+                'limit': 50,
                 'location': location,
                 'radius': radius,
                 'sort_by': sort_by}
 
     response = requests.get(url, params=parameters, headers=payload)
     data = response.json()
-    groomers = data['businesses'] #list of business objects
+    groomer_objects = data['businesses'] #list of business objects
+    all_groomers = []
+    for groomer_object in groomer_objects:
+        all_groomers.append(groomer_object['name'])
 
     #grabbing DB data
+    membership = request.args.get('memberships','')
+    credential = request.args.get('credentials', '')
+    specialty = request.args.get('specialties', '')
 
+    if membership == '':
+        pros_with_membership = all_groomers
+    else:
+        pros_with_membership = crud.filter_pros_by_membership(membership)
+    if credential == '':
+        pros_with_credential = all_groomers
+    else:
+        pros_with_credential = crud.filter_pros_by_credential(credential)
+    if specialty == '':
+        pros_with_specialty = all_groomers
+    else:
+        pros_with_specialty = crud.filter_pros_by_specialty(specialty)
+    
+    #compare API data with DB data
+    filtered_groomers = [] #list of filtered business objects
+    for groomer in groomer_objects:
+        if groomer['name'] in pros_with_membership and groomer['name'] in pros_with_credential and groomer['name'] in pros_with_specialty:
+            filtered_groomers.append(groomer)
+
+    results = len(filtered_groomers)
 
     return render_template ('search-results.html',
-                            data=data,
-                            professionals=groomers,
+                            results=results,
+                            professionals=filtered_groomers,
                             label='groomer',
                             term=term)
 
@@ -128,23 +154,53 @@ def find_sitters():
     #converting user's miles to yelp's meters
     radius = int(radius) * 1609
 
+    #grabbing API data
     url = 'https://api.yelp.com/v3/businesses/search'
     payload = {'Authorization': f'bearer {YELP_KEY}'}
     
     parameters = {'term': term,
                 'category': category,
-                'limit': 10,
+                'limit': 50,
                 'location': location,
                 'radius': radius,
                 'sort_by': sort_by}
 
     response = requests.get(url, params=parameters, headers=payload)
     data = response.json()
-    groomers = data['businesses'] #list of business objects
+    sitter_objects = data['businesses'] #list of business objects
+    all_sitters = []
+    for sitter_object in sitter_objects:
+        all_sitters.append(sitter_object['name'])
+
+    #grabbing DB data
+    membership = request.args.get('memberships','')
+    credential = request.args.get('credentials', '')
+    specialty = request.args.get('specialties', '')
+
+    if membership == '':
+        pros_with_membership = all_sitters
+    else:
+        pros_with_membership = crud.filter_pros_by_membership(membership)
+    if credential == '':
+        pros_with_credential = all_sitters
+    else:
+        pros_with_credential = crud.filter_pros_by_credential(credential)
+    if specialty == '':
+        pros_with_specialty = all_sitters
+    else:
+        pros_with_specialty = crud.filter_pros_by_specialty(specialty)
+    
+    #compare API data with DB data
+    filtered_sitters = [] #list of filtered business objects
+    for sitter in sitter_objects:
+        if sitter['name'] in pros_with_membership and sitter['name'] in pros_with_credential and sitter['name'] in pros_with_specialty:
+            filtered_sitters.append(sitter)
+
+    results = len(filtered_sitters)
 
     return render_template ('search-results.html',
-                            data=data,
-                            professionals=groomers,
+                            results=results,
+                            professionals=filtered_sitters,
                             label='sitter',
                             term=term)
 
@@ -173,11 +229,40 @@ def find_walkers():
 
     response = requests.get(url, params=parameters, headers=payload)
     data = response.json()
-    groomers = data['businesses'] #list of business objects
+    walker_objects = data['businesses'] #list of business objects
+    all_walkers = []
+    for walker_object in walker_objects:
+        all_walkers.append(walker_object['name'])
+
+    #grabbing DB data
+    membership = request.args.get('memberships','')
+    credential = request.args.get('credentials', '')
+    specialty = request.args.get('specialties', '')
+
+    if membership == '':
+        pros_with_membership = all_walkers
+    else:
+        pros_with_membership = crud.filter_pros_by_membership(membership)
+    if credential == '':
+        pros_with_credential = all_walkers
+    else:
+        pros_with_credential = crud.filter_pros_by_credential(credential)
+    if specialty == '':
+        pros_with_specialty = all_walkers
+    else:
+        pros_with_specialty = crud.filter_pros_by_specialty(specialty)
+    
+    #compare API data with DB data
+    filtered_walkers = [] #list of filtered business objects
+    for walker in walker_objects:
+        if walker['name'] in pros_with_membership and walker['name'] in pros_with_credential and walker['name'] in pros_with_specialty:
+            filtered_walkers.append(walker)
+
+    results = len(filtered_walkers)
 
     return render_template ('search-results.html',
-                            data=data,
-                            professionals=groomers,
+                            results=results,
+                            professionals=filtered_walkers,
                             label='walker',
                             term=term)
 
@@ -206,11 +291,40 @@ def find_trainers():
 
     response = requests.get(url, params=parameters, headers=payload)
     data = response.json()
-    groomers = data['businesses'] #list of business objects
+    trainer_objects = data['businesses'] #list of business objects
+    all_trainers = []
+    for trainer_object in trainer_objects:
+        all_trainers.append(trainer_object['name'])
+
+    #grabbing DB data
+    membership = request.args.get('memberships','')
+    credential = request.args.get('credentials', '')
+    specialty = request.args.get('specialties', '')
+
+    if membership == '':
+        pros_with_membership = all_trainers
+    else:
+        pros_with_membership = crud.filter_pros_by_membership(membership)
+    if credential == '':
+        pros_with_credential = all_trainers
+    else:
+        pros_with_credential = crud.filter_pros_by_credential(credential)
+    if specialty == '':
+        pros_with_specialty = all_trainers
+    else:
+        pros_with_specialty = crud.filter_pros_by_specialty(specialty)
+    
+    #compare API data with DB data
+    filtered_trainers = [] #list of filtered business objects
+    for trainer in trainer_objects:
+        if trainer['name'] in pros_with_membership and trainer['name'] in pros_with_credential and trainer['name'] in pros_with_specialty:
+            filtered_trainers.append(trainer)
+
+    results = len(filtered_trainers)
 
     return render_template ('search-results.html',
-                            data=data,
-                            professionals=groomers,
+                            results=results,
+                            professionals=filtered_trainers,
                             label='trainer',
                             term=term)
 

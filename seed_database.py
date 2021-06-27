@@ -36,7 +36,7 @@ model.db.create_all()
 petpros_in_db = []
 
 groomers_in_db = []
-groomers = crud.get_groomer_data() #data['businesses]
+groomers = crud.get_groomer_api_data() #data['businesses]
 for groomer in groomers:
     yelp_id, company_name, phone, job = (
         groomer['id'],
@@ -46,6 +46,45 @@ for groomer in groomers:
 
     db_petpro = crud.create_petpro(yelp_id, company_name, phone, job)
     groomers_in_db.append(db_petpro)
+    petpros_in_db.append(db_petpro)
+
+trainers_in_db = []
+trainers = crud.get_trainer_api_data() #data['businesses]
+for trainer in trainers:
+    yelp_id, company_name, phone, job = (
+        trainer['id'],
+        trainer['name'],
+        trainer['phone'],
+        "trainer")
+
+    db_petpro = crud.create_petpro(yelp_id, company_name, phone, job)
+    trainers_in_db.append(db_petpro)
+    petpros_in_db.append(db_petpro)
+
+sitters_in_db = []
+sitters = crud.get_sitter_api_data() #data['businesses]
+for sitter in sitters:
+    yelp_id, company_name, phone, job = (
+        sitter['id'],
+        sitter['name'],
+        sitter['phone'],
+        "sitter")
+
+    db_petpro = crud.create_petpro(yelp_id, company_name, phone, job)
+    sitters_in_db.append(db_petpro)
+    petpros_in_db.append(db_petpro)
+
+walkers_in_db = []
+walkers = crud.get_walker_api_data() #data['businesses]
+for walker in walkers:
+    yelp_id, company_name, phone, job = (
+        walker['id'],
+        walker['name'],
+        walker['phone'],
+        "walker")
+
+    db_petpro = crud.create_petpro(yelp_id, company_name, phone, job)
+    walkers_in_db.append(db_petpro)
     petpros_in_db.append(db_petpro)
 
 

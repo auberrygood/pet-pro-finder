@@ -26,16 +26,20 @@
 
                 <div class="form-group">
                     <label for="search-radius">Distance Radius</label>
-                    <small class="form-text text-muted">
-                        How many miles would you like to search from your location?
-                    </small>
+                        <small class="form-text text-muted">
+                            How many miles would you like to search from your location?
+                        </small>
 
-                    <input
+                    <select
                         id="search-radius"
-                        class="form-control"
-                        type="number"
+                        class="form-control custom-select"
                         name="radius"
                     >
+                        <option value="5">5 miles</option>
+                        <option value="10">10 miles</option>
+                        <option value="15">15 miles</option>
+                        <option value="20">20 miles</option>
+                    </select> 
                 </div>
 
                 <div class="form-group">
@@ -106,7 +110,6 @@
 
                 <br>
                 <br>
-
                 <input type="submit" value="Look for dog walkers!" class="btn btn-walker">
             </form>
         </div>

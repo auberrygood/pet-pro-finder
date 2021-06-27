@@ -26,9 +26,9 @@ specialties_list = {"training":['','puppies', 'adolescent', 'senior', 'dog aggre
                     "sitting":['','high energy','small dogs', 'medium dogs', 'large dogs','puppies','fearful dogs']}
 
 
-"""****************** YELP API FUNCTIONS *****************"""
+"""****************** YELP API FUNCTIONS TO SEED DATABASE *****************"""
 
-def get_trainer_data():
+def get_trainer_api_data():
     """Get pet trainer data from Yelp API"""
 
     url = 'https://api.yelp.com/v3/businesses/search'
@@ -36,7 +36,7 @@ def get_trainer_data():
     
     parameters = {'term': 'Pet Training',
                 'category': 'pet_training',
-                'limit': 100,
+                'limit': 50,
                 'location': 'Oakland, CA',
                 'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 
@@ -46,7 +46,7 @@ def get_trainer_data():
 
     return trainers
 
-def get_groomer_data():
+def get_groomer_api_data():
     """Get pet groomer data from Yelp API"""
 
     url = 'https://api.yelp.com/v3/businesses/search'
@@ -54,7 +54,7 @@ def get_groomer_data():
     
     parameters = {'term': 'Pet Groomers',
                 'category': 'groomer',
-                'limit': 100,
+                'limit': 50, #any higher than 50, program throws error...possibly not finding >50 results?
                 'location': 'Oakland, CA',
                 'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 
@@ -64,7 +64,7 @@ def get_groomer_data():
 
     return groomers
 
-def get_walker_data():
+def get_walker_api_data():
     """Get dog walker data from Yelp API"""
 
     url = 'https://api.yelp.com/v3/businesses/search'
@@ -72,7 +72,7 @@ def get_walker_data():
     
     parameters = {'term': 'Dog Walkers',
                 'category': 'dogwalkers',
-                'limit': 100,
+                'limit': 50,
                 'location': 'Oakland, CA',
                 'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 
@@ -82,7 +82,7 @@ def get_walker_data():
 
     return walkers
 
-def get_sitter_data():
+def get_sitter_api_data():
     """Get pet sitter data from Yelp API"""
 
     url = 'https://api.yelp.com/v3/businesses/search'
@@ -90,7 +90,7 @@ def get_sitter_data():
     
     parameters = {'term': 'Pet Sitting',
                 'category': 'pet_sitting',
-                'limit': 100,
+                'limit': 50,
                 'location': 'Oakland, CA',
                 'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 
@@ -154,6 +154,17 @@ def give_professional_a_grooming_membership(professional):
 
     return professional_with_membership
 
+def filter_pros_by_membership(membership):
+    membership_oo = Membership.query.filter_by(title=membership).one()
+    membership_id = membership_oo.membership_id
+    pros_with_membership = Professional_Membership.query.filter_by(membership_id=membership_id).all()
+    
+    pros = []
+    for pro in pros_with_membership:
+        company_name = pro.professional.company_name
+        pros.append(company_name)
+
+    return pros
 
 """****************** CREDENTIAL FUNCTIONS *****************"""
 
@@ -226,6 +237,17 @@ def give_professional_a_sitting_credential(professional):
 
     return professional_with_credential
 
+def filter_pros_by_credential(credential):
+    credential_oo = Credential.query.filter_by(title=credential).one()
+    credential_id = credential_oo.credential_id
+    pros_with_credential = Professional_Credential.query.filter_by(credential_id=credential_id).all()
+    
+    pros = []
+    for pro in pros_with_credential:
+        company_name = pro.professional.company_name
+        pros.append(company_name)
+        
+    return pros
 
 """****************** SPECIALTY FUNCTIONS *****************"""
 
@@ -297,6 +319,19 @@ def give_professional_a_sitting_specialty(professional):
     db.session.commit()
 
     return professional_with_specialty
+
+def filter_pros_by_specialty(specialty):
+    specialty_oo = Specialty.query.filter_by(type_=specialty).one()
+    specialty_id = specialty_oo.specialty_id
+    pros_with_specialty = Professional_Specialty.query.filter_by(specialty_id=specialty_id).all()
+    
+    pros = []
+    for pro in pros_with_specialty:
+        company_name = pro.professional.company_name
+        pros.append(company_name)
+        
+    return pros
+
 
 
 if __name__ == "__main__":
