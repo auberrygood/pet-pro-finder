@@ -342,12 +342,21 @@ def get_professional_details(id):
     response = requests.get(url, headers=payload)
     professional = response.json()
     categories = professional['categories']
+    yelp_id = professional['id']
 
     #SQLAlchemy to find detials of professional using yelp_id to filter through DB, return pro attributes
+    professional_id = crud.get_pro_id_by_yelp_id(yelp_id)
+    
+    membership = crud.get_pro_membership_info(professional_id)
+    credential=crud.get_pro_credential_info(professional_id)
+    specialty=crud.get_pro_specialty_info(professional_id)
 
     return render_template('professional-details.html',
                             professional=professional,
-                            categories=categories)
+                            categories=categories,
+                            membership=membership,
+                            credential=credential,
+                            specialty=specialty)
 
 
 

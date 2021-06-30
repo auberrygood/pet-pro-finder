@@ -101,7 +101,7 @@ def get_sitter_api_data():
     return sitters
 
 
-"""****************** DATABASE FUNCTIONS *****************"""
+"""****************** PROFESSIONAL FUNCTIONS *****************"""
 
 def create_petpro(yelp_id, company_name, phone, job):
     """Create and return a pet professional"""
@@ -111,6 +111,12 @@ def create_petpro(yelp_id, company_name, phone, job):
     db.session.commit()
 
     return petpro
+
+def get_pro_id_by_yelp_id(yelp_id):
+    pro_oo = Professional.query.filter_by(yelp_id=yelp_id).one()
+    professional_id = professional_oo.professional_id
+
+    return professional_id
 
 
 """****************** MEMBERSHIP FUNCTIONS *****************"""
@@ -165,6 +171,13 @@ def filter_pros_by_membership(membership):
         pros.append(company_name)
 
     return pros
+
+def get_pro_membership_info(professional_id):
+    pro_mem_oo = Professional_Membership.query.filter_by(professional_id=professional_id)
+    membership_id = pro_mem_oo.membership_id
+    membership = Membership.query.filter_by(membership_id=membership_id)
+    
+    return membership.title
 
 """****************** CREDENTIAL FUNCTIONS *****************"""
 
@@ -249,6 +262,13 @@ def filter_pros_by_credential(credential):
         
     return pros
 
+def get_pro_credential_info(professional_id):
+    pro_cred_oo = Professional_Credential.query.filter_by(professional_id=professional_id)
+    credential_id = pro_cred_oo.credential_id
+    credential = Credential.query.filter_by(credential_id=credential_id)
+    
+    return credential.title
+
 """****************** SPECIALTY FUNCTIONS *****************"""
 
 def create_specialty(specialty):
@@ -332,6 +352,12 @@ def filter_pros_by_specialty(specialty):
         
     return pros
 
+def get_pro_specialty_info(professional_id):
+    pro_spec_oo = Professional_Specialty.query.filter_by(professional_id=professional_id)
+    specialty_id = pro_spec_oo.specialty_id
+    specialty = Specialty.query.filter_by(specialty_id=specialty_id)
+    
+    return specialty.title
 
 
 if __name__ == "__main__":
