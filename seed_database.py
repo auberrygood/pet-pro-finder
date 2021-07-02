@@ -101,9 +101,13 @@ for membership in crud.memberships_list['grooming']:
 professionals_with_memberships_in_db = []
 # breakpoint() - keeps program running but stops here so i can play in console, can type "next" to go to next line in code
 for professional in petpros_in_db:
+    #make new variable, memberships for professional = []
+    #pick random number 1-2
+    #while len(memberships for professional) < random number, run following 107-109
     if professional.job == "trainer":
         db_professional_with_training_membership = crud.give_professional_a_training_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_training_membership)
+    #updated memberships for professional list
     elif professional.job == "groomer":
         db_professional_with_grooming_membership = crud.give_professional_a_grooming_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_grooming_membership)
