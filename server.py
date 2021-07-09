@@ -349,14 +349,14 @@ def get_professional_details(id):
     
     membership = crud.get_pro_membership_info(professional_id)
     credential=crud.get_pro_credential_info(professional_id)
-    specialty=crud.get_pro_specialty_info(professional_id)
+    specialties=crud.get_pro_specialty_info(professional_id)
 
     return render_template('professional-details.html',
                             professional=professional,
                             categories=categories,
                             membership=membership,
                             credential=credential,
-                            specialty=specialty)
+                            specialties=specialties)
 
 
 

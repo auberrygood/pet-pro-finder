@@ -44,21 +44,33 @@
       <div class="col-4">
         <h3>Memberships</h3>
           <ul>
-            <li>{{ membership }}</li>
+            {% if membership == '' %}
+              <li>No Memberships</li>
+            {% else %}
+              <li>{{ membership }}</li>
+            {% endif %}
           </ul>
       </div>
       
       <div class="col-4">
         <h3>Credentials</h3>
           <ul>
-            <li>{{ credential }}</li>
+            {% if credential == '' %}
+              <li>No Credentials</li>
+            {% else %}
+              <li>{{ credential }}</li>
+            {% endif %}
           </ul>
       </div>
       
       <div class="col-4">
         <h3>Specialties</h3>
           <ul>
-            <li>{{ specialty }}</li>
+            {% for specialty in specialties %}
+              {% if specialty != '' %}
+                <li>{{ specialty }}</li>
+              {% endif %}
+            {% endfor %}
           </ul>
       </div>
 

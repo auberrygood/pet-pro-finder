@@ -20,10 +20,10 @@ credentials_list = {"training":['','CPDT-KA', 'CPDT-KSA', 'CBCC-KA', 'IACP-DT', 
                     "walking":['','FFCP'], 
                     "sitting":['','FFCP']}
 
-specialties_list = {"training":['','puppies', 'adolescent', 'senior', 'dog aggression', 'human aggression', 'leash reactivity', 'basic obedience', 'service', 'therapy', 'ESA', 'sport', 'nosework', 'search and rescue', 'separation anxiety', 'potty training', 'off-leash', 'recall training'],
+specialties_list = {"training":['','puppies', 'adolescent', 'dog aggression', 'human aggression', 'leash reactivity', 'basic obedience', 'service', 'therapy', 'ESA', 'sport', 'nosework', 'search and rescue', 'separation anxiety', 'potty training', 'off-leash', 'recall training'],
                     "grooming":['','cats', 'puppies', 'kennel cut', 'teddy bear', 'breed trim', 'show trim', 'exotic', 'double coats'],
                     "walking":['','high energy','small dogs', 'medium dogs', 'large dogs','leash reactivity','fearful dogs', 'puppies', 'seniors','group walks','solo walks', 'hikes', 'off-leash parks'],
-                    "sitting":['','high energy','small dogs', 'medium dogs', 'large dogs','puppies','fearful dogs']}
+                    "sitting":['','cats','high energy','small dogs', 'medium dogs', 'large dogs','puppies','fearful dogs']}
 
 
 """****************** YELP API FUNCTIONS TO SEED DATABASE *****************"""
@@ -113,7 +113,7 @@ def create_petpro(yelp_id, company_name, phone, job):
     return petpro
 
 def get_pro_id_by_yelp_id(yelp_id):
-    pro_oo = Professional.query.filter_by(yelp_id=yelp_id).one()
+    pro_oo = Professional.query.filter_by(yelp_id=yelp_id).first()
     professional_id = pro_oo.professional_id
 
     return professional_id
@@ -151,6 +151,36 @@ def give_professional_a_grooming_membership(professional):
     grooming_membership = choice(memberships_list['grooming'])
 
     membership_oo = Membership.query.filter_by(title=grooming_membership).one()
+    membership_id = membership_oo.membership_id
+
+    professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership_id)
+
+    db.session.add(professional_with_membership)
+    db.session.commit()
+
+    return professional_with_membership
+
+def give_professional_a_walking_membership(professional):
+    """Take a professional, give them a random walking membership, and return"""
+    professional_id = professional.professional_id
+    walking_membership = choice(memberships_list['walking'])
+
+    membership_oo = Membership.query.filter_by(title=walking_membership).one()
+    membership_id = membership_oo.membership_id
+
+    professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership_id)
+
+    db.session.add(professional_with_membership)
+    db.session.commit()
+
+    return professional_with_membership
+
+def give_professional_a_sitting_membership(professional):
+    """Take a professional, give them a random sitting membership, and return"""
+    professional_id = professional.professional_id
+    sitting_membership = choice(memberships_list['sitting'])
+
+    membership_oo = Membership.query.filter_by(title=sitting_membership).one()
     membership_id = membership_oo.membership_id
 
     professional_with_membership = Professional_Membership(professional_id=professional_id, membership_id=membership_id)
@@ -353,11 +383,14 @@ def filter_pros_by_specialty(specialty):
     return pros
 
 def get_pro_specialty_info(professional_id):
-    pro_spec_oo = Professional_Specialty.query.filter_by(professional_id=professional_id).one()
-    specialty_id = pro_spec_oo.specialty_id
-    specialty = Specialty.query.filter_by(specialty_id=specialty_id).one()
-    
-    return specialty.type_
+    pro_spec_oo = Professional_Specialty.query.filter_by(professional_id=professional_id).all()
+    pro_specialties = []
+    for pro_spec in pro_spec_oo:
+        specialty_id = pro_spec.specialty_id
+        specialty = Specialty.query.filter_by(specialty_id=specialty_id).one()
+        pro_specialties.append(specialty.type_)
+
+    return pro_specialties
 
 
 if __name__ == "__main__":

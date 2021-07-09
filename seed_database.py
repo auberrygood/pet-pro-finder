@@ -16,23 +16,6 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 
-# with open("data/petpros.json") as f:
-#     petpro_data = json.loads(f.read())
-
-# petpros_in_db = []
-# for petpro in petpro_data:
-#     first_name, last_name, company_name, email, phone, zipcode = (
-#         petpro["first_name"],
-#         petpro["last_name"],
-#         petpro["company_name"],
-#         petpro["email"],
-#         petpro["phone"],
-#         petpro["zipcode"]
-#     )
-
-#     db_petpro = crud.create_petpro(first_name, last_name, company_name, email, phone, zipcode)
-#     petpros_in_db.append(db_petpro)
-
 petpros_in_db = []
 
 groomers_in_db = []
@@ -97,20 +80,30 @@ for membership in crud.memberships_list['grooming']:
     if membership not in memberships_in_db:
         db_grooming_membership = crud.create_membership(membership)
         memberships_in_db.append(db_grooming_membership.title)
+for membership in crud.memberships_list['walking']:
+    if membership not in memberships_in_db:
+        db_walking_membership = crud.create_membership(membership)
+        memberships_in_db.append(db_walking_membership.title)
+for membership in crud.memberships_list['sitting']:
+    if membership not in memberships_in_db:
+        db_sitting_membership = crud.create_membership(membership)
+        memberships_in_db.append(db_sitting_membership.title)
 
 professionals_with_memberships_in_db = []
 # breakpoint() - keeps program running but stops here so i can play in console, can type "next" to go to next line in code
 for professional in petpros_in_db:
-    #make new variable, memberships for professional = []
-    #pick random number 1-2
-    #while len(memberships for professional) < random number, run following 107-109
     if professional.job == "trainer":
         db_professional_with_training_membership = crud.give_professional_a_training_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_training_membership)
-    #updated memberships for professional list
     elif professional.job == "groomer":
         db_professional_with_grooming_membership = crud.give_professional_a_grooming_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_grooming_membership)
+    elif professional.job == "walker":
+        db_professional_with_walking_membership = crud.give_professional_a_walking_membership(professional)
+        professionals_with_memberships_in_db.append(db_professional_with_walking_membership)
+    elif professional.job == "sitter":
+        db_professional_with_sitting_membership = crud.give_professional_a_sitting_membership(professional)
+        professionals_with_memberships_in_db.append(db_professional_with_sitting_membership)
     
 
 credentials_in_db = []
@@ -167,15 +160,26 @@ for specialty in crud.specialties_list["sitting"]:
 
 professionals_with_specialties_in_db = []
 for professional in petpros_in_db:
-    if professional.job == "trainer":
-        db_professional_with_training_specialty = crud.give_professional_a_training_specialty(professional)
-        professionals_with_specialties_in_db.append(db_professional_with_training_specialty)
-    elif professional.job == "groomer":
-        db_professional_with_grooming_specialty = crud.give_professional_a_grooming_specialty(professional)
-        professionals_with_specialties_in_db.append(db_professional_with_grooming_specialty)
-    elif professional.job == "walker":
-        db_professional_with_walking_specialty = crud.give_professional_a_walking_specialty(professional)
-        professionals_with_specialties_in_db.append(db_professional_with_walking_specialty)
-    elif professional.job == "sitter":
-        db_professional_with_sitting_specialty = crud.give_professional_a_sitting_specialty(professional)
-        professionals_with_specialties_in_db.append(db_professional_with_sitting_specialty)
+    #make new variable, specialties_for_professional = []\
+    specialties_for_professional = []
+    #pick random number 1-2
+    num_specialties = randint(2,4)
+    #while len(memberships for professional) < random number, run following 90-92
+    while len(specialties_for_professional) < num_specialties:
+        if professional.job == "trainer":
+            db_professional_with_training_specialty = crud.give_professional_a_training_specialty(professional)
+            professionals_with_specialties_in_db.append(db_professional_with_training_specialty)
+            #updated specialties_for_professional list
+            specialties_for_professional.append(db_professional_with_training_specialty.specialty.type_)
+        elif professional.job == "groomer":
+            db_professional_with_grooming_specialty = crud.give_professional_a_grooming_specialty(professional)
+            professionals_with_specialties_in_db.append(db_professional_with_grooming_specialty)
+            specialties_for_professional.append(db_professional_with_grooming_specialty.specialty.type_)
+        elif professional.job == "walker":
+            db_professional_with_walking_specialty = crud.give_professional_a_walking_specialty(professional)
+            professionals_with_specialties_in_db.append(db_professional_with_walking_specialty)
+            specialties_for_professional.append(db_professional_with_walking_specialty.specialty.type_)
+        elif professional.job == "sitter":
+            db_professional_with_sitting_specialty = crud.give_professional_a_sitting_specialty(professional)
+            professionals_with_specialties_in_db.append(db_professional_with_sitting_specialty)
+            specialties_for_professional.append(db_professional_with_sitting_specialty.specialty.type_)
