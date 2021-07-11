@@ -162,7 +162,7 @@ professionals_with_specialties_in_db = []
 for professional in petpros_in_db:
     #make new variable, specialties_for_professional = []\
     specialties_for_professional = []
-    #pick random number 1-2
+    #pick random number
     num_specialties = randint(2,4)
     #while len(memberships for professional) < random number, run following 90-92
     while len(specialties_for_professional) < num_specialties:

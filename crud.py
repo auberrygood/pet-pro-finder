@@ -10,15 +10,15 @@ YELP_KEY = os.environ['YELP_KEY']
 
 professions_list = ["trainer","groomer","walker","sitter"]
 
-memberships_list = {"training":['','APDT', 'PPG', 'IACP'], 
-                    "grooming":['','PGA', 'IGA'], 
+memberships_list = {"training":['','APDT - Association of Professional Dog Trainers', 'PPG - Pet Professionals Guild', 'IACP - International Association of Canine Professionals', 'AABP - Association of Animal Behavior Professionals'], 
+                    "grooming":['','PGA - Professional Groomers Association', 'IGA - International Groomers Association'], 
                     "walking":[''], 
                     "sitting":['']}
 
-credentials_list = {"training":['','CPDT-KA', 'CPDT-KSA', 'CBCC-KA', 'IACP-DT', 'CDBD', 'IACP-CDTA', 'IACP-PDTA', 'IACP-CSDT','FFCP', 'KPA-CTP', 'AABP', 'CBATI', 'CTC', 'VSA-CDT', 'CAAB', 'CSC', 'CSAT', 'PMCT', 'DACVB', 'PFA'], 
-                    "grooming":['','ABC-PG', 'FFCP'], 
-                    "walking":['','FFCP'], 
-                    "sitting":['','FFCP']}
+credentials_list = {"training":['','CPDT-KA - Certified Professional Dog Trainer, Knowledge Assessed', 'CPDT-KSA - Certified Professional Dog Trainer, Skills Assessed', 'CBCC-KA - Certified Behavior Consultant Canine, Knowledge Assessed ', 'IACP-CDT - International Association of Canine Professionals, Certified Dog Trainer', 'IACP-CDTA - International Association of Canine Professionals, Certified Dog Trainer Advanced', 'IACP-PDTI - International Association of Canine Professionals, Professional Dog Trainer Instructor', 'IACP-CSDT - International Association of Canine Professionals, Certified Service Dog Trainer','CDBC - International Association of Animal Behavior, Certified Dog Behavior Consultant', 'FFCP - Fear Free Certified Professional', 'KPA-CTP - Karen Pryor Academy, Certified Training Partner', 'AABP - Association of Animal Behavior Professionals, Certified Dog Trainer', 'CBATI - Certified Behavior Adjustment Training Instructor', 'CTC - Academy for Dog Trainers, Certificate in Training and Counseling', 'VSA-CDT - Victoria Stillwell Acadamy, Certified Dog Trainer', 'ACAAB - Animal Behavior Society, Associate Certified Applied Animal Behaviorist', 'CAAB - Animal Behavior Society, Certified Applied Animal Behaviorist', 'CCS - Northwest School of Canine Studies, Certificate in Canine Studies', 'CSAT - Certified Separation Anxiety Trainer', 'PMCT - Pat Miller Certified Trainer', 'DACVB - Diplomate of the American College of Veterinary Behaviorists'], 
+                    "grooming":['','ABC-PG - Animal Behavior College, Professional Groomer', 'FFCP - Fear Free Certified Professional'], 
+                    "walking":['','FFCP - Fear Free Certified Professional'],
+                    "sitting":['','FFCP - Fear Free Certified Professional']}
 
 specialties_list = {"training":['','puppies', 'adolescent', 'dog aggression', 'human aggression', 'leash reactivity', 'basic obedience', 'service', 'therapy', 'ESA', 'sport', 'nosework', 'search and rescue', 'separation anxiety', 'potty training', 'off-leash', 'recall training'],
                     "grooming":['','cats', 'puppies', 'kennel cut', 'teddy bear', 'breed trim', 'show trim', 'exotic', 'double coats'],
@@ -54,7 +54,7 @@ def get_groomer_api_data():
     
     parameters = {'term': 'Pet Groomers',
                 'category': 'groomer',
-                'limit': 50, #any higher than 50, program throws error...possibly not finding >50 results?
+                'limit': 50,
                 'location': 'Oakland, CA',
                 'radius': 40000} #(24.85miles * 1609m/mile) to convert to yelp's meters; 24.85miles is yelp api max
 
@@ -311,64 +311,112 @@ def create_specialty(specialty):
     return specialty
 
 def give_professional_a_training_specialty(professional):
-    """Take a professional, give them a random training specialty, and return"""
+    """Take a professional, give them a random UNIQUE training specialty, and return"""
     professional_id = professional.professional_id
-    training_specialty = choice(specialties_list['training'])
 
-    specialty_oo = Specialty.query.filter_by(type_=training_specialty).one()
-    specialty_id = specialty_oo.specialty_id
+    current_specialties = [] #list of claimed specialty id's
+    rows = Professional_Specialty.query.filter_by(professional_id=professional_id)
+    if rows:
+        for row in rows:
+            specialty = row.specialty_id
+            current_specialties.append(specialty)
 
-    professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
+    while True:
+        training_specialty = choice(specialties_list['training'])
+        
+        specialty_oo = Specialty.query.filter_by(type_=training_specialty).one()
+        specialty_id = specialty_oo.specialty_id
+        
+        if specialty_id in current_specialties:
+            continue
 
-    db.session.add(professional_with_specialty)
-    db.session.commit()
+        professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
+        
+        db.session.add(professional_with_specialty)
+        db.session.commit()
 
-    return professional_with_specialty
+        return professional_with_specialty
 
 def give_professional_a_grooming_specialty(professional):
     """Take a professional, give them a random grooming specialty, and return"""
     professional_id = professional.professional_id
-    grooming_specialty = choice(specialties_list['grooming'])
+    
+    current_specialties = [] #list of claimed specialty id's
+    rows = Professional_Specialty.query.filter_by(professional_id=professional_id)
+    if rows:
+        for row in rows:
+            specialty = row.specialty_id
+            current_specialties.append(specialty)
+    
+    while True:
+        grooming_specialty = choice(specialties_list['grooming'])
 
-    specialty_oo = Specialty.query.filter_by(type_=grooming_specialty).one()
-    specialty_id = specialty_oo.specialty_id
+        specialty_oo = Specialty.query.filter_by(type_=grooming_specialty).one()
+        specialty_id = specialty_oo.specialty_id
 
-    professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
+        if specialty_id in current_specialties:
+            continue
 
-    db.session.add(professional_with_specialty)
-    db.session.commit()
+        professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
 
-    return professional_with_specialty
+        db.session.add(professional_with_specialty)
+        db.session.commit()
+
+        return professional_with_specialty
 
 def give_professional_a_walking_specialty(professional):
     """Take a professional, give them a random walking specialty, and return"""
     professional_id = professional.professional_id
-    walking_specialty = choice(specialties_list['walking'])
 
-    specialty_oo = Specialty.query.filter_by(type_=walking_specialty).one()
-    specialty_id = specialty_oo.specialty_id
+    current_specialties = [] #list of claimed specialty id's
+    rows = Professional_Specialty.query.filter_by(professional_id=professional_id)
+    if rows:
+        for row in rows:
+            specialty = row.specialty_id
+            current_specialties.append(specialty)
 
-    professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
+    while True:
+        walking_specialty = choice(specialties_list['walking'])
 
-    db.session.add(professional_with_specialty)
-    db.session.commit()
+        specialty_oo = Specialty.query.filter_by(type_=walking_specialty).one()
+        specialty_id = specialty_oo.specialty_id
 
-    return professional_with_specialty
+        if specialty_id in current_specialties:
+            continue
+
+        professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
+
+        db.session.add(professional_with_specialty)
+        db.session.commit()
+
+        return professional_with_specialty
 
 def give_professional_a_sitting_specialty(professional):
     """Take a professional, give them a random sitting specialty, and return"""
     professional_id = professional.professional_id
-    sitting_specialty = choice(specialties_list['sitting'])
 
-    specialty_oo = Specialty.query.filter_by(type_=sitting_specialty).one()
-    specialty_id = specialty_oo.specialty_id
+    current_specialties = [] #list of claimed specialty id's
+    rows = Professional_Specialty.query.filter_by(professional_id=professional_id)
+    if rows:
+        for row in rows:
+            specialty = row.specialty_id
+            current_specialties.append(specialty)
+   
+    while True:
+        sitting_specialty = choice(specialties_list['sitting'])
 
-    professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
+        specialty_oo = Specialty.query.filter_by(type_=sitting_specialty).one()
+        specialty_id = specialty_oo.specialty_id
 
-    db.session.add(professional_with_specialty)
-    db.session.commit()
+        if specialty_id in current_specialties:
+            continue
 
-    return professional_with_specialty
+        professional_with_specialty = Professional_Specialty(professional_id=professional_id, specialty_id=specialty_id)
+
+        db.session.add(professional_with_specialty)
+        db.session.commit()
+
+        return professional_with_specialty
 
 def filter_pros_by_specialty(specialty):
     specialty_oo = Specialty.query.filter_by(type_=specialty).one()

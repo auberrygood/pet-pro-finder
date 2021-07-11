@@ -46,8 +46,8 @@ class Membership(db.Model):
                         autoincrement=True,
                         primary_key=True)
     title = db.Column(db.String)
-    description = db.Column(db.Text)
-    link = db.Column(db.String)
+    # description = db.Column(db.Text)
+    # link = db.Column(db.String)
 
     # magic attibutes:
         # professionals = a list of Professional class objects
@@ -84,8 +84,8 @@ class Credential(db.Model):
                         autoincrement=True,
                         primary_key=True)
     title = db.Column(db.String)
-    description = db.Column(db.Text)
-    link = db.Column(db.String)
+    # description = db.Column(db.Text)
+    # link = db.Column(db.String)
 
     # magic attributes:
         # professionals = a list of Professional class objects

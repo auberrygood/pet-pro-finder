@@ -97,7 +97,7 @@ def find_groomers():
     
     parameters = {'term': term,
                 'category': category,
-                'limit': 50,
+                'limit': 10,
                 'location': location,
                 'radius': radius,
                 'sort_by': sort_by}
@@ -160,7 +160,7 @@ def find_sitters():
     
     parameters = {'term': term,
                 'category': category,
-                'limit': 50,
+                'limit': 10,
                 'location': location,
                 'radius': radius,
                 'sort_by': sort_by}
