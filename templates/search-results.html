@@ -28,7 +28,7 @@
           <ul class="professionals-list">
             {% for professional in professionals %}
               <li>
-                <a href="/professional/{{ professional['id'] }}" target="_blank">
+                <a href="/professional/{{ label }}/{{ professional['id'] }}" target="_blank">
                   {{ professional['name'] }}
                 </a>
               </li>

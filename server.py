@@ -110,9 +110,9 @@ def find_groomers():
         all_groomers.append(groomer_object['name'])
 
     #grabbing DB data
-    membership = request.args.get('memberships','')
-    credential = request.args.get('credentials', '')
-    specialty = request.args.get('specialties', '')
+    membership = request.args.get('memberships')
+    credential = request.args.get('credentials')
+    specialty = request.args.get('specialties')
 
     if membership == '':
         pros_with_membership = all_groomers
@@ -173,9 +173,9 @@ def find_sitters():
         all_sitters.append(sitter_object['name'])
 
     #grabbing DB data
-    membership = request.args.get('memberships','')
-    credential = request.args.get('credentials', '')
-    specialty = request.args.get('specialties', '')
+    membership = request.args.get('memberships')
+    credential = request.args.get('credentials')
+    specialty = request.args.get('specialties')
 
     if membership == '':
         pros_with_membership = all_sitters
@@ -235,9 +235,9 @@ def find_walkers():
         all_walkers.append(walker_object['name'])
 
     #grabbing DB data
-    membership = request.args.get('memberships','')
-    credential = request.args.get('credentials', '')
-    specialty = request.args.get('specialties', '')
+    membership = request.args.get('memberships')
+    credential = request.args.get('credentials')
+    specialty = request.args.get('specialties')
 
     if membership == '':
         pros_with_membership = all_walkers
@@ -297,9 +297,9 @@ def find_trainers():
         all_trainers.append(trainer_object['name'])
 
     #grabbing DB data
-    membership = request.args.get('memberships','')
-    credential = request.args.get('credentials', '')
-    specialty = request.args.get('specialties', '')
+    membership = request.args.get('memberships')
+    credential = request.args.get('credentials')
+    specialty = request.args.get('specialties')
 
     if membership == '':
         pros_with_membership = all_trainers
@@ -331,8 +331,8 @@ def find_trainers():
 
 """********** PROFESSIONAL DETAILS **********"""
 
-@app.route('/professional/<id>')
-def get_professional_details(id):
+@app.route('/professional/<label>/<id>')
+def get_professional_details(label, id):
     """View the details of a professional."""
 
 
@@ -344,8 +344,13 @@ def get_professional_details(id):
     categories = professional['categories']
     yelp_id = professional['id']
 
-    #SQLAlchemy to find detials of professional using yelp_id to filter through DB, return pro attributes
-    professional_id = crud.get_pro_id_by_yelp_id(yelp_id)
+    #SQLAlchemy to find API match in db, and return detials of professional
+    pros = crud.get_pros_by_yelp_id(yelp_id)
+    #choose id out of id_list that has a job that matches the job user is looking for....
+    for pro in pros:
+        job = pro.job
+        if job == label:
+            professional_id = pro.professional_id
     
     membership = crud.get_pro_membership_info(professional_id)
     credential=crud.get_pro_credential_info(professional_id)

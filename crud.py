@@ -112,11 +112,14 @@ def create_petpro(yelp_id, company_name, phone, job):
 
     return petpro
 
-def get_pro_id_by_yelp_id(yelp_id):
-    pro_oo = Professional.query.filter_by(yelp_id=yelp_id).first()
-    professional_id = pro_oo.professional_id
+def get_pros_by_yelp_id(yelp_id):
+    pros = Professional.query.filter_by(yelp_id=yelp_id).all()
+    # professional_ids = []
+    # for pro in pros_oo:
+    #     pro_id = pro.professional_id
+    #     professional_ids.append(pro_id)
 
-    return professional_id
+    return pros
 
 
 """****************** MEMBERSHIP FUNCTIONS *****************"""
@@ -284,7 +287,6 @@ def filter_pros_by_credential(credential):
     credential_oo = Credential.query.filter_by(title=credential).one()
     credential_id = credential_oo.credential_id
     pros_with_credential = Professional_Credential.query.filter_by(credential_id=credential_id).all()
-    
     pros = []
     for pro in pros_with_credential:
         company_name = pro.professional.company_name
@@ -296,7 +298,7 @@ def get_pro_credential_info(professional_id):
     pro_cred_oo = Professional_Credential.query.filter_by(professional_id=professional_id).one()
     credential_id = pro_cred_oo.credential_id
     credential = Credential.query.filter_by(credential_id=credential_id).one()
-    
+    # breakpoint()
     return credential.title
 
 """****************** SPECIALTY FUNCTIONS *****************"""
