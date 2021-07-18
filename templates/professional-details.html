@@ -3,85 +3,79 @@
 {% block title %}PetPro Details | {{ professional['name'] }}{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container" id="basic-info">
   <div class="row">
     <div class="col">
       
+      <br>
       <h2>{{ professional['name'] }}</h2>
+      {% for line in professional['location'].display_address %}
+          {{ line }}<p>
+        {% endfor %}
+        {{ professional.display_phone }}
 
     </div>
   </div>
+</div>
 
   <br>
-  
+  <br>
+
+<div class="container" id="attributes">
   <div class="row">
-    <div class="col">
-      <h3>Categories</h3>
+    
+    <section class="col-3" id="services">
+      <h3>Services</h3>
       
       <ul>
         {% for category in categories %}
           <li>{{ category.title }}</li>
         {% endfor %}
       </ul>
-    </div>
-  </div>
+    </section>
 
-  <div class="row">
-    <div class="col">
-      <h3>Location</h3>
-        {% for line in professional['location'].display_address %}
-          {{ line }} <br>
-        {% endfor %}
-        {{ professional.display_phone }}
-    </div>
-  </div>
-
-  <br>
-
-  <div class="container attributes">
-    <div class="row">
-
-      <div class="col-4">
-        <h3>Memberships</h3>
-          <ul>
-            {% if membership == '' %}
-              <li>No Memberships</li>
-            {% else %}
-              <li>{{ membership }}</li>
+    <section class="col-3" id="memberships">
+      <h3>Memberships</h3>
+        <ul>
+          {% if membership == '' %}
+            <li>No Memberships</li>
+          {% else %}
+            <li>{{ membership }}</li>
+          {% endif %}
+        </ul>
+      </section>
+    
+    <section class="col-3" id="credentials">
+      <h3>Credentials</h3>
+        <ul>
+          {% if credential == '' %}
+            <li>No Credentials</li>
+          {% else %}
+            <li>{{ credential }}</li>
+          {% endif %}
+        </ul>
+      </section>
+    
+    <section class="col-3" id="specialties">
+      <h3>Specialties</h3>
+        <ul>
+          {% for specialty in specialties %}
+            {% if specialty != '' %}
+              <li>{{ specialty }}</li>
             {% endif %}
-          </ul>
-      </div>
-      
-      <div class="col-4">
-        <h3>Credentials</h3>
-          <ul>
-            {% if credential == '' %}
-              <li>No Credentials</li>
-            {% else %}
-              <li>{{ credential }}</li>
-            {% endif %}
-          </ul>
-      </div>
-      
-      <div class="col-4">
-        <h3>Specialties</h3>
-          <ul>
-            {% for specialty in specialties %}
-              {% if specialty != '' %}
-                <li>{{ specialty }}</li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-      </div>
+          {% endfor %}
+        </ul>
+      </section>
 
-    </div>
   </div>
+</div>
 
+<div class="container">
   <div class="row">
-    <div class="col col-md-4">
-      
-      <img src="{{ professional['image_url'] }}">
 
+    <!-- business image -->
+    <div class="col-6">
+      <img src="{{ professional['image_url'] }}" class="img-fluid" id="photo">
       <p>
         <a href="{{ professional['url'] }}" target="_blank">
           Go to Yelp page
@@ -89,7 +83,20 @@
       </p>
     </div>
 
+    <!-- business location on google maps -->
+    <div class="col-6" id="map"></div>
+      <script type="text/javascript" src="/static/businessMap.js">
+        var name = '{{ professional.name }}'
+        var coordinates = '{{ professional.coordinates }}'
+      </script> 
+      <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj0RjbMD6mz8tpThVVYIbje-4PBU3g86A&callback=initMap">
+        var name = '{{ professional.name }}'
+        var coordinates = '{{ professional.coordinates }}'
+      </script>
     
+    </div>
   </div>
 </div>
+
 {% endblock %}

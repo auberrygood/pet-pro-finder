@@ -343,6 +343,7 @@ def get_professional_details(label, id):
     professional = response.json()
     categories = professional['categories']
     yelp_id = professional['id']
+    coordinates = professional['coordinates']
 
     #SQLAlchemy to find API match in db, and return detials of professional
     pros = crud.get_pros_by_yelp_id(yelp_id)
@@ -361,7 +362,8 @@ def get_professional_details(label, id):
                             categories=categories,
                             membership=membership,
                             credential=credential,
-                            specialties=specialties)
+                            specialties=specialties,
+                            coordinates=coordinates)
 
 
 
