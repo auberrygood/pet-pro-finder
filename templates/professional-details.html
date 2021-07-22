@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}PetPro Details | {{ professional['name'] }}{% endblock %}
+{% block title %}PetPro Details | {{ businessName }}{% endblock %}
 
 {% block content %}
 <div class="container" id="basic-info">
@@ -8,7 +8,7 @@
     <div class="col">
       
       <br>
-      <h2>{{ professional['name'] }}</h2>
+      <h2>{{ businessName }}</h2>
       {% for line in professional['location'].display_address %}
           {{ line }}<p>
         {% endfor %}
@@ -85,17 +85,13 @@
 
     <!-- business location on google maps -->
     <div class="col-6" id="map"></div>
+      <meta id="mapInfo" data-professional-name="{{businessName}}" data-business-lat="{{professional.coordinates.latitude}}" data-business-lng="{{professional.coordinates.longitude}}"></meta>
       <script type="text/javascript" src="/static/businessMap.js">
-        var name = '{{ professional.name }}'
-        var coordinates = '{{ professional.coordinates }}'
       </script> 
       <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj0RjbMD6mz8tpThVVYIbje-4PBU3g86A&callback=initMap">
-        var name = '{{ professional.name }}'
-        var coordinates = '{{ professional.coordinates }}'
       </script>
     
-    </div>
   </div>
 </div>
 

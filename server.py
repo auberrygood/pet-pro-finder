@@ -291,7 +291,7 @@ def find_trainers():
 
     response = requests.get(url, params=parameters, headers=payload)
     data = response.json()
-    trainer_objects = data['businesses'] #list of business objects
+    trainer_objects = data['businesses'] #list of API business objects
     all_trainers = []
     for trainer_object in trainer_objects:
         all_trainers.append(trainer_object['name'])
@@ -315,7 +315,7 @@ def find_trainers():
         pros_with_specialty = crud.filter_pros_by_specialty(specialty)
     
     #compare API data with DB data
-    filtered_trainers = [] #list of filtered business objects
+    filtered_trainers = [] #list of filtered API business objects after comparing to data in database
     for trainer in trainer_objects:
         if trainer['name'] in pros_with_membership and trainer['name'] in pros_with_credential and trainer['name'] in pros_with_specialty:
             filtered_trainers.append(trainer)
@@ -343,7 +343,7 @@ def get_professional_details(label, id):
     professional = response.json()
     categories = professional['categories']
     yelp_id = professional['id']
-    coordinates = professional['coordinates']
+    businessName = professional['name']
 
     #SQLAlchemy to find API match in db, and return detials of professional
     pros = crud.get_pros_by_yelp_id(yelp_id)
@@ -363,7 +363,7 @@ def get_professional_details(label, id):
                             membership=membership,
                             credential=credential,
                             specialties=specialties,
-                            coordinates=coordinates)
+                            businessName = businessName)
 
 
 
