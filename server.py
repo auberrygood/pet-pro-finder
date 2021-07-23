@@ -1,10 +1,11 @@
 """Server for PetProFinder app."""
 
-from flask import Flask, render_template, request, flash, session, redirect
+from flask import Flask, render_template, request, flash, session, redirect, jsonify
 from model import connect_to_db
 import crud
 import os
 import requests
+import json
 
 from jinja2 import StrictUndefined
 
@@ -138,6 +139,7 @@ def find_groomers():
     return render_template ('search-results.html',
                             results=results,
                             professionals=filtered_groomers,
+                            json_professionals=json.dumps(filtered_groomers), #convert into json
                             label='groomer',
                             term=term)
 
@@ -201,6 +203,7 @@ def find_sitters():
     return render_template ('search-results.html',
                             results=results,
                             professionals=filtered_sitters,
+                            json_professionals=json.dumps(filtered_sitters), #convert into json
                             label='sitter',
                             term=term)
 
@@ -263,6 +266,7 @@ def find_walkers():
     return render_template ('search-results.html',
                             results=results,
                             professionals=filtered_walkers,
+                            json_professionals=json.dumps(filtered_walkers), #convert into json
                             label='walker',
                             term=term)
 
@@ -291,6 +295,7 @@ def find_trainers():
 
     response = requests.get(url, params=parameters, headers=payload)
     data = response.json()
+
     trainer_objects = data['businesses'] #list of API business objects
     all_trainers = []
     for trainer_object in trainer_objects:
@@ -322,9 +327,11 @@ def find_trainers():
 
     results = len(filtered_trainers)
 
+
     return render_template ('search-results.html',
                             results=results,
                             professionals=filtered_trainers,
+                            json_professionals=json.dumps(filtered_trainers), #convert into json
                             label='trainer',
                             term=term)
 

@@ -1,3 +1,5 @@
+"use strict";
+
 function initMap() {
     const professionalName = document.querySelector("#mapInfo").getAttribute("data-professional-name")
     const businessLat = Number(document.querySelector("#mapInfo").getAttribute("data-business-lat"))
@@ -21,7 +23,7 @@ function initMap() {
         map:map,
         icon: {
             url: 'https://i2.wp.com/catgirlonlineshop.com/wp-content/uploads/2019/12/cropped-depositphotos_263556590-stock-illustration-dog-paw-icon-vector-footprint.png?ssl=1', 
-            scaledSize: new google.maps.Size(40, 40)
+            scaledSize: new google.maps.Size(25, 25)
         },
     });
 

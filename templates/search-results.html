@@ -5,59 +5,55 @@
 {% block content %}
   <div class="container">
     
+    <div class="row" id="search-content">
+      
+      <div class="col-4" id="search-text">
+        
+        <div class="row" id="search-title">
+          <h2>{{ label.title() }} Search Results</h2>
+          <p>
+            <span id="result-count">
+              {{ results }} {{ label }}s matched your search.
+            </span>
+          </p>
+        </div>
+        
+        <div class="row" id="search-results">
+          <!-- list of business results in list form -->
+          <div class="col" id="list-search-results">
+            <ul class="professionals-list">
+              {% for professional in professionals %}
+                <li>
+                  <a href="/professional/{{ label }}/{{ professional['id'] }}" target="_blank">
+                    {{ professional['name'] }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      
+      </div>
+
+      <!-- business results displayed on map -->
+      <div class="col-8" id="map"></div>
+        <!-- json_professionals is a json string thanks to server side json.dumps() -->
+        <meta id="mapResults" data-professionals="{{ json_professionals }}"></meta> 
+        <script type="text/javascript" src="/static/resultsMap.js"></script>
+        <script async defer
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj0RjbMD6mz8tpThVVYIbje-4PBU3g86A&callback=initMap">
+        </script>
+      </div>
+
+    </div>
+    
+    <p></p>
     <div class="row">
       <div class="col d-flex justify-content-center">
         <a href="/{{ label }}-search" class="lead backlink">
           Go back to {{ label }} search form
         </a>
       </div>
-    </div>
-
-    <p></p>
-    
-    <div class="row" id="title-search-results">
-      <h2>{{ label.title() }} Search Results</h2>
-      <p>
-        <span id="result-count">
-          {{ results }} {{ label }}s matched your search.
-        </span>
-      </p>
-    </div>
-
-    <div class="row" id="search-results">
-
-      <!-- list of business results in list form -->
-      <div class="col-6" id="list-search-results">
-        <ul class="professionals-list">
-          {% for professional in professionals %}
-            <li>
-              <a href="/professional/{{ label }}/{{ professional['id'] }}" target="_blank">
-                {{ professional['name'] }}
-              </a>
-            </li>
-          {% endfor %}
-        </ul>
-      </div>
-
-      <!-- business results displayed on map -->
-      <div class="col-6" id="map"></div>
-        <!-- <meta id="mapResults" data-professionals="{{ professionals }}"></meta> -->
-        <!-- <script type="text/javascript">
-          var GLOBAL = [
-            {op: 'isAuthenticated', val: false}
-          ];
-        </script> -->
-        <script type="text/javascript" src="/static/resultsMap.js"></script>
-
-        <!-- <script type="text/javascript">
-          //run the hooks
-          app.receptor.runHooks();
-        </script> -->
-
-        <script async defer
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj0RjbMD6mz8tpThVVYIbje-4PBU3g86A&callback=initMap">
-        </script>
-
     </div>
 
   </div>
