@@ -4,12 +4,12 @@ function initMap() {
     // takes json string and turns back into JS object
     const professionals = JSON.parse(document.querySelector("#mapResults").getAttribute("data-professionals"));
     
-    console.log(professionals);
-    console.log("")
+    // console.log(professionals);
+    // console.log("")
 
-    for (const professional of professionals){
-        console.log(professional);
-    };
+    // for (const professional of professionals){
+    //     console.log(professional);
+    // };
 
     
     // Map options
@@ -36,11 +36,14 @@ function initMap() {
         const infoWindow = new google.maps.InfoWindow();
         //content of the marker's infoWindow
         const businessContent = professional.name;
-        //show infoWindow when marker is clicked
-        marker.addListener('click', () => {
-            infoWindow.close();
+        //show infoWindow when marker is hovered over by mouse
+        marker.addListener('mouseover', () => {
             infoWindow.setContent(businessContent)
             infoWindow.open(map, marker);
         });
+        // marker.addListener('mouseleave', () => {
+        //     infoWindow.closeclick();
+        //     infoWindow.setContent(businessContent)
+        // });
     };
 }

@@ -8,28 +8,25 @@
         <div class="col">
             <h2>Search for Pet Trainers</h2>
 
-            <form method="GET" action="/trainer-results">
-        
+            <form method="GET" action="/trainer-results">  
                 <div class="form-group">
                     <label for="search-keyword">Search Location</label>
                     <small class="form-text text-muted">
                         Type in an address you'd like to search from.
                     </small>
-
                     <input
                         id="search-address"
                         class="form-control"
                         type="text"
                         name="address"
+                        required
                     >
                 </div>
-
                 <div class="form-group">
                     <label for="search-radius">Distance Radius</label>
                         <small class="form-text text-muted">
                             How many miles would you like to search from your location?
                         </small>
-
                     <select
                         id="search-radius"
                         class="form-control custom-select"
@@ -41,10 +38,8 @@
                         <option value="20">20 miles</option>
                     </select> 
                 </div>
-
                 <div class="form-group">
                     <label for="search-sort-by">Sort by</label>
-
                     <select
                         id="search-sort-by"
                         class="form-control custom-select"
@@ -56,10 +51,8 @@
                         <option value="distance">Distance</option>
                     </select>
                 </div>
-
                 <br>
                 <h3>Advanced Search</h3>
-
                 <div class="form-group">
                     <label for="search-by-memberships">Memberships</label>
                     <small class="form-text text-muted">
@@ -75,7 +68,6 @@
                         {% endfor %}
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="search-by-credentials">Credentials</label>
                     <small class="form-text text-muted">
@@ -91,7 +83,6 @@
                         {% endfor %}
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="search-by-specialties">Specialties</label>
                     <small class="form-text text-muted">
@@ -107,7 +98,6 @@
                         {% endfor %}
                     </select>
                 </div>
-
                 <br>
                 <br>
                 <input type="submit" value="Look for pet trainers!" class="btn btn-trainer">

@@ -37,6 +37,7 @@ class Professional(db.Model):
     def __repr__(self):
         return f'<PetPro: id={self.professional_id} business={self.company_name} job={self.job}>'
 
+
 class Membership(db.Model):
     """ A membership. """
     
@@ -55,6 +56,7 @@ class Membership(db.Model):
 
     def __repr__(self):
         return f'<Membership: {self.title}>'
+
 
 class Professional_Membership(db.Model):
     """ A pet professional's membership; an assocation table between 'professionals' & 'memberships'. """
@@ -75,6 +77,7 @@ class Professional_Membership(db.Model):
     def __repr__(self):
         return f'<{self.professional}, {self.membership.title}>'
 
+
 class Credential(db.Model):
     """ A credential. """
     
@@ -93,6 +96,7 @@ class Credential(db.Model):
 
     def __repr__(self):
         return f'<Credential: {self.title}>'
+
 
 class Professional_Credential(db.Model):
     """ A pet professional's credential; an assocation table between 'professionals' & 'credentials'."""
@@ -113,6 +117,7 @@ class Professional_Credential(db.Model):
     def __repr__(self):
         return f'<{self.professional}, {self.credential.title}>'
 
+
 class Specialty(db.Model):
     """ A specialty. """
     
@@ -129,6 +134,7 @@ class Specialty(db.Model):
 
     def __repr__(self):
         return f'<Specialty: {self.type_}>'
+
 
 class Professional_Specialty(db.Model):
     """ A pet professional's specialty; an assocation table between 'professionals' & 'specialties'."""

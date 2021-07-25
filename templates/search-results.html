@@ -3,12 +3,9 @@
 {% block title %}{{ term }}{% endblock %}
 
 {% block content %}
-  <div class="container">
-    
-    <div class="row" id="search-content">
-      
+  <div class="container" id="search-content">
+    <div class="row" id="text-and-map">      
       <div class="col-4" id="search-text">
-        
         <div class="row" id="search-title">
           <h2>{{ label.title() }} Search Results</h2>
           <p>
@@ -16,8 +13,7 @@
               {{ results }} {{ label }}s matched your search.
             </span>
           </p>
-        </div>
-        
+        </div>       
         <div class="row" id="search-results">
           <!-- list of business results in list form -->
           <div class="col" id="list-search-results">
@@ -31,10 +27,8 @@
               {% endfor %}
             </ul>
           </div>
-        </div>
-      
+        </div> 
       </div>
-
       <!-- business results displayed on map -->
       <div class="col-8" id="map"></div>
         <!-- json_professionals is a json string thanks to server side json.dumps() -->
@@ -44,17 +38,16 @@
           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj0RjbMD6mz8tpThVVYIbje-4PBU3g86A&callback=initMap">
         </script>
       </div>
-
-    </div>
-    
+    </div>    
     <p></p>
-    <div class="row">
-      <div class="col d-flex justify-content-center">
-        <a href="/{{ label }}-search" class="lead backlink">
-          Go back to {{ label }} search form
-        </a>
-      </div>
-    </div>
-
   </div>
+  
+  <div class="container">
+    <div class="col d-flex justify-content-center">
+      <a href="/{{ label }}-search" class="lead backlink">
+        Go back to {{ label }} search form
+      </a>
+    </div>
+  </div>
+
 {% endblock %}

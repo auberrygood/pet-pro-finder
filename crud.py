@@ -46,6 +46,7 @@ def get_trainer_api_data():
 
     return trainers
 
+
 def get_groomer_api_data():
     """Get pet groomer data from Yelp API"""
 
@@ -64,6 +65,7 @@ def get_groomer_api_data():
 
     return groomers
 
+
 def get_walker_api_data():
     """Get dog walker data from Yelp API"""
 
@@ -81,6 +83,7 @@ def get_walker_api_data():
     walkers = data['businesses']
 
     return walkers
+
 
 def get_sitter_api_data():
     """Get pet sitter data from Yelp API"""
@@ -112,7 +115,9 @@ def create_petpro(yelp_id, company_name, phone, job):
 
     return petpro
 
+
 def get_pros_by_yelp_id(yelp_id):
+    """ Query for professionals using yelp id"""
     pros = Professional.query.filter_by(yelp_id=yelp_id).all()
     # professional_ids = []
     # for pro in pros_oo:
@@ -133,6 +138,7 @@ def create_membership(membership):
 
     return membership
 
+
 def give_professional_a_training_membership(professional):
     """Take a professional, give them a random training membership, and return"""
     professional_id = professional.professional_id
@@ -147,6 +153,7 @@ def give_professional_a_training_membership(professional):
     db.session.commit()
 
     return professional_with_membership
+
 
 def give_professional_a_grooming_membership(professional):
     """Take a professional, give them a random grooming membership, and return"""
@@ -163,6 +170,7 @@ def give_professional_a_grooming_membership(professional):
 
     return professional_with_membership
 
+
 def give_professional_a_walking_membership(professional):
     """Take a professional, give them a random walking membership, and return"""
     professional_id = professional.professional_id
@@ -177,6 +185,7 @@ def give_professional_a_walking_membership(professional):
     db.session.commit()
 
     return professional_with_membership
+
 
 def give_professional_a_sitting_membership(professional):
     """Take a professional, give them a random sitting membership, and return"""
@@ -193,7 +202,9 @@ def give_professional_a_sitting_membership(professional):
 
     return professional_with_membership
 
+
 def filter_pros_by_membership(membership):
+    """ Query professionals by membership title."""
     membership_oo = Membership.query.filter_by(title=membership).one()
     membership_id = membership_oo.membership_id
     pros_with_membership = Professional_Membership.query.filter_by(membership_id=membership_id).all()
@@ -205,7 +216,9 @@ def filter_pros_by_membership(membership):
 
     return pros
 
+
 def get_pro_membership_info(professional_id):
+    """ Query for membership title using professional id."""
     pro_mem_oo = Professional_Membership.query.filter_by(professional_id=professional_id).one()
     membership_id = pro_mem_oo.membership_id
     membership = Membership.query.filter_by(membership_id=membership_id).one()
@@ -223,6 +236,7 @@ def create_credential(credential):
 
     return credential
 
+
 def give_professional_a_training_credential(professional):
     """Take a professional, give them a random training credential, and return"""
     professional_id = professional.professional_id
@@ -237,6 +251,7 @@ def give_professional_a_training_credential(professional):
     db.session.commit()
 
     return professional_with_credential
+
 
 def give_professional_a_grooming_credential(professional):
     """Take a professional, give them a random grooming credential, and return"""
@@ -253,6 +268,7 @@ def give_professional_a_grooming_credential(professional):
 
     return professional_with_credential
 
+
 def give_professional_a_walking_credential(professional):
     """Take a professional, give them a random walking credential, and return"""
     professional_id = professional.professional_id
@@ -267,6 +283,7 @@ def give_professional_a_walking_credential(professional):
     db.session.commit()
 
     return professional_with_credential
+
 
 def give_professional_a_sitting_credential(professional):
     """Take a professional, give them a random sitting credential, and return"""
@@ -283,7 +300,9 @@ def give_professional_a_sitting_credential(professional):
 
     return professional_with_credential
 
+
 def filter_pros_by_credential(credential):
+    """ Query professionals by credential title."""
     credential_oo = Credential.query.filter_by(title=credential).one()
     credential_id = credential_oo.credential_id
     pros_with_credential = Professional_Credential.query.filter_by(credential_id=credential_id).all()
@@ -294,7 +313,9 @@ def filter_pros_by_credential(credential):
         
     return pros
 
+
 def get_pro_credential_info(professional_id):
+    """ Query professional's credentials using professional id."""
     pro_cred_oo = Professional_Credential.query.filter_by(professional_id=professional_id).one()
     credential_id = pro_cred_oo.credential_id
     credential = Credential.query.filter_by(credential_id=credential_id).one()
@@ -311,6 +332,7 @@ def create_specialty(specialty):
     db.session.commit()
 
     return specialty
+
 
 def give_professional_a_training_specialty(professional):
     """Take a professional, give them a random UNIQUE training specialty, and return"""
@@ -339,6 +361,7 @@ def give_professional_a_training_specialty(professional):
 
         return professional_with_specialty
 
+
 def give_professional_a_grooming_specialty(professional):
     """Take a professional, give them a random grooming specialty, and return"""
     professional_id = professional.professional_id
@@ -365,6 +388,7 @@ def give_professional_a_grooming_specialty(professional):
         db.session.commit()
 
         return professional_with_specialty
+
 
 def give_professional_a_walking_specialty(professional):
     """Take a professional, give them a random walking specialty, and return"""
@@ -393,6 +417,7 @@ def give_professional_a_walking_specialty(professional):
 
         return professional_with_specialty
 
+
 def give_professional_a_sitting_specialty(professional):
     """Take a professional, give them a random sitting specialty, and return"""
     professional_id = professional.professional_id
@@ -420,7 +445,9 @@ def give_professional_a_sitting_specialty(professional):
 
         return professional_with_specialty
 
+
 def filter_pros_by_specialty(specialty):
+    """ Query professionals by specialty type."""
     specialty_oo = Specialty.query.filter_by(type_=specialty).one()
     specialty_id = specialty_oo.specialty_id
     pros_with_specialty = Professional_Specialty.query.filter_by(specialty_id=specialty_id).all()
@@ -432,7 +459,9 @@ def filter_pros_by_specialty(specialty):
         
     return pros
 
+
 def get_pro_specialty_info(professional_id):
+    """ Query professional specialties by professional's id"""
     pro_spec_oo = Professional_Specialty.query.filter_by(professional_id=professional_id).all()
     pro_specialties = []
     for pro_spec in pro_spec_oo:

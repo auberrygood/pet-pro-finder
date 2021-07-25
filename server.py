@@ -37,6 +37,7 @@ def show_groomer_search_form():
                             credentials=credentials,
                             specialties=specialties)
     
+
 @app.route('/trainer-search')
 def show_trainer_search_form():
     """Show trainer search form"""
@@ -50,6 +51,7 @@ def show_trainer_search_form():
                             credentials=credentials,
                             specialties=specialties)
 
+
 @app.route('/walker-search')
 def show_walker_search_form():
     """Show walker search form"""
@@ -62,6 +64,7 @@ def show_walker_search_form():
                             memberships=memberships,
                             credentials=credentials,
                             specialties=specialties)
+
 
 @app.route('/sitter-search')
 def show_sitter_search_form():
@@ -98,7 +101,7 @@ def find_groomers():
     
     parameters = {'term': term,
                 'category': category,
-                'limit': 10,
+                'limit': 25,
                 'location': location,
                 'radius': radius,
                 'sort_by': sort_by}
@@ -143,6 +146,7 @@ def find_groomers():
                             label='groomer',
                             term=term)
 
+
 @app.route('/sitter-results')
 def find_sitters():
     """Search for pet sitters"""
@@ -162,7 +166,7 @@ def find_sitters():
     
     parameters = {'term': term,
                 'category': category,
-                'limit': 10,
+                'limit': 25,
                 'location': location,
                 'radius': radius,
                 'sort_by': sort_by}
@@ -207,6 +211,7 @@ def find_sitters():
                             label='sitter',
                             term=term)
 
+
 @app.route('/walker-results')
 def find_walkers():
     """Search for dog walkers"""
@@ -225,7 +230,7 @@ def find_walkers():
     
     parameters = {'term': term,
                 'category': category,
-                'limit': 10,
+                'limit': 25,
                 'location': location,
                 'radius': radius,
                 'sort_by': sort_by}
@@ -270,6 +275,7 @@ def find_walkers():
                             label='walker',
                             term=term)
 
+
 @app.route('/trainer-results')
 def find_trainers():
     """Search for pet trainers"""
@@ -288,7 +294,7 @@ def find_trainers():
     
     parameters = {'term': term,
                 'category': category,
-                'limit': 10,
+                'limit': 25,
                 'location': location,
                 'radius': radius,
                 'sort_by': sort_by}
