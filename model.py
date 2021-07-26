@@ -15,7 +15,6 @@ class Professional(db.Model):
                         primary_key=True)
     yelp_id = db.Column(db.String)
     company_name = db.Column(db.String)
-    phone = db.Column(db.String)
     job = db.Column(db.String)
 
     #relationship tables:               
@@ -47,8 +46,6 @@ class Membership(db.Model):
                         autoincrement=True,
                         primary_key=True)
     title = db.Column(db.String)
-    # description = db.Column(db.Text)
-    # link = db.Column(db.String)
 
     # magic attibutes:
         # professionals = a list of Professional class objects
@@ -87,8 +84,6 @@ class Credential(db.Model):
                         autoincrement=True,
                         primary_key=True)
     title = db.Column(db.String)
-    # description = db.Column(db.Text)
-    # link = db.Column(db.String)
 
     # magic attributes:
         # professionals = a list of Professional class objects

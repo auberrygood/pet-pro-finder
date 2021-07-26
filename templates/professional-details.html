@@ -76,11 +76,11 @@
     <!-- business image -->
     <div class="col-6">
       <img src="{{ professional['image_url'] }}" class="img-fluid" id="photo">
-      <p>
+      <!-- <p>
         <a href="{{ professional['url'] }}" target="_blank">
           Go to Yelp page
         </a>
-      </p>
+      </p> -->
     </div>
 
     <!-- business location on google maps -->
@@ -93,6 +93,15 @@
       </script>
     
   </div>
+  <div class="row yelp-page justify-content-center padded">
+    <div class="yelp-button text-center">
+      <a class="btn btn-orange" href="{{ professional['url'] }}">
+        Visit Yelp Page
+      </a>
+  </div>
+  </div>
 </div>
+
+
 
 {% endblock %}
