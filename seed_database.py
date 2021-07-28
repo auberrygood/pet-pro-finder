@@ -21,13 +21,13 @@ groomers_in_db = []
 
 groomers = crud.get_groomer_api_data() #data['businesses]
 for groomer in groomers:
-    yelp_id, company_name, phone, job = (
+    yelp_id, company_name, job = (
         groomer['id'],
         groomer['name'],
-        groomer['phone'],
+        # groomer['phone'],
         "groomer")
 
-    db_petpro = crud.create_petpro(yelp_id, company_name, phone, job)
+    db_petpro = crud.create_petpro(yelp_id, company_name, job)
     groomers_in_db.append(db_petpro)
     petpros_in_db.append(db_petpro)
 
@@ -35,13 +35,13 @@ trainers_in_db = []
 
 trainers = crud.get_trainer_api_data() #data['businesses]
 for trainer in trainers:
-    yelp_id, company_name, phone, job = (
+    yelp_id, company_name, job = (
         trainer['id'],
         trainer['name'],
-        trainer['phone'],
+        # trainer['phone'],
         "trainer")
 
-    db_petpro = crud.create_petpro(yelp_id, company_name, phone, job)
+    db_petpro = crud.create_petpro(yelp_id, company_name, job)
     trainers_in_db.append(db_petpro)
     petpros_in_db.append(db_petpro)
 
@@ -49,13 +49,13 @@ sitters_in_db = []
 
 sitters = crud.get_sitter_api_data() #data['businesses]
 for sitter in sitters:
-    yelp_id, company_name, phone, job = (
+    yelp_id, company_name, job = (
         sitter['id'],
         sitter['name'],
-        sitter['phone'],
+        # sitter['phone'],
         "sitter")
 
-    db_petpro = crud.create_petpro(yelp_id, company_name, phone, job)
+    db_petpro = crud.create_petpro(yelp_id, company_name, job)
     sitters_in_db.append(db_petpro)
     petpros_in_db.append(db_petpro)
 
@@ -63,13 +63,13 @@ walkers_in_db = []
 
 walkers = crud.get_walker_api_data() #data['businesses]
 for walker in walkers:
-    yelp_id, company_name, phone, job = (
+    yelp_id, company_name, job = (
         walker['id'],
         walker['name'],
-        walker['phone'],
+        # walker['phone'],
         "walker")
 
-    db_petpro = crud.create_petpro(yelp_id, company_name, phone, job)
+    db_petpro = crud.create_petpro(yelp_id, company_name, job)
     walkers_in_db.append(db_petpro)
     petpros_in_db.append(db_petpro)
 

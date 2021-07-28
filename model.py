@@ -5,6 +5,51 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+class User(db.Model):
+    """ A user."""
+
+    __tablename__ = "users"
+
+    client_id = db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    username = db.Column(db.String,
+                        unique=True)
+    email = db.Column(db.String,
+                        unique=True)
+    password = db.Column(db.String)
+
+    #magic attributes:
+        # ratings = a list of Rating objects (username, professional, score)
+    
+    def __repr__(self):
+        return f'<Username: {self.username} id: {self.client_id}>'
+
+
+class Ratings(db.Model):
+    """ A pet professional's rating. """
+    
+    __tablename__ = "ratings"
+
+    rating_id = db.Column(db.Integer,
+                            autoincrement=True,
+                            primary_key=True)
+    client_id = db.Column(db.Integer, 
+                            db.ForeignKey('users.client_id'))
+    professional_id = db.Column(db.Integer,
+                            db.ForeignKey('professionals.professional_id'))
+    score = db.Column(db.Integer)
+
+    #relationship tables:
+    professional = db.relationship("Professional",
+                                    backref="ratings")
+    user = db.relationship("User",
+                            backref="ratings")
+    
+    def __repr__(self):
+        return f'<Username: {self.user.username} professional: {self.professional.company_name} score: {self.score}>'
+
+
 class Professional(db.Model):
     """A pet professional. """
 
@@ -16,6 +61,7 @@ class Professional(db.Model):
     yelp_id = db.Column(db.String)
     company_name = db.Column(db.String)
     job = db.Column(db.String)
+    # phone = db.Column(db.String)
 
     #relationship tables:               
     membership = db.relationship("Membership",
@@ -29,9 +75,10 @@ class Professional(db.Model):
                                     backref="professionals")
 
     # magic attributes:
-        # professionals_memberships = a list of Professional_Membership class (professional & their membership id)
+        # professionals_memberships = a list of Professional_Membership class objects (professional id & their membership id)
         # professionals_credentials = a list of Professional_Credential class objects(professional id & their credential id)
         # professionals_specialties = a list of Professional_Specialty class objects (professional id & their specialty id)
+        # ratings = a list of Rating objects (username, professional, score)
 
     def __repr__(self):
         return f'<PetPro: id={self.professional_id} business={self.company_name} job={self.job}>'

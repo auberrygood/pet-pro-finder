@@ -106,9 +106,9 @@ def get_sitter_api_data():
 
 """****************** PROFESSIONAL FUNCTIONS *****************"""
 
-def create_petpro(yelp_id, company_name, phone, job):
+def create_petpro(yelp_id, company_name, job):
     """Create and return a pet professional"""
-    petpro = Professional(yelp_id=yelp_id, company_name=company_name, phone=phone, job=job)
+    petpro = Professional(yelp_id=yelp_id, company_name=company_name, job=job)
     
     db.session.add(petpro)
     db.session.commit()
