@@ -1,11 +1,12 @@
 """Models for pet_pro_finder app."""
 
 from flask_sqlalchemy import SQLAlchemy
+from Flask_login import UserMixin
 
 db = SQLAlchemy()
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     """ A user."""
 
     __tablename__ = "users"
@@ -13,17 +14,24 @@ class User(db.Model):
     client_id = db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    username = db.Column(db.String,
+    username = db.Column(db.String(50),
                         unique=True)
-    email = db.Column(db.String,
+    email = db.Column(db.String(120),
                         unique=True)
-    password = db.Column(db.String)
+    password_hash = db.Column(db.String(130))
 
     #magic attributes:
         # ratings = a list of Rating objects (username, professional, score)
     
+    def set_password(self, password):
+        #tutorial did not have 'return' preceding next line; is 'return' necessary??
+        return self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
     def __repr__(self):
-        return f'<Username: {self.username} id: {self.client_id}>'
+        return f'<User username: {self.username} client_id: {self.client_id}>'
 
 
 class Ratings(db.Model):

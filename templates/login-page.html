@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %} Log-In / Create Account {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Log In</h2>
+
+            <form method="GET" action="/login">      
+                <div class="form-group">
+                    <label for="search-keyword">Email</label>
+                    <input
+                        id="submit-email"
+                        class="form-control"
+                        type="text"
+                        name="email"
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="search-keyword">Password</label>
+                    <input
+                        id="submit-password"
+                        class="form-control"
+                        type="text"
+                        name="password"
+                        required
+                    >
+                <input type="submit" value="Log In" class="btn btn-orange">
+            </form>
+        </div>
+
+        <div class="col-6">
+            <h2>Create Account</h2>
+
+            <form method="GET" action="/create-user">      
+                <div class="form-group">
+                    <label for="search-keyword">Username</label>
+                    <input
+                        id="submit-username"
+                        class="form-control"
+                        type="text"
+                        name="username"
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="search-keyword">Email</label>
+                    <input
+                        id="submit-email"
+                        class="form-control"
+                        type="text"
+                        name="email"
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="search-keyword">Password</label>
+                    <input
+                        id="submit-password"
+                        class="form-control"
+                        type="text"
+                        name="password"
+                        required
+                    >
+                <input type="submit" value="Create Account" class="btn btn-orange">
+            </form>
+        </div>

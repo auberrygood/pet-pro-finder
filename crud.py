@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, Professional, Membership, Professional_Membership, Credential, Professional_Credential, Specialty, Professional_Specialty, connect_to_db
+from model import db, User, Rating, Professional, Membership, Professional_Membership, Credential, Professional_Credential, Specialty, Professional_Specialty, connect_to_db
 from random import choice, randint
 import requests
 import os
@@ -102,6 +102,48 @@ def get_sitter_api_data():
     sitters = data['businesses']
 
     return sitters
+
+
+"""****************** USER FUNCTIONS *****************"""
+
+def create_user(email, username, password):
+    """ Create and return a user """
+    user = User(email=email, username=username)
+
+    user.set_password(password)
+    
+    db.session.add(user)
+    db.session.commit()
+
+    return user
+
+
+def show_all_users():
+    """ Return a list of all user objects """
+    users = User.query.all()
+    
+    return users
+
+
+def get_user_by_email(email):
+    """ Query for user by email """
+    user = User.query.filter(email=email).first()
+
+    return user
+
+
+def get_user_by_username(username):
+    """ Query for user by username """
+    user = User.query.filter(username=username).first()
+
+    return user
+
+
+def get_user_by_id(client_id):
+    """ Query for user by id """
+    user = User.query.filter(client_id=client_id).first()
+
+    return user
 
 
 """****************** PROFESSIONAL FUNCTIONS *****************"""
@@ -470,6 +512,50 @@ def get_pro_specialty_info(professional_id):
         pro_specialties.append(specialty.type_)
 
     return pro_specialties
+
+"""****************** RATING FUNCTIONS *****************"""
+
+def get_user_pro_rating(client_id, professional_id):
+    """ Return the score given to a professional by specific user. """
+    rating = Rating.query.filter(client_id=client_id, professional_id=professional_id).first()
+    if rating:
+        current_score = rating.score
+        return current_score
+    else:
+        return None
+
+def give_professional_a_rating(score, client_id, professional_id):
+    """ Have user give a professional a score. """
+    rating = Rating(client_id=client_id, professional_id=professional_id, score=score)
+    
+    db.session.add(rating)
+    db.session.commit()
+
+    return rating
+
+def replace_rating(score, client_id, professional_id):
+    """ Replace the score given to a professional by a specific user. """
+    rating = Rating.query.filter_by(client_id=client_id and professional_id=professional_id).first()
+    
+    db.session.delete(rating)
+    db.session.commit()
+    
+    new_rating = give_professional_a_rating(score=score, client_id=client_id, professional_id=professional_id)
+
+    return new rating
+
+
+def get_professioanl_average_rating(professional_id):
+    """ Return the average rating a professional has. """
+    total_scores = 0
+    ratings = Rating.query.all()
+    rating_count = Rating.query.count()
+    for rating in ratings:
+        total_scores =+ int(rating.score)
+    average_rating = (total_scores) / (rating_count)
+
+    return average_rating
+
 
 
 if __name__ == "__main__":
