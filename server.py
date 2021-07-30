@@ -1,6 +1,6 @@
 """Server for PetProFinder app."""
 
-from model import connect_to_db #suggested to place model imports after login definitions to avoid bugs
+
 from flask import Flask, render_template, request, flash, session, redirect, jsonify
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 import crud
@@ -12,9 +12,10 @@ from jinja2 import StrictUndefined
 app = Flask(__name__)
 app.secret_key = "petpro"
 app.jinja_env.undefined = StrictUndefined
-
 login = LoginManager(app)
 login.login_view = '/login-page'
+
+from model import connect_to_db #suggested to place model imports after login definitions to avoid bugs
 
 YELP_KEY = os.environ['YELP_KEY']
 

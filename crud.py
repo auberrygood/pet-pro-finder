@@ -203,7 +203,7 @@ def give_professional_a_grooming_membership(professional):
     """Take a professional, give them a random grooming membership, and return"""
     professional_id = professional.professional_id
     grooming_membership = choice(memberships_list['grooming'])
-
+    # breakpoint()
     membership_oo = Membership.query.filter_by(title=grooming_membership).one()
     membership_id = membership_oo.membership_id
 

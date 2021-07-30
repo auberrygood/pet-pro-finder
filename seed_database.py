@@ -97,14 +97,13 @@ for membership in crud.memberships_list['sitting']:
         memberships_in_db.append(db_sitting_membership.title)
 
 professionals_with_memberships_in_db = []
-# breakpoint() - keeps program running but stops here so i can play in console, can type "next" to go to next line in code
+# breakpoint() #-keeps program running but stops here so i can play in console, can type "next" to go to next line in code
 
 for professional in petpros_in_db:
     if professional.job == "trainer":
         db_professional_with_training_membership = crud.give_professional_a_training_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_training_membership)
     elif professional.job == "groomer":
-        breakpoint()
         db_professional_with_grooming_membership = crud.give_professional_a_grooming_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_grooming_membership)
     elif professional.job == "walker":
