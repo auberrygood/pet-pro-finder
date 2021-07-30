@@ -1,6 +1,6 @@
 """Server for PetProFinder app."""
 
-
+from model import connect_to_db #suggested to place model imports after login definitions to avoid bugs
 from flask import Flask, render_template, request, flash, session, redirect, jsonify
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 import crud
@@ -13,9 +13,8 @@ app = Flask(__name__)
 app.secret_key = "petpro"
 app.jinja_env.undefined = StrictUndefined
 login = LoginManager(app)
-login.login_view = '/login-page'
+login.login_view = 'login'
 
-from model import connect_to_db #suggested to place model imports after login definitions to avoid bugs
 
 YELP_KEY = os.environ['YELP_KEY']
 
@@ -42,7 +41,7 @@ def load_user(id):
 
 
 @app.route('/login', methods = ['GET', 'POST'])
-def loginuser():
+def login():
     """ Log user in and add user info to session """
 
     if current_user.is_authenticated:
@@ -66,7 +65,7 @@ def loginuser():
             return redirect('/login-page')
     else:
         flash('Sorry, this user does not exist.')
-        return redirect('login-page')
+        return redirect('/login-page')
 
 
 @app.route('/create-user', methods = ['POST'])
@@ -486,10 +485,12 @@ def rate_a_professional(label, id):
 
     if current_score != None:
         crud.replace_rating(score=submitted_score, client_id=user.client_id, professional_id=professional_id)
+        flash(f'Score of {submitted_score} submitted.')
         return redirect('/professional/{label}/{id}')
     else:
         crud.give_professional_a_rating(score=submitted_score, client_id=user.client_id, professional_id=professional_id)
-
+        flash(f'Score of {submitted_score} submitted.')
+        return redirect('/professional/{label}/{id}')
 
 
 if __name__ == "__main__":
