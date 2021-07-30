@@ -1,5 +1,6 @@
 """Server for PetProFinder app."""
 
+from model import connect_to_db #suggested to place model imports after login definitions to avoid bugs
 from flask import Flask, render_template, request, flash, session, redirect, jsonify
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 import crud
@@ -11,10 +12,9 @@ from jinja2 import StrictUndefined
 app = Flask(__name__)
 app.secret_key = "petpro"
 app.jinja_env.undefined = StrictUndefined
+
 login = LoginManager(app)
 login.login_view = '/login-page'
-
-from model import connect_to_db #suggested to place model imports after login definitions to avoid bugs
 
 YELP_KEY = os.environ['YELP_KEY']
 
@@ -35,46 +35,52 @@ def login_page():
 
 
 @login.user_loader
-def load_user(client_id):
-    
-    return crud.get_user_by_id(client_id)
+def load_user(id):
+    """ Flask-Login function to retrieve ID of user from session if any, and load user into memory """
+    return User.query.get(int(id))
 
 
 @app.route('/login', methods = ['GET', 'POST'])
-def login_user():
+def loginuser():
     """ Log user in and add user info to session """
 
     if current_user.is_authenticated:
         return redirect('/')
     
-    user_email = request.args.get('user_email')
-    user_password = request.args.get('user_password')
+    email = request.form.get['email']
+    password = request.form.get['password']
 
-    user = crud.get_user_by_email(user_email)
-
-    if user == None:
-        flash('Sorry, this user does not exist.')
-        return redirect('login-page')
-    else:
-        if user is None or not user.check_password(user_password):
-            flash('Invalid username or password.')
-            return redirect('/login-page')
-        else:
+    user = crud.get_user_by_email(email)
+    print("**********")
+    print(user)
+    print("**********")
+    
+    if user:
+        if user.check_password(password)==True:
             login_user(user)
             flash('Login Successful')
             return redirect('/')
+        else:
+            flash('Invalid password.')
+            return redirect('/login-page')
+    else:
+        flash('Sorry, this user does not exist.')
+        return redirect('login-page')
 
 
 @app.route('/create-user', methods = ['POST'])
 def create_login():
     """ Create login credentials for user """
 
-    user_email = request.args.get('email')
-    username = request.args.get('username')
-    user_password = request.args.get('password')
+    user_email = request.form.get('email')
+    print(user_email)
+    username = request.form.get('username')
+    print(username)
+    user_password = request.form.get('password')
+    print(user_password)
 
     potential_user = crud.get_user_by_email(user_email)
-    potenital_username = crud.get_user_by_username(username)
+    potential_username = crud.get_user_by_username(username)
 
     if potential_user != None:
         flash('Email already in use, please use a different email.')
@@ -83,7 +89,7 @@ def create_login():
         flash('Username already in use, please choose another.')
         return redirect('/login-page')
     else:
-        create_user(email=user_email, username=username, password=user_password)
+        crud.create_user(email=user_email, username=username, password=user_password)
         flash('New account created! You may now log in.')
         return redirect('/login-page')
 

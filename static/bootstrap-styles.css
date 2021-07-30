@@ -25,6 +25,10 @@ html, body {
     text-align: center;
 }
 
+.ml-auto {
+    margin-left: auto;
+}
+
 
 /* homepage.html */
 .above-text {

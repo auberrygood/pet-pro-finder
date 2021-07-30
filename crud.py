@@ -13,11 +13,11 @@ professions_list = ["trainer","groomer","walker","sitter"]
 memberships_list = {"training":['','APDT - Association of Professional Dog Trainers', 'PPG - Pet Professionals Guild', 'IACP - International Association of Canine Professionals', 'AABP - Association of Animal Behavior Professionals'], 
                     "grooming":['','PGA - Professional Groomers Association', 'IGA - International Groomers Association'], 
                     "walking":[''], 
-                    "sitting":['']}
+                    "sitting":['', 'PSA - Pet Sitters Associates']}
 
 credentials_list = {"training":['','CPDT-KA - Certified Professional Dog Trainer, Knowledge Assessed', 'CPDT-KSA - Certified Professional Dog Trainer, Skills Assessed', 'CBCC-KA - Certified Behavior Consultant Canine, Knowledge Assessed ', 'IACP-CDT - International Association of Canine Professionals, Certified Dog Trainer', 'IACP-CDTA - International Association of Canine Professionals, Certified Dog Trainer Advanced', 'IACP-PDTI - International Association of Canine Professionals, Professional Dog Trainer Instructor', 'IACP-CSDT - International Association of Canine Professionals, Certified Service Dog Trainer','CDBC - International Association of Animal Behavior, Certified Dog Behavior Consultant', 'FFCP - Fear Free Certified Professional', 'KPA-CTP - Karen Pryor Academy, Certified Training Partner', 'AABP - Association of Animal Behavior Professionals, Certified Dog Trainer', 'CBATI - Certified Behavior Adjustment Training Instructor', 'CTC - Academy for Dog Trainers, Certificate in Training and Counseling', 'VSA-CDT - Victoria Stillwell Acadamy, Certified Dog Trainer', 'ACAAB - Animal Behavior Society, Associate Certified Applied Animal Behaviorist', 'CAAB - Animal Behavior Society, Certified Applied Animal Behaviorist', 'CCS - Northwest School of Canine Studies, Certificate in Canine Studies', 'CSAT - Certified Separation Anxiety Trainer', 'PMCT - Pat Miller Certified Trainer', 'DACVB - Diplomate of the American College of Veterinary Behaviorists'], 
                     "grooming":['','ABC-PG - Animal Behavior College, Professional Groomer', 'FFCP - Fear Free Certified Professional'], 
-                    "walking":['','FFCP - Fear Free Certified Professional'],
+                    "walking":['','FFCP - Fear Free Certified Professional', 'DTCDW - DogTech Certified Dog Walker'],
                     "sitting":['','FFCP - Fear Free Certified Professional']}
 
 specialties_list = {"training":['','puppies', 'adolescent', 'dog aggression', 'human aggression', 'leash reactivity', 'basic obedience', 'service', 'therapy', 'ESA', 'sport', 'nosework', 'search and rescue', 'separation anxiety', 'potty training', 'off-leash', 'recall training'],
@@ -108,7 +108,7 @@ def get_sitter_api_data():
 
 def create_user(email, username, password):
     """ Create and return a user """
-    user = User(email=email, username=username)
+    user = User(email=email, username=username, password_hash=password)
 
     user.set_password(password)
     
@@ -127,14 +127,16 @@ def show_all_users():
 
 def get_user_by_email(email):
     """ Query for user by email """
-    user = User.query.filter(email=email).first()
-
-    return user
+    user = User.query.filter_by(email=email).first()
+    if user:
+        return user
+    else:
+        return None
 
 
 def get_user_by_username(username):
     """ Query for user by username """
-    user = User.query.filter(username=username).first()
+    user = User.query.filter_by(username=username).first()
 
     return user
 
@@ -535,14 +537,14 @@ def give_professional_a_rating(score, client_id, professional_id):
 
 def replace_rating(score, client_id, professional_id):
     """ Replace the score given to a professional by a specific user. """
-    rating = Rating.query.filter_by(client_id=client_id and professional_id=professional_id).first()
+    rating = Rating.query.filter(client_id=client_id, professional_id=professional_id).first()
     
     db.session.delete(rating)
     db.session.commit()
     
     new_rating = give_professional_a_rating(score=score, client_id=client_id, professional_id=professional_id)
 
-    return new rating
+    return new_rating
 
 
 def get_professioanl_average_rating(professional_id):

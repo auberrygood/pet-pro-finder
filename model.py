@@ -1,7 +1,9 @@
 """Models for pet_pro_finder app."""
 
 from flask_sqlalchemy import SQLAlchemy
-from Flask_login import UserMixin
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 db = SQLAlchemy()
 
@@ -25,7 +27,7 @@ class User(UserMixin, db.Model):
     
     def set_password(self, password):
         #tutorial did not have 'return' preceding next line; is 'return' necessary??
-        return self.password_hash = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password)
     
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -34,7 +36,7 @@ class User(UserMixin, db.Model):
         return f'<User username: {self.username} client_id: {self.client_id}>'
 
 
-class Ratings(db.Model):
+class Rating(db.Model):
     """ A pet professional's rating. """
     
     __tablename__ = "ratings"
@@ -69,7 +71,6 @@ class Professional(db.Model):
     yelp_id = db.Column(db.String)
     company_name = db.Column(db.String)
     job = db.Column(db.String)
-    # phone = db.Column(db.String)
 
     #relationship tables:               
     membership = db.relationship("Membership",

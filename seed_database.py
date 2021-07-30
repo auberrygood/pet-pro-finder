@@ -104,6 +104,7 @@ for professional in petpros_in_db:
         db_professional_with_training_membership = crud.give_professional_a_training_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_training_membership)
     elif professional.job == "groomer":
+        breakpoint()
         db_professional_with_grooming_membership = crud.give_professional_a_grooming_membership(professional)
         professionals_with_memberships_in_db.append(db_professional_with_grooming_membership)
     elif professional.job == "walker":

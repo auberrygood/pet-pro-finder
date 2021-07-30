@@ -31,10 +31,10 @@
             <a class="nav-link" href="/trainer-search">Trainers</a>
           </li>
         </ul>
-        <ul class="navbar-nav ml-auto mb-2 mb-lg-2">
+        <ul class="navbar-nav text-right ml-auto mb-2 mb-lg-2">
           {% if current_user.is_anonymous %}
           <li class="nav-item">
-            <a class="nav-link" href="/login">Log In or Create Account</a>
+            <a class="nav-link" href="/login-page">Log In or Create Account</a>
           </li>
           {% else %}
           <li class="nav-item">
@@ -42,10 +42,19 @@
           <li class="nav-item">
             <a class="nav-link" href="/logout">Log Out</a>
           </li>
+          {% endif %}
         </ul>
       </div>
     </nav>
-
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class=flashes>
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    </div>
+  {% endif %}
+  {% endwith %}
   {% block content %}{% endblock %}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
