@@ -3,7 +3,6 @@
 import os
 import json
 from random import choice, randint
-from datetime import datetime
 
 import crud
 import model
@@ -15,7 +14,7 @@ os.system("createdb petpros")
 model.connect_to_db(server.app)
 model.db.create_all()
 
-
+# breakpoint()
 petpros_in_db = []
 groomers_in_db = []
 
