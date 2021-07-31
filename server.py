@@ -439,18 +439,18 @@ def find_trainers():
 
 """********** PROFESSIONAL DETAILS **********"""
 
-@app.route('/professional/<label>/<id>')
-def get_professional_details(label, id):
+@app.route('/professional/<label>/<yelp_id>')
+def get_professional_details(label, yelp_id):
     """View the details of a professional."""
 
 
-    url = f'https://api.yelp.com/v3/businesses/{id}' #implement f string to register {id} as variable
+    url = f'https://api.yelp.com/v3/businesses/{yelp_id}' #implement f string to register {id} as variable
     payload = {'Authorization': f'bearer {YELP_KEY}'}
 
     response = requests.get(url, headers=payload)
     professional = response.json()
     categories = professional['categories']
-    yelp_id = professional['id']
+    yelp_id = professional['id'] #do we need this if already in argument?
     businessName = professional['name']
 
     #SQLAlchemy to find API match in db, and return detials of professional
@@ -464,6 +464,13 @@ def get_professional_details(label, id):
     membership = crud.get_pro_membership_info(professional_id)
     credential = crud.get_pro_credential_info(professional_id)
     specialties = crud.get_pro_specialty_info(professional_id)
+    average_rating = crud.get_professional_average_rating(professional_id)
+
+    if current_user.is_authenticated:
+        user_id = current_user.id 
+        user_rating = crud.get_user_pro_rating(user_id, professional_id)
+    else:
+        user_rating = None
 
     return render_template('professional-details.html',
                             professional=professional,
@@ -473,21 +480,23 @@ def get_professional_details(label, id):
                             specialties=specialties,
                             businessName = businessName,
                             label=label,
-                            yelp_id=id)
+                            yelp_id=yelp_id,
+                            average_rating=average_rating,
+                            user_rating=user_rating)
 
 
-@app.route('/professional/<label>/<id>/rating', methods = ['POST'])
+@app.route('/professional/<label>/<yelp_id>/rating', methods = ['POST'])
 @login_required
-def rate_a_professional(label, id):
+def rate_a_professional(label, yelp_id):
     """Rate a professional; display and save score to db."""
 
-    url = f'https://api.yelp.com/v3/businesses/{id}' #implement f string to register {id} as variable
+    url = f'https://api.yelp.com/v3/businesses/{yelp_id}' #implement f string to register {id} as variable
     payload = {'Authorization': f'bearer {YELP_KEY}'}
 
     response = requests.get(url, headers=payload)
     professional = response.json()
 
-    yelp_id = professional['id']
+    yelp_id = professional['id'] #do we need this is we already have it from argument?
     businessName = professional['name']
 
     #SQLAlchemy to find API match in db, and return detials of professional
@@ -500,16 +509,16 @@ def rate_a_professional(label, id):
     
     user = current_user
     current_score = crud.get_user_pro_rating(user_id=user.id, professional_id=professional_id)
-    submitted_score = request.args.get('submit_score')
+    submitted_score = request.form.get('submit_score')
 
-    if current_score != None:
-        crud.replace_rating(score=submitted_score, id=user.id, professional_id=professional_id)
+    if current_score:
+        crud.replace_rating(id=user.id, professional_id=professional_id, score=submitted_score,)
         flash(f'Score of {submitted_score} submitted.')
-        return redirect('/professional/{label}/{id}')
+        return redirect(f'/professional/{label}/{yelp_id}')
     else:
         crud.give_professional_a_rating(score=submitted_score, id=user.id, professional_id=professional_id)
         flash(f'Score of {submitted_score} submitted.')
-        return redirect('/professional/{label}/{id}')
+        return redirect(f'/professional/{label}/{yelp_id}')
 
 
 if __name__ == "__main__":

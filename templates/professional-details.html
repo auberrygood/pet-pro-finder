@@ -5,15 +5,30 @@
 {% block content %}
 <div class="container" id="basic-info">
   <div class="row">
-    <div class="col">
-      
+    <div class="col-4">
       <br>
       <h2>{{ businessName }}</h2>
       {% for line in professional['location'].display_address %}
           {{ line }}<p>
         {% endfor %}
         {{ professional.display_phone }}
-
+    </div>
+    <div class="col-4">
+      <br>
+        <h3>Average Rating:</h3>
+        {% if average_rating != None %}
+          {{ average_rating }} paws up!
+        {% else %}
+          No one has rated this petpro yet! <br>
+          If you've worked with this petpro, <br>
+          be the first to rate them below!
+      {% endif %}
+    </div>
+    <div class="col-4">
+      {% if current_user.is_authenticated and user_rating != None %}
+        <h3>{{ current_user.username }}'s rating:</h3>
+        {{ user_rating }} paws up!
+      {% endif %}
     </div>
   </div>
 </div>
@@ -76,11 +91,6 @@
     <!-- business image -->
     <div class="col-6">
       <img src="{{ professional['image_url'] }}" class="img-fluid" id="photo">
-      <!-- <p>
-        <a href="{{ professional['url'] }}" target="_blank">
-          Go to Yelp page
-        </a>
-      </p> -->
     </div>
 
     <!-- business location on google maps -->
@@ -91,18 +101,25 @@
       <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj0RjbMD6mz8tpThVVYIbje-4PBU3g86A&callback=initMap">
       </script>
-    
   </div>
+  
+  <!-- Rate business if user logged in -->
   <div class="row justify-content-center padded align-center">
     <div class="col-8">
+      {% if current_user.is_anonymous %}
+      <h2>Want to rate this business?</h2>
+      <a href="/login-page" target="_blank">
+        Please log in first!
+      </a>
+      {% else %}
       <h2>Rate this business!</h2>
         <form method="POST" action="/professional/{{ label }}/{{ yelp_id }}/rating">
           <div class="form-group">
             <label for="search-keyword">Score</label>
             <select
-                id="score"
+                id="submit_score"
                 class="form-control custom-select"
-                name="score"
+                name="submit_score"
             >
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -112,6 +129,7 @@
             <input type="submit" value="Submit Score!" class="btn btn-orange">
           </div>
         </form>
+      {% endif %}
     </div>
     <div class="col-4 yelp-button text-right">
       <a class="btn btn-orange" href="{{ professional['url'] }}">

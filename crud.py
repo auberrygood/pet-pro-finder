@@ -518,13 +518,14 @@ def get_pro_specialty_info(professional_id):
 """****************** RATING FUNCTIONS *****************"""
 
 def get_user_pro_rating(user_id, professional_id):
-    """ Return the score given to a professional by specific user. """
+    """ Return the score given to a professional by any specific user. """
     rating = Rating.query.filter_by(id=user_id, professional_id=professional_id).first()
     if rating:
         current_score = rating.score
         return current_score
     else:
         return None
+
 
 def give_professional_a_rating(id, professional_id, score):
     """ Have user give a professional a score. """
@@ -537,7 +538,7 @@ def give_professional_a_rating(id, professional_id, score):
 
 def replace_rating(id, professional_id, score):
     """ Replace the score given to a professional by a specific user. """
-    rating = Rating.query.filter(id=id, professional_id=professional_id).first()
+    rating = Rating.query.filter_by(id=id, professional_id=professional_id).one()
     
     db.session.delete(rating)
     db.session.commit()
@@ -547,16 +548,19 @@ def replace_rating(id, professional_id, score):
     return new_rating
 
 
-def get_professioanl_average_rating(professional_id):
+def get_professional_average_rating(professional_id):
     """ Return the average rating a professional has. """
     total_scores = 0
-    ratings = Rating.query.all()
-    rating_count = Rating.query.count()
-    for rating in ratings:
-        total_scores =+ int(rating.score)
-    average_rating = (total_scores) / (rating_count)
-
-    return average_rating
+    rating_count = Rating.query.filter_by(professional_id=professional_id).count()
+    
+    if rating_count > 0:
+        ratings = Rating.query.filter_by(professional_id=professional_id).all()
+        for rating in ratings:
+            total_scores = total_scores + int(rating.score)
+        average_rating = (total_scores) / (rating_count)
+        return int(average_rating)
+    else:
+        return None
 
 
 
