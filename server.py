@@ -1,22 +1,37 @@
 """Server for PetProFinder app."""
 
-from model import connect_to_db #suggested to place model imports after login definitions to avoid bugs
+from model import connect_to_db #jen suggested to place model imports after login definitions to avoid bugs?
+from model import User
 from flask import Flask, render_template, request, flash, session, redirect, jsonify
-from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 import crud
 import os
 import requests
 import json
 from jinja2 import StrictUndefined
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 
 app = Flask(__name__)
 app.secret_key = "petpro"
 app.jinja_env.undefined = StrictUndefined
-login = LoginManager(app)
-login.login_view = 'login'
 
+login_manager = LoginManager(app)
+# login_manager.init_app(app)
+login_manager.login_view = '/login_page'
 
 YELP_KEY = os.environ['YELP_KEY']
+
+
+@app.route("/routes", methods=["GET"])
+def getRoutes():
+    routes = {}
+    for r in app.url_map._rules:
+        routes[r.rule] = {}
+        routes[r.rule]["functionName"] = r.endpoint
+        routes[r.rule]["methods"] = list(r.methods)
+
+    routes.pop("/static/<path:filename>")
+
+    return jsonify(routes)
 
 
 @app.route('/')
@@ -34,11 +49,13 @@ def login_page():
     return render_template('login-page.html')
 
 
-@login.user_loader
+@login_manager.user_loader
 def load_user(id):
     """ Flask-Login function to retrieve ID of user from session if any, and load user into memory """
-    return User.query.get(int(id))
-
+    user = User.query.filter_by(id=id).first()
+    
+    return user
+    
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -46,9 +63,9 @@ def login():
 
     if current_user.is_authenticated:
         return redirect('/')
-    
-    email = request.form.get['email']
-    password = request.form.get['password']
+        
+    email = request.form.get('email')
+    password = request.form.get('password')
 
     user = crud.get_user_by_email(email)
     print("**********")
@@ -94,7 +111,8 @@ def create_login():
         return redirect('/login-page')
 
 
-app.route('/logout')
+@app.route('/logout')
+@login_required
 def logout():
     logout_user()
     flash('Successfully logged out')
@@ -454,10 +472,12 @@ def get_professional_details(label, id):
                             membership=membership,
                             credential=credential,
                             specialties=specialties,
-                            businessName = businessName)
+                            businessName = businessName,
+                            label=label,
+                            yelp_id=id)
 
 
-@app.route('/professional/<label>/<id>/rating')
+@app.route('/professional/<label>/<id>/rating', methods = ['POST'])
 @login_required
 def rate_a_professional(label, id):
     """Rate a professional; display and save score to db."""
@@ -480,15 +500,15 @@ def rate_a_professional(label, id):
             professional_id = pro.professional_id
     
     user = current_user
-    current_score = crud.get_user_pro_rating(client_id=user.client_id, professional_id=professional_id)
+    current_score = crud.get_user_pro_rating(user_id=user.id, professional_id=professional_id)
     submitted_score = request.args.get('submit_score')
 
     if current_score != None:
-        crud.replace_rating(score=submitted_score, client_id=user.client_id, professional_id=professional_id)
+        crud.replace_rating(score=submitted_score, id=user.id, professional_id=professional_id)
         flash(f'Score of {submitted_score} submitted.')
         return redirect('/professional/{label}/{id}')
     else:
-        crud.give_professional_a_rating(score=submitted_score, client_id=user.client_id, professional_id=professional_id)
+        crud.give_professional_a_rating(score=submitted_score, id=user.id, professional_id=professional_id)
         flash(f'Score of {submitted_score} submitted.')
         return redirect('/professional/{label}/{id}')
 

@@ -4,7 +4,6 @@ html, body {
     margin: 0;
     padding: 0;
 }
-
 .navbar {
 	background-color: #3acccb;
 	color: white;
@@ -12,19 +11,19 @@ html, body {
     padding: 3px 50px;
     font-family: Arial
 }
-
 #petpro-logo, #petpro-logo:hover {
 	color: #333333;
 }
-
 .navbar-nav>li>a, .navbar-dark .navbar-nav .nav-link {
 	color: white;
+    display: block;
 }
-
+.nav-link {
+    padding: 0;
+}
 .text-center {
     text-align: center;
 }
-
 .ml-auto {
     margin-left: auto;
 }
@@ -34,26 +33,21 @@ html, body {
 .above-text {
     padding-top: 150px;
 }
-
 .below-text-padding {
     padding-bottom: 20px;
 }
-
 .big-text {
     font-size: 1.5rem;
     line-height: 2rem;
 }
-
 .primary-font {
     font-family: "paralucent-text", Arial, sans-serif;
     font-weight: bold;
 }
-
 .subprimary-font {
     font-family: "paralucent-text", Arial, sans-serif;
     color: rgb(107, 107, 107);
 }
-
 .btn-blue {
     padding: 20px;
     background-color: #3acccb;
@@ -61,22 +55,19 @@ html, body {
     color: white;
     border-radius: 25px 25px 25px 25px;
 }
-
 .below-button-padding {
-    /* padding-bottom: 5px; */
     padding: 5px;
 }
-
 .right-padded {
     padding-right: 5px;
 }
+
 
 /* results page */
 #search-content {
     height: 100%;
     width: 100%;
 }
-
 #text-and-map {
     height: 100%;
     width: 100%;
@@ -92,8 +83,21 @@ html, body {
     border-radius: 25px 25px 25px 25px;
 }
 
+
 /* Details Page */
 .padded {
     padding-top:20px;
     padding-bottom:20px;
 }
+.align-center{
+    align-items: center;
+}
+.text-right {
+    text-align: right;
+}
+
+/* below css code visible in firefox browser only */
+/* select#score option[value="1"] { background-image: url(https://i2.wp.com/catgirlonlineshop.com/wp-content/uploads/2019/12/cropped-depositphotos_263556590-stock-illustration-dog-paw-icon-vector-footprint.png?ssl=1);}
+select#score option[value="2"] { background-image:url();}
+select#score option[value="3"] { background-image:url();}
+select#score option[value="4"] { background-image:url();} */

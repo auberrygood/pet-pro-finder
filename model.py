@@ -13,9 +13,11 @@ class User(UserMixin, db.Model):
 
     __tablename__ = "users"
 
-    client_id = db.Column(db.Integer,
+    id = db.Column(db.Integer,
                         autoincrement=True,
-                        primary_key=True)
+                        primary_key=True,
+                        unique=True)
+
     username = db.Column(db.String(50),
                         unique=True)
     email = db.Column(db.String(120),
@@ -32,8 +34,11 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    # def get_id(self):
+    #     return unicode(self.id)
+
     def __repr__(self):
-        return f'<User username: {self.username} client_id: {self.client_id}>'
+        return f'<User username: {self.username} id: {self.id}>'
 
 
 class Rating(db.Model):
@@ -44,8 +49,8 @@ class Rating(db.Model):
     rating_id = db.Column(db.Integer,
                             autoincrement=True,
                             primary_key=True)
-    client_id = db.Column(db.Integer, 
-                            db.ForeignKey('users.client_id'))
+    id = db.Column(db.Integer, 
+                            db.ForeignKey('users.id'))
     professional_id = db.Column(db.Integer,
                             db.ForeignKey('professionals.professional_id'))
     score = db.Column(db.Integer)
@@ -55,7 +60,7 @@ class Rating(db.Model):
                                     backref="ratings")
     user = db.relationship("User",
                             backref="ratings")
-    
+
     def __repr__(self):
         return f'<Username: {self.user.username} professional: {self.professional.company_name} score: {self.score}>'
 

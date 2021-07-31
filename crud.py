@@ -141,9 +141,9 @@ def get_user_by_username(username):
     return user
 
 
-def get_user_by_id(client_id):
+def get_user_by_id(id):
     """ Query for user by id """
-    user = User.query.filter(client_id=client_id).first()
+    user = User.query.filter(id=id).first()
 
     return user
 
@@ -517,32 +517,32 @@ def get_pro_specialty_info(professional_id):
 
 """****************** RATING FUNCTIONS *****************"""
 
-def get_user_pro_rating(client_id, professional_id):
+def get_user_pro_rating(user_id, professional_id):
     """ Return the score given to a professional by specific user. """
-    rating = Rating.query.filter(client_id=client_id, professional_id=professional_id).first()
+    rating = Rating.query.filter_by(id=user_id, professional_id=professional_id).first()
     if rating:
         current_score = rating.score
         return current_score
     else:
         return None
 
-def give_professional_a_rating(score, client_id, professional_id):
+def give_professional_a_rating(id, professional_id, score):
     """ Have user give a professional a score. """
-    rating = Rating(client_id=client_id, professional_id=professional_id, score=score)
+    rating = Rating(id=id, professional_id=professional_id, score=score)
     
     db.session.add(rating)
     db.session.commit()
 
     return rating
 
-def replace_rating(score, client_id, professional_id):
+def replace_rating(id, professional_id, score):
     """ Replace the score given to a professional by a specific user. """
-    rating = Rating.query.filter(client_id=client_id, professional_id=professional_id).first()
+    rating = Rating.query.filter(id=id, professional_id=professional_id).first()
     
     db.session.delete(rating)
     db.session.commit()
     
-    new_rating = give_professional_a_rating(score=score, client_id=client_id, professional_id=professional_id)
+    new_rating = give_professional_a_rating(id=id, professional_id=professional_id, score=score)
 
     return new_rating
 

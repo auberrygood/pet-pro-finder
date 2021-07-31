@@ -93,8 +93,27 @@
       </script>
     
   </div>
-  <div class="row yelp-page justify-content-center padded">
-    <div class="yelp-button text-center">
+  <div class="row justify-content-center padded align-center">
+    <div class="col-8">
+      <h2>Rate this business!</h2>
+        <form method="POST" action="/professional/{{ label }}/{{ yelp_id }}/rating">
+          <div class="form-group">
+            <label for="search-keyword">Score</label>
+            <select
+                id="score"
+                class="form-control custom-select"
+                name="score"
+            >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            <input type="submit" value="Submit Score!" class="btn btn-orange">
+          </div>
+        </form>
+    </div>
+    <div class="col-4 yelp-button text-right">
       <a class="btn btn-orange" href="{{ professional['url'] }}">
         Visit Yelp Page
       </a>
