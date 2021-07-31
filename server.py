@@ -74,7 +74,7 @@ def login():
     if user:
         if user.check_password(password)==True:
             login_user(user)
-            flash('Login Successful')
+            # flash('Login Successful')
             return redirect('/')
         else:
             flash('Invalid password.')
