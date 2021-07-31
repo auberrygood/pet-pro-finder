@@ -558,7 +558,7 @@ def get_professional_average_rating(professional_id):
         for rating in ratings:
             total_scores = total_scores + int(rating.score)
         average_rating = (total_scores) / (rating_count)
-        return ("{:.1f}".format(average_rating))
+        return ("{:.2f}".format(average_rating))
     else:
         return None
 
