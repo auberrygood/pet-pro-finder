@@ -4,12 +4,18 @@ html, body {
     margin: 0;
     padding: 0;
 }
+header.masthead {
+    padding-top: 4rem;
+}
 .navbar {
 	background-color: #3acccb;
 	color: white;
 	border-radius: 0px;
     padding: 3px 50px;
     font-family: Arial
+}
+.fixed-top {
+    position: fixed;
 }
 #petpro-logo, #petpro-logo:hover {
 	color: #333333;
@@ -55,13 +61,27 @@ html, body {
     color: white;
     border-radius: 25px 25px 25px 25px;
 }
+.btn-sitter {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+.btn-walker {
+    padding-right: 27px;
+    padding-left: 27px;
+}
+.btn-trainer {
+    padding-right: 24px;
+    padding-left: 24px;
+}
 .below-button-padding {
     padding: 5px;
 }
 .right-padded {
     padding-right: 5px;
 }
-
+#icon {
+    font-size: xx-large;
+}
 
 /* results page */
 #search-content {
@@ -94,6 +114,9 @@ html, body {
 }
 .text-right {
     text-align: right;
+}
+#rate-info {
+    text-align: center
 }
 
 /* below css code visible in firefox browser only */

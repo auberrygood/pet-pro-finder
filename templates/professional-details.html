@@ -13,7 +13,7 @@
         {% endfor %}
         {{ professional.display_phone }}
     </div>
-    <div class="col-4">
+    <div class="col-4" id="rate-info">
       <br>
         <h3>Average Rating:</h3>
         {% if average_rating != None %}
@@ -24,10 +24,13 @@
           be the first to rate them below!
       {% endif %}
     </div>
-    <div class="col-4">
+    <div class="col-4" id="rate-info">
+      <br>
       {% if current_user.is_authenticated and user_rating != None %}
         <h3>{{ current_user.username }}'s rating:</h3>
-        {{ user_rating }} paws up!
+        {% for i in range(user_rating) %}
+        <span class="material-icons">pets</span>
+        {% endfor %}
       {% endif %}
     </div>
   </div>
