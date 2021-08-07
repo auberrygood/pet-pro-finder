@@ -5,33 +5,35 @@
 {% block content %}
 <div class="container" id="basic-info">
   <div class="row">
-    <div class="col-4">
+    <div class="col-12">
       <br>
       <h2>{{ businessName }}</h2>
       {% for line in professional['location'].display_address %}
-          {{ line }}<p>
-        {% endfor %}
+          {{ line }}
+        {% endfor %} <br>
         {{ professional.display_phone }}
     </div>
-    <div class="col-4" id="rate-info">
-      <br>
-        <h3>Average Rating:</h3>
-        {% if average_rating != None %}
-          {{ average_rating }} paws up!
-        {% else %}
-          No one has rated this petpro yet! <br>
-          If you've worked with this petpro, <br>
-          be the first to rate them below!
-      {% endif %}
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
+    <br>
+      <h4>Average Rating:</h4>
+      {% if average_rating != None %}
+        {{ average_rating }} paws up!
+      {% else %}
+        No one has rated this petpro yet! <br>
+        If you've worked with this petpro, <br>
+        be the first to rate them below!
+    {% endif %}
     </div>
-    <div class="col-4" id="rate-info">
-      <br>
-      {% if current_user.is_authenticated and user_rating != None %}
-        <h3>{{ current_user.username }}'s rating:</h3>
-        {% for i in range(user_rating) %}
-        <span class="material-icons">pets</span>
-        {% endfor %}
-      {% endif %}
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
+    <br>
+    {% if current_user.is_authenticated and user_rating != None %}
+      <h4>{{ current_user.username }}'s rating:</h4>
+      {% for i in range(user_rating) %}
+      <span class="material-icons">pets</span>
+      {% endfor %}
+    {% endif %}
     </div>
   </div>
 </div>
@@ -39,10 +41,65 @@
   <br>
   <br>
 
-<div class="container" id="attributes">
+<div class="container">
+  <div class="row">
+    <!-- business image -->
+    <div class="col-6">
+      <img src="{{ professional['image_url'] }}" class="img-fluid" id="photo">
+    </div>
+    <!-- business location on google maps -->
+    <div class="col-6" id="map"></div>
+      <meta id="mapInfo" data-professional-name="{{businessName}}" data-business-lat="{{professional.coordinates.latitude}}" data-business-lng="{{professional.coordinates.longitude}}"></meta>
+      <script type="text/javascript" src="/static/businessMap.js">
+      </script> 
+      <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj0RjbMD6mz8tpThVVYIbje-4PBU3g86A&callback=initMap">
+      </script>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+  <!-- Rate business if user logged in -->
+    <div class="row justify-content-center padded align-center">
+      <div class="col-8">
+        {% if current_user.is_anonymous %}
+        <h2>Want to rate this business?</h2>
+        <a href="/login-page" target="_blank">
+          Please log in first!
+        </a>
+        {% else %}
+        <h2>Rate this business!</h2>
+          <form method="POST" action="/professional/{{ label }}/{{ yelp_id }}/rating" class="row">
+            <div class="form-group">
+              <label for="search-keyword">Score</label>
+              <select
+                  id="submit_score"
+                  class="form-control custom-select"
+                  name="submit_score"
+              >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              <input type="submit" value="Submit Score!" class="btn btn-orange">
+            </div>
+          </form>
+        {% endif %}
+      </div>
+      <div class="col-4 yelp-button text-right">
+        <a class="btn btn-orange" href="{{ professional['url'] }}">
+          Visit Yelp Page
+        </a>
+    </div>
+  </div>
+</div>
+
+<div class="attributes container" id="attributes">
   <div class="row">
     
-    <section class="col-3" id="services">
+    <section class="col-xs-12 col-md-3" id="services">
       <h3>Services</h3>
       <ul>
         {% for category in categories %}
@@ -51,7 +108,7 @@
       </ul>
     </section>
 
-    <section class="col-3" id="memberships">
+    <section class="col-xs-12 col-md-3" id="memberships">
       <h3>Memberships</h3>
         <ul>
           {% if membership == '' %}
@@ -62,7 +119,7 @@
         </ul>
       </section>
     
-    <section class="col-3" id="credentials">
+    <section class="col-xs-12 col-md-3" id="credentials">
       <h3>Credentials</h3>
         <ul>
           {% if credential == '' %}
@@ -73,7 +130,7 @@
         </ul>
       </section>
     
-    <section class="col-3" id="specialties">
+    <section class="col-xs-12 col-md-3" id="specialties">
       <h3>Specialties</h3>
         <ul>
           {% for specialty in specialties %}
@@ -87,59 +144,7 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="row">
 
-    <!-- business image -->
-    <div class="col-6">
-      <img src="{{ professional['image_url'] }}" class="img-fluid" id="photo">
-    </div>
-
-    <!-- business location on google maps -->
-    <div class="col-6" id="map"></div>
-      <meta id="mapInfo" data-professional-name="{{businessName}}" data-business-lat="{{professional.coordinates.latitude}}" data-business-lng="{{professional.coordinates.longitude}}"></meta>
-      <script type="text/javascript" src="/static/businessMap.js">
-      </script> 
-      <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj0RjbMD6mz8tpThVVYIbje-4PBU3g86A&callback=initMap">
-      </script>
-  </div>
-  
-  <!-- Rate business if user logged in -->
-  <div class="row justify-content-center padded align-center">
-    <div class="col-8">
-      {% if current_user.is_anonymous %}
-      <h2>Want to rate this business?</h2>
-      <a href="/login-page" target="_blank">
-        Please log in first!
-      </a>
-      {% else %}
-      <h2>Rate this business!</h2>
-        <form method="POST" action="/professional/{{ label }}/{{ yelp_id }}/rating">
-          <div class="form-group">
-            <label for="search-keyword">Score</label>
-            <select
-                id="submit_score"
-                class="form-control custom-select"
-                name="submit_score"
-            >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-            <input type="submit" value="Submit Score!" class="btn btn-orange">
-          </div>
-        </form>
-      {% endif %}
-    </div>
-    <div class="col-4 yelp-button text-right">
-      <a class="btn btn-orange" href="{{ professional['url'] }}">
-        Visit Yelp Page
-      </a>
-  </div>
-  </div>
-</div>
 
 
 

@@ -19,9 +19,9 @@
           <div class="col" id="list-search-results">
             <ul class="professionals-list">
               {% for professional in professionals %}
-                <li>
+                <li class="professional-result">
                   <a href="/professional/{{ label }}/{{ professional['id'] }}" target="_blank">
-                    {{ professional['name'] }}
+                    <h6>{{ professional['name'] }}</h6>
                   </a>
                 </li>
               {% endfor %}

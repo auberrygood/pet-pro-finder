@@ -468,7 +468,10 @@ def get_professional_details(label, yelp_id):
 
     if current_user.is_authenticated:
         user_id = current_user.id 
-        user_rating = int(crud.get_user_pro_rating(user_id, professional_id))
+        user_rating = crud.get_user_pro_rating(user_id, professional_id)
+        if user_rating:
+            user_rating = int(crud.get_user_pro_rating(user_id, professional_id))
+            return user_rating
     else:
         user_rating = None
 

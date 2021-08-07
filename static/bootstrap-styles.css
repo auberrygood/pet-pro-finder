@@ -3,16 +3,20 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 header.masthead {
-    padding-top: 4rem;
+    padding-top: 54px;
 }
 .navbar {
 	background-color: #3acccb;
 	color: white;
 	border-radius: 0px;
     padding: 3px 50px;
-    font-family: Arial
+    /* font-family: Arial */
+}
+.flexbox {
+    display: flex;
 }
 .fixed-top {
     position: fixed;
@@ -33,11 +37,36 @@ header.masthead {
 .ml-auto {
     margin-left: auto;
 }
+.btn-orange {
+    padding: 20px;
+    background-color: #ff9100;
+    border-color: #ff9100;
+    color: rgb(0, 0, 0);
+    border-radius: 25px 25px 25px 25px;
+}
 
 
 /* homepage.html */
+.artwork {
+    width: 100%;
+    height: calc(100vh - 54px);
+    background-image: url('/static/img/dog-chair.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-color: skyblue;
+}
+.artwork .flexbox {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+}
+.artwork .text-shadow {
+    color: white;
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.3);
+}
 .above-text {
-    padding-top: 150px;
+    padding-top: 48px;
 }
 .below-text-padding {
     padding-bottom: 20px;
@@ -47,18 +76,18 @@ header.masthead {
     line-height: 2rem;
 }
 .primary-font {
-    font-family: "paralucent-text", Arial, sans-serif;
+    /* font-family: "paralucent-text", Arial, sans-serif; */
     font-weight: bold;
 }
 .subprimary-font {
-    font-family: "paralucent-text", Arial, sans-serif;
-    color: rgb(107, 107, 107);
+    /* font-family: Arial, sans-serif; */
+    color: rgba(255, 255, 255, 1);
 }
 .btn-blue {
     padding: 20px;
+    color: white;
     background-color: #3acccb;
     border-color: #3acccb;
-    color: white;
     border-radius: 25px 25px 25px 25px;
 }
 .btn-sitter {
@@ -83,25 +112,43 @@ header.masthead {
     font-size: xx-large;
 }
 
+
+/* Search Forms */
+.search-form {
+    max-width: 600px;
+}
+
+
+
 /* results page */
 #search-content {
-    height: 100%;
     width: 100%;
 }
 #text-and-map {
     height: 100%;
     width: 100%;
 }
-
-
-/* Search Forms */
-.btn-orange {
-    padding: 20px;
-    background-color: #ff9100;
-    border-color: #ff9100;
-    color: rgb(0, 0, 0);
-    border-radius: 25px 25px 25px 25px;
+#map {
+    height: calc(100vh - 64px);
 }
+.professionals-list {
+    height: calc(100vh - 151px);
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+    list-style-type: none;
+}
+.professional-result {
+    color: black;
+}
+.professional-result a {
+    display: block;
+    padding: 24px 0;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
 
 
 /* Details Page */
@@ -115,9 +162,12 @@ header.masthead {
 .text-right {
     text-align: right;
 }
-#rate-info {
-    text-align: center
+.attributes {
+    padding-bottom: 100px;
 }
+/* #rate-info {
+    text-align: center
+} */
 
 /* below css code visible in firefox browser only */
 /* select#score option[value="1"] { background-image: url(https://i2.wp.com/catgirlonlineshop.com/wp-content/uploads/2019/12/cropped-depositphotos_263556590-stock-illustration-dog-paw-icon-vector-footprint.png?ssl=1);}
