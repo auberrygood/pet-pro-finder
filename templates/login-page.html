@@ -8,7 +8,15 @@
     <div class="row">
         <div class="col-6">
             <h2>Log In</h2>
-
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class=flashes>
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
             <form method="POST" action="/login">      
                 <div class="form-group">
                     <label for="search-keyword">Email</label>

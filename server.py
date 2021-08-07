@@ -470,8 +470,7 @@ def get_professional_details(label, yelp_id):
         user_id = current_user.id 
         user_rating = crud.get_user_pro_rating(user_id, professional_id)
         if user_rating:
-            user_rating = int(crud.get_user_pro_rating(user_id, professional_id))
-            return user_rating
+            user_rating = int(user_rating)
     else:
         user_rating = None
 
@@ -514,8 +513,9 @@ def rate_a_professional(label, yelp_id):
     current_score = crud.get_user_pro_rating(user_id=user.id, professional_id=professional_id)
     submitted_score = request.form.get('submit_score')
 
+
     if current_score:
-        crud.replace_rating(id=user.id, professional_id=professional_id, score=submitted_score,)
+        crud.replace_rating(id=user.id, professional_id=professional_id, score=submitted_score)
         flash(f'Score of {submitted_score} submitted.')
         return redirect(f'/professional/{label}/{yelp_id}')
     else:
