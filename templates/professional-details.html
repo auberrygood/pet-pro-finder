@@ -14,32 +14,60 @@
         {{ professional.display_phone }}
     </div>
   </div>
-  <div class="row">
+  <!-- Rating Info Row -->
+  <div class="row align-center text-center">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
     <br>
       <h4>Average Rating:</h4>
       {% if average_rating != None %}
         {{ average_rating }} paws up!
       {% else %}
-        No one has rated this petpro yet! <br>
+        No one has rated this petpro yet! <p></p>
         If you've worked with this petpro, <br>
-        be the first to rate them below!
-    {% endif %}
+        be the first to rate them!
+      {% endif %}
     </div>
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
     <br>
     {% if current_user.is_authenticated and user_rating != None %}
       <h4>{{ current_user.username }}'s rating:</h4>
       {% for i in range(user_rating) %}
-      <span class="material-icons">pets</span>
+        <span class="material-icons">pets</span>
       {% endfor %}
     {% endif %}
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
+      <br>
+      {% if current_user.is_anonymous %}
+        <h4>Want to rate this business?</h4>
+        <a class="btn btn-orange" id="score-button" href="/login-page">Log In First!</a>
+      {% else %}
+        <h4>Rate this business!</h4>
+          <form method="POST" action="/professional/{{ label }}/{{ yelp_id }}/rating" class="row">
+            <div class="row score-form-group">
+              <!-- <label for="search-keyword">Score</label> -->
+              <select
+                  id="submit_score"
+                  class="form-control score-form custom-select"
+                  name="submit_score"
+              >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              <span class="col-3 score-button">
+                <input type="submit" value="Submit Score" class="btn btn-orange" id="score-button">
+              </span>
+            </div>
+          </form>
+      {% endif %}
     </div>
   </div>
 </div>
 
-  <br>
-  <br>
+<br>
+<br>
 
 <div class="container">
   <div class="row">
@@ -58,10 +86,10 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="row">
+<!-- <div class="container">
+  <div class="row"> -->
   <!-- Rate business if user logged in -->
-    <div class="row justify-content-center padded align-center">
+    <!-- <div class="row justify-content-center padded align-center">
       <div class="col-8">
         {% if current_user.is_anonymous %}
         <h2>Want to rate this business?</h2>
@@ -71,11 +99,11 @@
         {% else %}
         <h2>Rate this business!</h2>
           <form method="POST" action="/professional/{{ label }}/{{ yelp_id }}/rating" class="row">
-            <div class="form-group">
-              <label for="search-keyword">Score</label>
-              <select
+            <div class="row form-group"> -->
+              <!-- <label for="search-keyword">Score</label> -->
+              <!-- <select
                   id="submit_score"
-                  class="form-control custom-select"
+                  class="form-control score-form custom-select"
                   name="submit_score"
               >
                   <option value="1">1</option>
@@ -83,7 +111,9 @@
                   <option value="3">3</option>
                   <option value="4">4</option>
               </select>
-              <input type="submit" value="Submit Score!" class="btn btn-orange">
+              <div class="col-3 score-button text-left">
+                <input type="submit" value="Submit Score!" class="btn btn-orange">
+              </div>
             </div>
           </form>
         {% endif %}
@@ -94,58 +124,67 @@
         </a>
     </div>
   </div>
-</div>
-
+</div> -->
+<!-- toggle collapse attribute buttons -->
 <div class="attributes container" id="attributes">
+  <p>
+    <button class="btn btn-orange attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target="#services" aria-expanded="false" aria-controls="services">Services</button>
+    <button class="btn btn-orange attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target="#memberships" aria-expanded="false" aria-controls="memberships">Memberships</button>
+    <button class="btn btn-orange attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target="#credentials" aria-expanded="false" aria-controls="credentials">Credentials</button>
+    <button class="btn btn-orange last-attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target="#specialties" aria-expanded="false" aria-controls="specialties">Specialties</button>
+    <button class="btn btn-orange all-attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="services memberships credentials">All</button>
+  </p>
   <div class="row">
-    
-    <section class="col-xs-12 col-md-3" id="services">
-      <h3>Services</h3>
-      <ul>
-        {% for category in categories %}
-          <li>{{ category.title }}</li>
-        {% endfor %}
-      </ul>
-    </section>
-
-    <section class="col-xs-12 col-md-3" id="memberships">
-      <h3>Memberships</h3>
-        <ul>
-          {% if membership == '' %}
-            <li>No Memberships</li>
-          {% else %}
-            <li>{{ membership }}</li>
-          {% endif %}
-        </ul>
-      </section>
-    
-    <section class="col-xs-12 col-md-3" id="credentials">
-      <h3>Credentials</h3>
-        <ul>
-          {% if credential == '' %}
-            <li>No Credentials</li>
-          {% else %}
-            <li>{{ credential }}</li>
-          {% endif %}
-        </ul>
-      </section>
-    
-    <section class="col-xs-12 col-md-3" id="specialties">
-      <h3>Specialties</h3>
-        <ul>
-          {% for specialty in specialties %}
-            {% if specialty != '' %}
-              <li>{{ specialty }}</li>
+    <div class="col collapse-btns">
+      <div class="collapse multi-collapse" id="services">
+        <div class="card card-body">
+          <ul class="no-type">
+            {% for category in categories %}
+              <li>{{ category.title }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="collapse multi-collapse" id="memberships">
+        <div class="card card-body">
+          <ul class="no-type">
+            {% if membership == '' %}
+              <li>No Memberships</li>
+            {% else %}
+              <li>{{ membership }}</li>
             {% endif %}
-          {% endfor %}
-        </ul>
-      </section>
-
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="collapse multi-collapse" id="credentials">
+        <div class="card card-body">
+          <ul class="no-type">
+            {% if credential == '' %}
+              <li>No Credentials</li>
+            {% else %}
+              <li>{{ credential }}</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="collapse multi-collapse" id="specialties">
+        <div class="card card-body">
+          <ul class="no-type">
+            {% for specialty in specialties %}
+              {% if specialty != '' %}
+                <li>{{ specialty }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-
-
-
-
 {% endblock %}

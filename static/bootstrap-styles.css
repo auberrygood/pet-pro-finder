@@ -37,6 +37,9 @@ header.masthead {
 .ml-auto {
     margin-left: auto;
 }
+.ml-log {
+    margin-left: 10px;
+}
 .btn-orange {
     padding: 20px;
     background-color: #ff9100;
@@ -116,6 +119,7 @@ header.masthead {
 /* Search Forms */
 .search-form {
     max-width: 600px;
+    padding-top: 2em;
 }
 
 
@@ -128,7 +132,10 @@ header.masthead {
     height: 100%;
     width: 100%;
 }
-#map {
+#search-text {
+    padding-top: 16px;
+}
+.results-map {
     height: calc(100vh - 64px);
 }
 .professionals-list {
@@ -156,18 +163,48 @@ header.masthead {
     padding-top:20px;
     padding-bottom:20px;
 }
-.align-center{
+.align-center {
     align-items: center;
 }
 .text-right {
     text-align: right;
 }
+.text-left {
+    text-align: left;
+}
 .attributes {
     padding-bottom: 100px;
+    padding-top: 40px;
 }
-/* #rate-info {
-    text-align: center
-} */
+.attribute-btn {
+    width: 260px;
+    margin-right:32px
+}
+.last-attribute-btn {
+    width: 260px;
+    margin-right:32px
+}
+.all-attribute-btn {
+    width: auto;
+}
+.card-body {
+    width: 260px;
+}
+.no-type {
+    overflow: auto;
+    list-style-type:circle;
+}
+.score-form {
+    display: block;
+    width: 10%;
+}
+#score-button {
+    padding: 5px;
+    text-align: center;
+}
+.score-form-group {
+    margin-left: 125px;
+}
 
 /* below css code visible in firefox browser only */
 /* select#score option[value="1"] { background-image: url(https://i2.wp.com/catgirlonlineshop.com/wp-content/uploads/2019/12/cropped-depositphotos_263556590-stock-illustration-dog-paw-icon-vector-footprint.png?ssl=1);}

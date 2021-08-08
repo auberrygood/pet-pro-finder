@@ -10,7 +10,7 @@
           <h2>{{ label.title() }} Search Results</h2>
           <p>
             <span id="result-count">
-              {{ results }} {{ label }}s matched your search.
+              <i>{{ results }} {{ label }}s matched your search.</i>
             </span>
           </p>
         </div>       
@@ -30,7 +30,7 @@
         </div> 
       </div>
       <!-- business results displayed on map -->
-      <div class="col-8" id="map"></div>
+      <div class="col-8 results-map" id="map"></div>
         <!-- json_professionals is a json string thanks to server side json.dumps() -->
         <meta id="mapResults" data-professionals="{{ json_professionals }}"></meta> 
         <script type="text/javascript" src="/static/resultsMap.js"></script>
