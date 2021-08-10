@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="container">
-    <div class="row">
+    <div class="row log-account">
         <div class="col-6 log-in">
             <h2 class="subheader">Log In</h2>
             <form method="POST" action="/login">      
@@ -29,7 +29,7 @@
                         required
                     >
                 </div>
-                <input type="submit" value="Log In" class="btn btn-orange">
+                <input type="submit" value="Log In" class="btn btn-orange" id="login-button">
             </form>
         </div>
 
@@ -67,13 +67,13 @@
                         required
                     >
                 </div>
-                <input type="submit" value="Create Account" class="btn btn-orange">
+                <input type="submit" value="Create Account" class="btn btn-orange" id="login-button">
             </form>
         </div>
     </div>
 </div>
 <div class="container flash">
-    <div class="row flash align-bottom">
+    <div class="row login-flash">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class=flashes>
@@ -85,4 +85,16 @@
         {% endwith %}
     </div>
 </div>
+<div class="container mao-image">
+    <div class="row mao">
+        <div class="col-6 mao mao-head">
+            <img src="/static/img/mao_head.jpg" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col-6 mao mao-butt">
+            <img src="/static/img/mao_butt.jpg" class="img-fluid" alt="Responsive image">
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}

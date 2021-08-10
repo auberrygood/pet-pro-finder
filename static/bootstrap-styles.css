@@ -55,10 +55,26 @@ header.masthead {
 
 
 /* login page */
-.flash {
-    height: 100%;
-    align-items: bottom;
-    padding-top: 8px;
+#login-button {
+    margin-top: 16px;
+}
+.log-account {
+    padding-top: 16px;
+}
+.login-flash {
+    text-align: center;
+    padding-top: 32px;
+    font-family:'Fredoka One', cursive;
+}
+.mao-image {
+    padding:0;
+    border:0;
+    margin:0;
+}
+.mao {
+    padding:0;
+    border:0;
+    margin:0;
 }
 
 
