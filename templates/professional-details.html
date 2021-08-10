@@ -7,7 +7,7 @@
   <div class="row">
     <div class="col-12">
       <br>
-      <h2>{{ businessName }}</h2>
+      <h2 class="pro-name">{{ businessName }}</h2>
       {% for line in professional['location'].display_address %}
           {{ line }}
         {% endfor %} <br>
@@ -18,7 +18,7 @@
   <div class="row align-center text-center">
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
     <br>
-      <h4>Average Rating:</h4>
+      <h4 class="subheader">Average Rating:</h4>
       {% if average_rating != None %}
         {{ average_rating }} paws up!
       {% else %}
@@ -30,7 +30,7 @@
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
     <br>
     {% if current_user.is_authenticated and user_rating != None %}
-      <h4>{{ current_user.username }}'s rating:</h4>
+      <h4 class="subheader">{{ current_user.username }}'s rating:</h4>
       {% for i in range(user_rating) %}
         <span class="material-icons">pets</span>
       {% endfor %}
@@ -42,7 +42,7 @@
         <h4>Want to rate this business?</h4>
         <a class="btn btn-orange" id="score-button" href="/login-page">Log In First!</a>
       {% else %}
-        <h4>Rate this business!</h4>
+        <h4 class="subheader">Rate this business!</h4>
           <form method="POST" action="/professional/{{ label }}/{{ yelp_id }}/rating" class="row">
             <div class="row score-form-group">
               <!-- <label for="search-keyword">Score</label> -->
@@ -69,7 +69,7 @@
 <br>
 <br>
 
-<div class="container">
+<div class="imagemap container">
   <div class="row">
     <!-- business image -->
     <div class="col-6">
@@ -77,7 +77,7 @@
     </div>
     <!-- business location on google maps -->
     <div class="col-6" id="map"></div>
-      <meta id="mapInfo" data-professional-name="{{businessName}}" data-business-lat="{{professional.coordinates.latitude}}" data-business-lng="{{professional.coordinates.longitude}}"></meta>
+      <meta id="mapInfo" data-professional-name="{{businessName}}" data-professional-yelp="{{professional.url}}" data-business-lat="{{professional.coordinates.latitude}}" data-business-lng="{{professional.coordinates.longitude}}"></meta>
       <script type="text/javascript" src="/static/businessMap.js">
       </script> 
       <script async defer
@@ -86,52 +86,12 @@
   </div>
 </div>
 
-<!-- <div class="container">
-  <div class="row"> -->
-  <!-- Rate business if user logged in -->
-    <!-- <div class="row justify-content-center padded align-center">
-      <div class="col-8">
-        {% if current_user.is_anonymous %}
-        <h2>Want to rate this business?</h2>
-        <a href="/login-page" target="_blank">
-          Please log in first!
-        </a>
-        {% else %}
-        <h2>Rate this business!</h2>
-          <form method="POST" action="/professional/{{ label }}/{{ yelp_id }}/rating" class="row">
-            <div class="row form-group"> -->
-              <!-- <label for="search-keyword">Score</label> -->
-              <!-- <select
-                  id="submit_score"
-                  class="form-control score-form custom-select"
-                  name="submit_score"
-              >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-              </select>
-              <div class="col-3 score-button text-left">
-                <input type="submit" value="Submit Score!" class="btn btn-orange">
-              </div>
-            </div>
-          </form>
-        {% endif %}
-      </div>
-      <div class="col-4 yelp-button text-right">
-        <a class="btn btn-orange" href="{{ professional['url'] }}">
-          Visit Yelp Page
-        </a>
-    </div>
-  </div>
-</div> -->
-<!-- toggle collapse attribute buttons -->
 <div class="attributes container" id="attributes">
   <p>
     <button class="btn btn-orange attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target="#services" aria-expanded="false" aria-controls="services">Services</button>
     <button class="btn btn-orange attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target="#memberships" aria-expanded="false" aria-controls="memberships">Memberships</button>
     <button class="btn btn-orange attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target="#credentials" aria-expanded="false" aria-controls="credentials">Credentials</button>
-    <button class="btn btn-orange last-attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target="#specialties" aria-expanded="false" aria-controls="specialties">Specialties</button>
+    <button class="btn btn-orange attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target="#specialties" aria-expanded="false" aria-controls="specialties">Specialties</button>
     <button class="btn btn-orange all-attribute-btn" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="services memberships credentials">All</button>
   </p>
   <div class="row">

@@ -456,11 +456,19 @@ def get_professional_details(label, yelp_id):
     #SQLAlchemy to find API match in db, and return detials of professional
     pros = crud.get_pros_by_yelp_id(yelp_id)
     #choose id out of id_list that has a job that matches the job user is looking for....
+    print("***************")
+    print(f"label: {label}")
+    print("***************")
     for pro in pros:
         job = pro.job
+        print("***************")
+        print(f"job: {job}")
+        print("***************")
         if job == label:
             professional_id = pro.professional_id
-    
+    print("***************")
+    print(f"professional id: {professional_id}")
+    print("***************")
     membership = crud.get_pro_membership_info(professional_id)
     credential = crud.get_pro_credential_info(professional_id)
     specialties = crud.get_pro_specialty_info(professional_id)

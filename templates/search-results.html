@@ -7,7 +7,7 @@
     <div class="row" id="text-and-map">      
       <div class="col-4" id="search-text">
         <div class="row" id="search-title">
-          <h2>{{ label.title() }} Search Results</h2>
+          <h2 class="subheader">{{ label.title() }} Search Results</h2>
           <p>
             <span id="result-count">
               <i>{{ results }} {{ label }}s matched your search.</i>
@@ -20,7 +20,7 @@
             <ul class="professionals-list">
               {% for professional in professionals %}
                 <li class="professional-result">
-                  <a href="/professional/{{ label }}/{{ professional['id'] }}" target="_blank">
+                  <a href="/professional/{{ label }}/{{ professional['id'] }}" target="_blank"><span data-content="{{ professional['name'] }}" aria-hidden="true"></span>
                     <h6>{{ professional['name'] }}</h6>
                   </a>
                 </li>

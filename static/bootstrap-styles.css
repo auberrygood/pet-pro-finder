@@ -9,10 +9,10 @@ header.masthead {
     padding-top: 54px;
 }
 .navbar {
-	background-color: #3acccb;
+    background-color: #3acccb;
 	color: white;
 	border-radius: 0px;
-    padding: 3px 50px;
+    padding: 0px 50px;
     /* font-family: Arial */
 }
 .flexbox {
@@ -22,7 +22,11 @@ header.masthead {
     position: fixed;
 }
 #petpro-logo, #petpro-logo:hover {
-	color: #333333;
+    color: #333333;
+    /* font-family: 'Pattaya', sans-serif; */
+    font-size: x-large;
+    /* font-family: 'Pacifico', cursive; */
+    font-family: 'Fredoka One', cursive;
 }
 .navbar-nav>li>a, .navbar-dark .navbar-nav .nav-link {
 	color: white;
@@ -42,10 +46,14 @@ header.masthead {
 }
 .btn-orange {
     padding: 20px;
-    background-color: #ff9100;
-    border-color: #ff9100;
-    color: rgb(0, 0, 0);
+    background-color: #ffa500;
+    border-color: #ffa500;
+    color: white;
+    font-weight: 600;
     border-radius: 25px 25px 25px 25px;
+}
+.subheader {
+    font-weight: 600;
 }
 
 
@@ -57,7 +65,7 @@ header.masthead {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    background-color: skyblue;
+    background-color:#3acccb;
 }
 .artwork .flexbox {
     flex-direction: column;
@@ -123,7 +131,6 @@ header.masthead {
 }
 
 
-
 /* results page */
 #search-content {
     width: 100%;
@@ -155,10 +162,17 @@ header.masthead {
     color: black;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
-
+/* hover color change */
+.professional-result a:hover {
+    color:orange
+}
 
 
 /* Details Page */
+.pro-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
 .padded {
     padding-top:20px;
     padding-bottom:20px;
@@ -178,17 +192,16 @@ header.masthead {
 }
 .attribute-btn {
     width: 260px;
-    margin-right:32px
-}
-.last-attribute-btn {
-    width: 260px;
-    margin-right:32px
+    margin-right:32px;
+    color: white;
 }
 .all-attribute-btn {
     width: auto;
+    color: white;
 }
 .card-body {
     width: 260px;
+    border: none
 }
 .no-type {
     overflow: auto;
@@ -205,9 +218,3 @@ header.masthead {
 .score-form-group {
     margin-left: 125px;
 }
-
-/* below css code visible in firefox browser only */
-/* select#score option[value="1"] { background-image: url(https://i2.wp.com/catgirlonlineshop.com/wp-content/uploads/2019/12/cropped-depositphotos_263556590-stock-illustration-dog-paw-icon-vector-footprint.png?ssl=1);}
-select#score option[value="2"] { background-image:url();}
-select#score option[value="3"] { background-image:url();}
-select#score option[value="4"] { background-image:url();} */

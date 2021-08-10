@@ -4,7 +4,8 @@ function initMap() {
     const professionalName = document.querySelector("#mapInfo").getAttribute("data-professional-name")
     const businessLat = Number(document.querySelector("#mapInfo").getAttribute("data-business-lat"))
     const businessLng = Number(document.querySelector("#mapInfo").getAttribute("data-business-lng"))
-    
+    const professionalYelp = document.querySelector("#mapInfo").getAttribute("data-professional-yelp")
+
     console.log(professionalName)
     console.log("latlng", businessLat, businessLng)
     
@@ -31,7 +32,7 @@ function initMap() {
     const infoWindow = new google.maps.InfoWindow();
 
     //content of the marker's infoWindow
-    const businessContent = professionalName
+    const businessContent = professionalName.link(professionalYelp)
 
     //show infoWindow when marker is clicked
     marker.addListener('click', () => {
