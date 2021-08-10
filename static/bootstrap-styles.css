@@ -13,7 +13,6 @@ header.masthead {
 	color: white;
 	border-radius: 0px;
     padding: 0px 50px;
-    /* font-family: Arial */
 }
 .flexbox {
     display: flex;
@@ -23,9 +22,7 @@ header.masthead {
 }
 #petpro-logo, #petpro-logo:hover {
     color: #333333;
-    /* font-family: 'Pattaya', sans-serif; */
     font-size: x-large;
-    /* font-family: 'Pacifico', cursive; */
     font-family: 'Fredoka One', cursive;
 }
 .navbar-nav>li>a, .navbar-dark .navbar-nav .nav-link {
@@ -57,10 +54,19 @@ header.masthead {
 }
 
 
+/* login page */
+.flash {
+    height: 100%;
+    align-items: bottom;
+    padding-top: 8px;
+}
+
+
 /* homepage.html */
 .artwork {
     width: 100%;
-    height: calc(100vh - 54px);
+    height: 100%;
+    /* height: calc(100vh - 54px); */
     background-image: url('/static/img/dog-chair.jpg');
     background-repeat: no-repeat;
     background-position: center center;
@@ -213,6 +219,8 @@ header.masthead {
 }
 #score-button {
     padding: 5px;
+    padding-left: 16px;
+    padding-right: 16px;
     text-align: center;
 }
 .score-form-group {
