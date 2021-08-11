@@ -16,7 +16,7 @@
   </div>
   <!-- Rating Info Row -->
   <div class="row align-center text-center">
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="average-rate">
     <br>
       <h4 class="subheader">Average Rating:</h4>
       {% if average_rating != None %}
@@ -27,7 +27,7 @@
         be the first to rate them!
       {% endif %}
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="user-rating">
     <br>
     {% if current_user.is_authenticated and user_rating != None %}
       <h4 class="subheader">{{ current_user.username }}'s rating:</h4>
@@ -36,7 +36,7 @@
       {% endfor %}
     {% endif %}
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="rate-info">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="submit-rating">
       <br>
       {% if current_user.is_anonymous %}
         <h4 class="subheader">Want to rate this business?</h4>
@@ -72,11 +72,12 @@
 <div class="imagemap container">
   <div class="row">
     <!-- business image -->
-    <div class="col-6">
+    <div class="col-6 business-image">
+      <!-- shadow p-3 mb-5 bg-white rounded -->
       <img src="{{ professional['image_url'] }}" class="img-fluid" id="photo">
     </div>
     <!-- business location on google maps -->
-    <div class="col-6" id="map"></div>
+    <div class="col-6 business-map" id="map"></div>
       <meta id="mapInfo" data-professional-name="{{businessName}}" data-professional-yelp="{{professional.url}}" data-business-lat="{{professional.coordinates.latitude}}" data-business-lng="{{professional.coordinates.longitude}}"></meta>
       <script type="text/javascript" src="/static/businessMap.js">
       </script> 

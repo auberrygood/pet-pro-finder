@@ -13,6 +13,7 @@ header.masthead {
 	color: white;
 	border-radius: 0px;
     padding: 0px 50px;
+    font-size: large;
 }
 .flexbox {
     display: flex;
@@ -51,6 +52,17 @@ header.masthead {
 }
 .subheader {
     font-weight: 600;
+}
+.card-footer {
+    background-color: #3acccb;
+	color: white;
+	border-radius: 0px;
+}
+.card-footer a {
+    text-decoration: none
+}
+.card-footer a:hover {
+    color:orange
 }
 
 
@@ -209,11 +221,10 @@ header.masthead {
     text-align: left;
 }
 .attributes {
-    padding-bottom: 100px;
-    padding-top: 40px;
+    padding:40px 0px 100px 0px;
 }
 .attribute-btn {
-    width: 260px;
+    width: 277px;
     margin-right:32px;
     color: white;
 }
@@ -240,5 +251,21 @@ header.masthead {
     text-align: center;
 }
 .score-form-group {
-    margin-left: 125px;
+    /* margin-left: 115px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.business-image {
+    padding-right: auto;
+    padding-left: 0px;
+    padding-right: 45px;
+    /* width: 600px; */
+    margin-right: auto;
+}
+#photo  {
+    border-radius: 25px 25px 25px 25px;
+}
+#map {
+    border-radius: 25px 25px 25px 25px;
 }
