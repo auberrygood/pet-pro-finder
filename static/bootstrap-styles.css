@@ -55,8 +55,10 @@ header.masthead {
 }
 .card-footer {
     background-color: #3acccb;
-	color: white;
-	border-radius: 0px;
+	color: rgb(0, 0, 0);
+	border-radius: 5px;
+    padding: 0px;
+    font-size: small;
 }
 .card-footer a {
     text-decoration: none
@@ -162,6 +164,9 @@ header.masthead {
 .search-form {
     max-width: 600px;
     padding-top: 2em;
+}
+.btn-professional {
+    margin-bottom: 32px;
 }
 
 
