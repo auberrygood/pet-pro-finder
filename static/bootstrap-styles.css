@@ -186,6 +186,7 @@ header.masthead {
 }
 .results-map {
     height: calc(100vh - 64px);
+    margin-top: 16px;
 }
 .professionals-list {
     height: calc(100vh - 151px);
