@@ -6,3 +6,6 @@ Analyzing user input, PetPro Finder creates a custom-created shortlist of pet pr
 
 Project Tech Stack:
 Python, Javascript, HTML, Jinja, Flask, Flask_Login, PostGreSQL, SqlAlchemy, Requests, Json, Werkzeug.Security, CSS, Bootstrap
+
+API's Used:
+Yelp-Fusion, (Google) Maps Javascript
